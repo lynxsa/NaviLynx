@@ -1,0 +1,157 @@
+/* stylelint-disable at-rule-no-unknown */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* stylelint-enable at-rule-no-unknown */
+
+/* Global App Styles */
+* {
+  box-sizing: border-box;
+}
+
+/* Safe Area Utilities */
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-left {
+  padding-left: env(safe-area-inset-left);
+}
+
+.safe-right {
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Glass morphism utilities */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-card-dark {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Shadow utilities */
+.shadow-glass {
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+.shadow-button {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-card {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Animation utilities */
+.animate-pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Typography improvements */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Layout utilities */
+.container-safe {
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+@media (min-width: 640px) {
+  .container-safe {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-safe {
+    max-width: 1200px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+/* Responsive text utilities */
+.text-responsive-xs {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.text-responsive-sm {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.text-responsive-base {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.text-responsive-lg {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.text-responsive-xl {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.text-responsive-2xl {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.text-responsive-3xl {
+  font-size: 30px;
+  line-height: 36px;
+}
+
+@media (min-width: 640px) {
+  .text-responsive-xs { font-size: 13px; line-height: 18px; }
+  .text-responsive-sm { font-size: 15px; line-height: 22px; }
+  .text-responsive-base { font-size: 17px; line-height: 26px; }
+  .text-responsive-lg { font-size: 19px; line-height: 30px; }
+  .text-responsive-xl { font-size: 22px; line-height: 30px; }
+  .text-responsive-2xl { font-size: 26px; line-height: 34px; }
+  .text-responsive-3xl { font-size: 32px; line-height: 38px; }
+}
+
+@media (min-width: 1024px) {
+  .text-responsive-xs { font-size: 14px; line-height: 20px; }
+  .text-responsive-sm { font-size: 16px; line-height: 24px; }
+  .text-responsive-base { font-size: 18px; line-height: 28px; }
+  .text-responsive-lg { font-size: 20px; line-height: 32px; }
+  .text-responsive-xl { font-size: 24px; line-height: 32px; }
+  .text-responsive-2xl { font-size: 28px; line-height: 36px; }
+  .text-responsive-3xl { font-size: 36px; line-height: 42px; }
+}

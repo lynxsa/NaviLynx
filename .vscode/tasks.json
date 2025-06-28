@@ -1,0 +1,22 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run NaviLynx Development Server",
+			"type": "shell",
+			"command": "npx expo start",
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": [
+				"$expo"
+			]
+		},
+		{
+			"label": "Expo EAS Build (Android & iOS)",
+			"type": "shell",
+			"command": "eas build --platform all",
+			"group": "build",
+			"isBackground": false
+		}
+	]
+}

@@ -1,0 +1,89 @@
+
+✅ Key Features to Build & Maintain:
+🌍 South African Focus:
+Use local venues (e.g., Sandton City, OR Tambo, Chris Hani Baragwanath, Canal Walk, Kruger National Park).
+
+Reflect South African culture, signage, and UX expectations.
+
+Currency: ZAR (R). Formats: +27 phone numbers, SA postal codes, real locations.
+
+🧭 App Screens:
+Home — Featured venues, categories (Hospitals, Malls, Parks, Airports), search bar, quick actions.
+
+AR Navigator — Live camera with AR waypoints, directional indicators, audio cues, haptics, and floor-based guidance.
+
+Parking Assistant — Save photo + GPS of car, add notes, extend parking time, calculate local parking rates.
+
+Profile — Theme switch, app stats, settings.
+
+Venue Details — Address, hours, emergency numbers, directions, call/email buttons.
+
+SplashScreen — Animated branding on load.
+
+Error Handling UI — Friendly messages, retry buttons, offline indicators.
+
+🧩 Components & Structure:
+components/GlassCard.tsx, Logo.tsx, SplashScreen.tsx
+
+constants/Theme.ts
+
+context/ThemeContext.tsx
+
+Tab + stack navigation (@react-navigation)
+
+app/(tabs)/[...].tsx, app/venue/[id].tsx, app/_layout.tsx
+
+📦 Required Dependencies (Install if missing):
+bash
+Copy
+Edit
+expo-camera
+expo-location
+expo-image-picker
+expo-gl
+expo-three
+three
+@types/three
+expo-linear-gradient
+expo-haptics
+expo-blur
+react-native-safe-area-context
+@react-navigation/native
+@react-navigation/bottom-tabs
+@react-navigation/stack
+react-native-reanimated
+📈 Features Still To Enhance:
+ Integrate real-time progress tracking in AR mode
+
+ Add audio guides and text-to-speech navigation
+
+ Refine AR waypoint accuracy (simulate floors & beacon-like transitions)
+
+ Add user review system for each venue
+
+ Add venue booking system (for salons, clinics, events)
+
+ Add “Find Nearest Help” feature (emergency/assistance)
+
+ Build offline cache + fallback states
+
+ Add local weather info (for outdoor venues)
+
+💡 Instructions to AI Assistant:
+Continue developing the app with:
+
+Clean and consistent architecture
+
+Local South African market logic
+
+AR enhancements and real-time interactivity
+
+Zero dependency errors
+
+All components in place and working
+
+Graceful permission and error handling throughout
+
+Cross-platform consistency (Android, iOS, Web)
+
+Let me know if any core features are missing or require a redesign for better UX.

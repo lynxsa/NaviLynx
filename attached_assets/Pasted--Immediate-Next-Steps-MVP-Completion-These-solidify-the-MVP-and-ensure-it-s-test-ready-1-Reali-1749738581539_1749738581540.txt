@@ -1,0 +1,82 @@
+✅ Immediate Next Steps (MVP Completion)
+These solidify the MVP and ensure it's test-ready:
+
+1. Realistic AR Navigation (Simulated)
+Improve AR anchors by integrating expo-ar or @react-native-arkit (iOS only).
+
+Create indoor map mockups (SVG or 3D) and overlay waypoint arrows logically.
+
+Simulate "You are here" dot with smooth interpolation.
+
+2. Venue Category Enhancements
+Different features per venue type:
+
+Hospitals: emergency exit routes, department directories
+
+Malls: store directory, Wi-Fi zones, restroom locations
+
+Airports: gate directions, baggage claim info
+
+Parks: picnic areas, restrooms, walking trails
+
+3. Polish User Flow
+Add onboarding carousel for first-time users.
+
+Track last visited venue and navigation history.
+
+Show a bottom sheet when scanning fails (with retry/help).
+
+🔜 Mid-Term Features (Pilot Ready)
+These get the app ready for a pilot launch or soft rollout:
+
+4. Firebase/Backend Integration
+Store venue data, user favorites, AR routes on Firebase Firestore.
+
+Use Firebase Storage for image assets (e.g., parking photos).
+
+Track user sessions anonymously for analytics.
+
+5. Admin Portal (CMS)
+Build a basic web portal (Next.js) to:
+
+Add/edit venues
+
+Manage AR routes and tags
+
+Upload floor maps
+
+Moderate user reviews
+
+6. Push Notifications
+Add expo-notifications for parking time alerts and venue-specific announcements.
+
+🚀 Long-Term Features (Post-MVP & Monetization)
+These are powerful additions once your MVP is stable:
+
+7. Crowdsourced Navigation
+Let users mark facilities (e.g., elevators, water coolers) and review them.
+
+Give users points or badges for contributions.
+
+8. Monetization
+Venue subscription: Offer a paid tier for detailed analytics & branding.
+
+Ad placements: Venue-specific ads in the Home or AR view.
+
+Premium user accounts: Offline navigation, multi-venue routing, etc.
+
+9. Advanced Indoor Positioning
+When you're ready for real-world indoor navigation:
+
+Investigate BLE beacons (e.g., Estimote or Kontakt.io)
+
+Use Wi-Fi RTT (on Android)
+
+Consider Apple Indoor Maps (for iOS public buildings)
+
+🔧 Technical Maintenance
+Add unit tests (with jest-expo)
+
+CI/CD pipeline with GitHub Actions + EAS Deploy
+
+Monitor crashes with Sentry or Firebase Crashlytics

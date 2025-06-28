@@ -1,0 +1,115 @@
+Here is an improved and comprehensive version of your prompt that you can use internally or with a dev team to clearly describe the next phase of work for your **NaviLynx app**:
+
+---
+
+### ✅ **Improved Development Prompt for NaviLynx Enhancement**
+
+---
+
+**Objective:**
+Complete the NaviLynx app by integrating, fixing, and activating all core features. Ensure the codebase is clean, all components are live, error-handled, and that the app is fully functional across authentication, navigation, and venue services.
+
+---
+
+### 🛠️ **Tasks to Perform**
+
+#### 1. 🔧 **Code Cleanup & Error Handling**
+
+* Inspect all files for syntax errors, unused variables, and broken imports
+* Wrap all asynchronous functions with `try/catch` blocks
+* Add fallback UI where data might fail to load (e.g., empty states or error messages)
+* Console errors should be silenced in production
+
+#### 2. 🔗 **Component Integration**
+
+* Ensure all screen components are imported and **used in navigation stacks**
+* Link all components to their corresponding **services and hooks**
+
+  * Venue listing → `venueService.js`
+  * Auth flow → `authService.js`
+  * User insights → `userInsightService.js`
+* Activate any inactive components (e.g., buttons, forms, pages)
+
+#### 3. 🧭 **Navigation & Page Connectivity**
+
+* Use `React Navigation` with:
+
+  * **Stack Navigation** for authentication/onboarding flow
+  * **Bottom Tab Navigation** for main app pages
+* All pages should connect seamlessly:
+
+  ```
+  Splash → Login/Signup → Onboarding → Home → Venue Categories → Venue Detail → Indoor Navigation
+  ```
+
+#### 4. 🧍 **Signup + Onboarding Enhancements**
+
+* Collect the following data for user insights:
+
+  * Full Name
+  * Email
+  * Password
+  * Phone Number
+  * **Date of Birth**
+  * Gender
+  * Suburb/Location
+  * Shopping Preferences (multi-select)
+  * Frequently Visited Venues (optional)
+* Save this data to local state (and eventually API-ready format)
+
+#### 5. 🗺️ **Venue Categorization (with South African Examples)**
+
+```js
+// Example structure
+{
+  category: 'Hospitals',
+  venues: [
+    { name: 'Tembisa Hospital', image: 'placeholder.jpg' },
+    { name: 'Netcare Milpark Hospital' },
+    ...
+  ]
+}
+```
+
+**Venue Categories:**
+
+* 🛍 Shopping Malls
+* ✈️ Airports
+* 🏥 Hospitals (incl. Tembisa Hospital)
+* 🏫 Schools & Universities (incl. Ivory Park High School)
+* 🏢 Convention/Event Centres
+
+Add image placeholders for each venue. Use flat list components for rendering.
+
+#### 6. 🧪 **Feature Activation**
+
+Ensure all key features are implemented and working:
+
+* Indoor navigation screen with dummy route simulation
+* Venue detail pages pulling data from service
+* Personalized suggestions based on DOB/interests
+* Tab for “Nearby Venues” (based on mock location)
+* User onboarding flow conditionally shown only once
+
+#### 7. 🧼 **Final Quality Checks**
+
+* Check all forms for validation (email, password, required fields)
+* Ensure there are no broken links/screens
+* Optimize images and remove any placeholder test code
+* Ensure app works on both iOS and Android simulators
+
+---
+
+### ✅ Expected Result
+
+A fully working, clean, and connected NaviLynx app with:
+
+* A robust signup and onboarding process
+* Connected venue browsing and indoor navigation
+* Proper error handling
+* Components all active and utilized
+* Ready for admin dashboard integration in a future phase
+
+---
+
+Would you like me to start implementing this now by scaffolding a few updated files (like `SignupScreen.js`, `VenueService.js`, and `AppNavigator.js`), or are you planning to use this prompt with your team? Let me know how hands-on you’d like my help from here.

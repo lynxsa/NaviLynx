@@ -1,0 +1,105 @@
+Perfect — here's the plan for enhancing your **existing NaviLynx app** with the requested changes:
+
+---
+
+### ✅ ENHANCEMENT PLAN
+
+#### 1. 🔐 **Authentication & Onboarding Flow**
+
+**Signup Form Fields (for insights & targeting):**
+
+* Full Name
+* Email
+* Password
+* Phone Number
+* **Date of Birth**
+* Gender
+* Home Location/Suburb
+* Preferred Shopping Interests (Fashion, Food, Electronics, etc.) – multi-select
+* Frequently Visited Venues – optional
+
+> ✅ This will help store-side analytics and future admin dashboard features.
+
+---
+
+#### 2. 🏥 **Venue Categorization (with new additions)**
+
+**🛍 Shopping Malls**
+
+* Rosebank Mall
+* Sandton City
+* Menlyn Park
+* Gateway Theatre of Shopping
+* Mall of Africa
+
+**✈️ Airports**
+
+* OR Tambo International
+* Cape Town International
+* King Shaka International
+
+**🏥 Hospitals**
+
+* Netcare Milpark Hospital
+* Groote Schuur Hospital
+* **Tembisa Hospital**
+
+**🏫 Schools & Universities**
+
+* University of Witwatersrand (Wits)
+* University of Cape Town (UCT)
+* **Ivory Park High School**
+* University of Pretoria
+* Stellenbosch University
+
+**🏢 Convention / Event Venues**
+
+* Gallagher Convention Centre
+* Cape Town International Convention Centre (CTICC)
+
+---
+
+#### 3. 🔗 Page Linking & Services
+
+* Use `React Navigation` with Stack & Tab Navigators
+* Pages interconnected:
+
+  * Home > Venue Category > Venue Detail > Store Navigator
+* All hooks like `useNavigation`, `useContext`, and `useEffect` used properly
+* Dummy data served from services (e.g., `venueService.js`, `userService.js`)
+
+---
+
+#### 4. 🖼️ UI Enhancements
+
+* Venue cards with placeholder image slots (can update later)
+* Personalization suggestions based on signup info (e.g., “Fashion stores trending for 18–25s”)
+
+---
+
+#### 5. 🧪 Error Handling & Debugging
+
+* Validate all form fields
+* Fallback handling for services
+* Try-catch in hooks
+* UI messages for failed fetches or invalid nav routes
+
+---
+
+### ✅ Next Step
+
+Please share your **current code base** or key components like:
+
+* `App.js`
+* `navigation` folder
+* `screens` or `pages`
+* `services` or `api` logic
+
+Once I have that, I’ll:
+
+1. Integrate the enhanced signup & onboarding.
+2. Plug in the new venue categories.
+3. Clean up and ensure error-free navigation & hook usage.
+4. Return the improved version or walk you through patching it yourself.
+
+Want me to scaffold a snippet of the signup form or venue category structure now to get started?

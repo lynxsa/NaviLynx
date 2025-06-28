@@ -1,0 +1,24 @@
+Generate the basic file structure for a React Native Expo app named 'NaviLynx' with folders for 'screens', 'components', 'navigation', 'constants', and 'context'.
+Create the main App.js file for the NaviLynx app using React Navigation v6, setting up a Stack Navigator and a Bottom Tab Navigator with tabs for Home, AR Navigator, Parking, and Profile. Include placeholder screens for each.
+Design a professional React Native SplashScreen component. It should show a 'NaviLynx' text logo that fades in and out, a subtle progress bar, and display a loading message. Ensure it works well with Expo's splash screen.
+Provide a React Native component for a transparent, fixed top navigation bar. It needs to be responsive, include a brand logo, a mobile menu icon, a theme toggle, and search/user icons. Use 'react-native-safe-area-context'.
+Create a reusable 'GlassCard' React Native component. It should have a slightly transparent background with a blur effect (use expo-blur), rounded corners, and a subtle drop shadow for depth. It should accept children props.
+Write the code for a React Native context provider named 'ThemeContext' that manages light and dark themes. It should detect the system's preferred theme and include a function to manually toggle the theme. Store theme colors in a 'Colors.js' constant.
+Core Features (Prioritize what investors will want to see):
+
+Develop a 'HomeScreen' for the NaviLynx app. It should feature a large hero section with a search bar overlay, followed by horizontal scrollable sections for 'Featured Venues' and 'Latest News'. Add dummy data for now.
+Create a 'ParkingScreen' in React Native that allows users to capture a photo of their parking spot (using expo-image-picker), get their current GPS location (using expo-location), and add a text note. Include buttons for these actions.
+Show me how to integrate Firebase Authentication (email/password) into a React Native Expo app. Provide a Login and Signup form on a single screen, handling user state and navigation upon successful authentication.
+Write a React Native screen ('VenueDetailsScreen') that displays detailed information about a venue. It should include a photo gallery, a description, and interactive cards for categories like 'Stores', 'Restaurants', and 'Restrooms'.
+AR Experience (Crucial for investor demo - start simple, make it visually appealing):
+
+Generate a basic 'ARNavigatorScreen' in React Native Expo. This screen should display the live camera feed using 'expo-camera'. Add a simple overlay UI with a placeholder 'Settings' button and 'Exit AR' button.
+Integrate 'expo-gl' and 'expo-three' into the 'ARNavigatorScreen'. Show how to render a basic 3D cube fixed in space relative to the camera, to demonstrate AR capabilities. Include necessary permissions.
+`Provide a conceptual React Native code structure for how a simple indoor AR waypoint system could work:
+User starts at a known marker (e.g., a scanned QR code).
+The app calculates a path to a destination (using dummy path data).
+Simple 3D arrows are rendered on the camera feed to guide the user along the path. Focus on the AR overlay rendering part, assuming positioning data is available.`
+Final Polish (for the demo):
+
+Show how to add subtle animations to button presses and screen transitions in React Native to make the UI feel more polished.
+Provide example usage of accessibility props like 'accessibilityLabel' and 'accessibilityRole' for common React Native UI elements (buttons, text inputs) on the 'HomeScreen'.

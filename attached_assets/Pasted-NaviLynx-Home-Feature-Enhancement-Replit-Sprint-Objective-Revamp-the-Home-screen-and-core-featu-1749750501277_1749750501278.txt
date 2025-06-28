@@ -1,0 +1,113 @@
+NaviLynx Home & Feature Enhancement (Replit Sprint)
+Objective:
+Revamp the Home screen and core features to maximize user engagement, enrich AR/object-recognition, introduce multi-language voice guidance, and add a venue-based group chat—while keeping everything performant and visually compelling.
+
+🎨 1. Home Page Redesign
+Dynamic Hero Banners
+
+Full-width, swipeable promo slides (e.g. “Summer Sale at Rosebank Mall”)
+
+Auto-rotate with manual swipe controls
+
+Clickable CTAs linking to featured venue pages
+
+“Smart” Venue Highlights
+
+Top 3–5 trending venues based on user profile & time of day
+
+Carousel cards with placeholder images & category badges
+
+Quick-Access Tiles
+
+One-tap icons for “Nearby,” “Favorites,” “New Stores,” “Events”
+
+Show notification badges for unread group-chat updates
+
+Performance
+
+Lazy-load images & code-split heavy modules
+
+Ensure 60 fps swipe and scroll
+
+🗂️ 2. Enhanced Venue Categories
+Category Grid
+
+Collapsible sections (e.g. Hospitals, Malls, Schools, Airports, Events)
+
+Each category header shows count + “See All” link
+
+Venue Cards
+
+Placeholder image slot (e.g. <ImagePlaceholder />)
+
+Name, icon, distance, mini “Join Chat” button
+
+🔍 3. Object Recognition & AR
+Camera View Improvements
+
+Overlay “Tap to identify” hotspots on store signage
+
+Real-time bounding boxes + labels
+
+AR Navigation
+
+Floor-plan overlay + arrow guidance
+
+Auto-recalibrate when user turns/crosses corridors
+
+💬 4. Venue-Based Group Chat
+Chat Hub
+
+“Chat Rooms” tab on Home
+
+Auto-subscribe to room for each venue you visit
+
+Features
+
+Text, emoji, image sharing
+
+“Announcements” pinned messages (for mall admins)
+
+Unread-count badges, mention notifications
+
+🌐 5. Multi-Language Voice & Directions
+Voice-Over Prompts
+
+Text-to-speech guidance (“Turn left in 10 m”)
+
+Support: English (default), Zulu, Afrikaans, Xhosa, Tsonga, plus two more top-6 languages
+
+Language Settings
+
+In-app language switcher
+
+Auto-detect from device locale on first launch
+
+✨ 6. Other “Nice-to-Haves”
+Personalized Recommendations
+
+“Because you’re 25–34 and love food…”
+
+Dark Mode
+
+Toggle in settings + system-theme sync
+
+Push-Notification Previews
+
+“New event at Sandton City, 30 min away”
+
+✅ Development Checklist
+ Scaffold redesigned Home UI (banners + smart tiles)
+
+ Implement collapsible category grid + placeholder images
+
+ Hook up object-recognition service & AR-overlay module
+
+ Build chat rooms with venue subscription logic
+
+ Integrate TTS voice prompts for top 6 languages
+
+ Profile-driven personalization & lazy loading
+
+ QA on both iOS & Android emulators
+

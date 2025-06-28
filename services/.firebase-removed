@@ -1,0 +1,3 @@
+// This file has been removed - Firebase is no longer used in NaviLynx
+// Authentication is now handled by custom AsyncStorage-based system
+// See context/AuthContext.tsx for the new authentication implementation
