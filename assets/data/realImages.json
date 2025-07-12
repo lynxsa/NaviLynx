@@ -1,0 +1,127 @@
+{
+  "venues": {
+    "sandton_city": {
+      "name": "Sandton City",
+      "hero": "https://images.unsplash.com/photo-1555636222-cae831e670b3?w=800&h=600&fit=crop&crop=center",
+      "thumbnail": "https://images.unsplash.com/photo-1555636222-cae831e670b3?w=400&h=300&fit=crop&crop=center",
+      "gallery": [
+        "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?w=400&h=300&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=300&fit=crop&crop=center"
+      ]
+    },
+    "or_tambo": {
+      "name": "OR Tambo International Airport",
+      "hero": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&h=600&fit=crop&crop=center",
+      "thumbnail": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop&crop=center"
+    },
+    "nelson_mandela_square": {
+      "name": "Nelson Mandela Square",
+      "hero": "https://images.unsplash.com/photo-1542295669297-4d352b042bca?w=800&h=600&fit=crop&crop=center",
+      "thumbnail": "https://images.unsplash.com/photo-1542295669297-4d352b042bca?w=400&h=300&fit=crop&crop=center"
+    },
+    "menlyn_park": {
+      "name": "Menlyn Park Shopping Centre",
+      "hero": "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?w=800&h=600&fit=crop&crop=center",
+      "thumbnail": "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?w=400&h=300&fit=crop&crop=center"
+    },
+    "gateway_durban": {
+      "name": "Gateway Theatre of Shopping",
+      "hero": "https://images.unsplash.com/photo-1555636222-cae831e670b3?w=800&h=600&fit=crop&crop=center",
+      "thumbnail": "https://images.unsplash.com/photo-1555636222-cae831e670b3?w=400&h=300&fit=crop&crop=center"
+    }
+  },
+  "categories": {
+    "shopping": {
+      "name": "Shopping Malls",
+      "image": "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?w=400&h=400&fit=crop&crop=center",
+      "icon": "bag"
+    },
+    "dining": {
+      "name": "Restaurants",
+      "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=400&fit=crop&crop=center",
+      "icon": "utensils"
+    },
+    "entertainment": {
+      "name": "Entertainment",
+      "image": "https://images.unsplash.com/photo-1489599611833-7aafae9ee391?w=400&h=400&fit=crop&crop=center",
+      "icon": "film"
+    },
+    "medical": {
+      "name": "Medical Centers",
+      "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=400&fit=crop&crop=center",
+      "icon": "heart"
+    },
+    "transport": {
+      "name": "Transport Hubs",
+      "image": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=400&fit=crop&crop=center",
+      "icon": "plane"
+    },
+    "education": {
+      "name": "Universities",
+      "image": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=400&fit=crop&crop=center",
+      "icon": "book"
+    }
+  },
+  "deals": [
+    {
+      "id": "1",
+      "title": "Summer Fashion Sale",
+      "discount": "50",
+      "image": "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=400&h=200&fit=crop&crop=center",
+      "venue": "Sandton City"
+    },
+    {
+      "id": "2", 
+      "title": "Electronics Mega Deal",
+      "discount": "30",
+      "image": "https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=400&h=200&fit=crop&crop=center",
+      "venue": "Menlyn Park"
+    },
+    {
+      "id": "3",
+      "title": "Restaurant Week Special",
+      "discount": "25",
+      "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=200&fit=crop&crop=center",
+      "venue": "Nelson Mandela Square"
+    }
+  ],
+  "banners": [
+    {
+      "id": "1",
+      "title": "Discover Sandton",
+      "subtitle": "Premium shopping experience",
+      "image": "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?w=800&h=400&fit=crop&crop=center",
+      "cta": "Explore Now"
+    },
+    {
+      "id": "2",
+      "title": "Airport Navigation",
+      "subtitle": "Never get lost again",
+      "image": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&h=400&fit=crop&crop=center",
+      "cta": "Get Directions"
+    },
+    {
+      "id": "3",
+      "title": "Local Events",
+      "subtitle": "What's happening nearby",
+      "image": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&h=400&fit=crop&crop=center",
+      "cta": "View Events"
+    }
+  ],
+  "events": [
+    {
+      "id": "1",
+      "title": "Jazz in the Square",
+      "venue": "Nelson Mandela Square",
+      "date": "2025-07-15",
+      "image": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop&crop=center"
+    },
+    {
+      "id": "2",
+      "title": "Fashion Week Showcase",
+      "venue": "Sandton City",
+      "date": "2025-07-20",
+      "image": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&h=300&fit=crop&crop=center"
+    }
+  ]
+}
