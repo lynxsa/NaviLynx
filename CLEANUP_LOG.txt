@@ -1,0 +1,7 @@
+Cleanup started: Removing legacy screens and components not part of the new NaviLynx architecture.
+
+- app/(tabs)/: Will keep only navigation stubs.
+- app/chat/ and app/venue/: Will be removed.
+- components/: Will keep only navigation, UI primitives, and new architecture stubs.
+
+Scaffolding of new architecture will follow after cleanup.
