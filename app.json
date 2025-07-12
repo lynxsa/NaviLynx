@@ -1,0 +1,204 @@
+{
+  "expo": {
+    "name": "NaviLynx",
+    "slug": "navilynx",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "navilynx",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": false,
+    "privacy": "public",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "description": "AI-powered indoor navigation for South African venues with AR features, local payments, and load shedding alerts",
+    "githubUrl": "https://github.com/your-org/navilynx",
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#6366F1"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.navilynx.app",
+      "buildNumber": "1",
+      "deploymentTarget": "13.0",
+      "requireFullScreen": false,
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "infoPlist": {
+        "NSCameraUsageDescription": "NaviLynx needs camera access for AR navigation and smart shopping features",
+        "NSLocationWhenInUseUsageDescription": "NaviLynx needs location access for navigation, parking, and load shedding alerts",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "NaviLynx needs location access for navigation, parking, and load shedding alerts",
+        "NSMicrophoneUsageDescription": "NaviLynx uses microphone for voice commands during navigation",
+        "NSMotionUsageDescription": "NaviLynx uses device motion for enhanced AR navigation",
+        "NSContactsUsageDescription": "NaviLynx can access contacts to share locations with family and friends",
+        "NSCalendarsUsageDescription": "NaviLynx can access calendar to integrate with your appointments",
+        "NSPhotoLibraryUsageDescription": "NaviLynx can save parking photos and shopping images to your photo library",
+        "NSBluetoothAlwaysUsageDescription": "NaviLynx uses Bluetooth for enhanced indoor positioning",
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLName": "navilynx",
+            "CFBundleURLSchemes": [
+              "navilynx"
+            ]
+          }
+        ]
+      },
+      "associatedDomains": [
+        "applinks:navilynx.com",
+        "applinks:www.navilynx.com"
+      ]
+    },
+    "android": {
+      "package": "com.navilynx.app",
+      "versionCode": 1,
+      "compileSdkVersion": 34,
+      "targetSdkVersion": 34,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#6366F1"
+      },
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_BACKGROUND_LOCATION",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.VIBRATE",
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.ACCESS_WIFI_STATE",
+        "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_ADMIN",
+        "android.permission.READ_CONTACTS",
+        "android.permission.READ_CALENDAR",
+        "android.permission.WAKE_LOCK"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "navilynx.com"
+            },
+            {
+              "scheme": "https",
+              "host": "www.navilynx.com"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png",
+      "name": "NaviLynx - Indoor Navigation",
+      "shortName": "NaviLynx",
+      "lang": "en",
+      "scope": "/",
+      "themeColor": "#6366F1",
+      "backgroundColor": "#ffffff",
+      "display": "standalone",
+      "orientation": "portrait",
+      "dir": "ltr",
+      "preferRelatedApplications": true,
+      "relatedApplications": [
+        {
+          "platform": "play",
+          "url": "https://play.google.com/store/apps/details?id=com.navilynx.app",
+          "id": "com.navilynx.app"
+        },
+        {
+          "platform": "itunes",
+          "url": "https://apps.apple.com/app/navilynx/id123456789"
+        }
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#6366F1"
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow NaviLynx to access your camera for AR navigation and smart shopping features.",
+          "microphonePermission": "Allow NaviLynx to access your microphone for voice commands."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow NaviLynx to use your location for navigation, parking, and load shedding alerts.",
+          "isIosBackgroundLocationEnabled": true,
+          "isAndroidBackgroundLocationEnabled": true
+        }
+      ],
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "Allow NaviLynx to access device motion for enhanced AR navigation."
+        }
+      ],
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "Allow NaviLynx to access contacts to share locations with family and friends."
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/SpaceMono-Regular.ttf"
+          ]
+        }
+      ],
+      "expo-localization",
+      "expo-web-browser"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": false
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "6881e0fe-9a71-4fa6-ad3a-4e7472721ec9"
+      }
+    },
+    "owner": "lynx.consulting",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/6881e0fe-9a71-4fa6-ad3a-4e7472721ec9"
+    }
+  }
+}
