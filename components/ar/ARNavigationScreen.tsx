@@ -61,29 +61,10 @@ export default function ARNavigationScreen({
   const [currentInstruction, setCurrentInstruction] = useState('');
   const [remainingDistance, setRemainingDistance] = useState(0);
   
-  // Enhanced Navigation State
-  const [currentStep, setCurrentStep] = useState(1);
-  const [totalSteps] = useState(5);
-  const [estimatedTime, setEstimatedTime] = useState('3 min');
-  const [currentFloor, setCurrentFloor] = useState(1);
-  const [nextDirection, setNextDirection] = useState<'straight' | 'left' | 'right' | 'up' | 'down'>('straight');
-  const [confidence, setConfidence] = useState(0.85);
-  const [signalStrength, setSignalStrength] = useState(4);
-  const [showHint, setShowHint] = useState(false);
-  
-  // UI Enhancement State
-  const [showInstructions, setShowInstructions] = useState(true);
-  const [isMinimized, setIsMinimized] = useState(false);
-  const [showCompass, setShowCompass] = useState(true);
-  const [arMode, setArMode] = useState<'enhanced' | 'basic'>('enhanced');
-  
   // Animation refs
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const arrowRotation = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(0)).current;
-  const glowAnim = useRef(new Animated.Value(0)).current;
-  const progressAnim = useRef(new Animated.Value(0)).current;
   
   // Three.js refs
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -350,7 +331,7 @@ export default function ARNavigationScreen({
     setArWaypoints(currentWaypoints);
 
     // Create new waypoint meshes
-    currentWaypoints.forEach(waypoint => {
+    currentWaypoints.forEach((waypoint: ARWaypoint) => {
       if (!waypoint.visible) return;
 
       let geometry: THREE.BufferGeometry;

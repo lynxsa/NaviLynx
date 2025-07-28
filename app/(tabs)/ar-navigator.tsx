@@ -23,6 +23,9 @@ import {
 import MapView, { Marker, Polyline, Region } from 'react-native-maps';
 import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
+import ARCameraView from '../../components/ar/CameraFeed/ARCameraView';
+import ARNavigationOverlay from '../../components/ar/Overlays/ARNavigationOverlay';
+import ARNavigationScreen from '../../components/ar/ARNavigationScreen';
 
 // Internal imports
 import { useTheme } from '../../context/ThemeContext';
@@ -30,20 +33,32 @@ import { IconSymbol } from '../../components/ui/IconSymbol';
 import { colors, spacing, borderRadius } from '../../styles/modernTheme';
 import { LocationService } from '../../services/LocationService';
 import { NavigationService } from '../../services/NavigationService';
-import { EnhancedVenueService } from '../../services/EnhancedVenueService';
 import { southAfricanVenues, Venue } from '../../data/southAfricanVenues';
 
 // Type definitions
 interface VenueWithDistance extends Venue {
   distance: number;
+  distanceText?: string;
+  internalAreas?: InternalArea[];
+  arSupported?: boolean;
 }
 
+interface InternalArea {
+  id: string;
+  name: string;
+  coordinates: { x: number; y: number; floor: number };
+  type: 'entrance' | 'checkpoint' | 'destination' | 'amenity';
+  venueId: string;
+  location?: any;
+  beaconId?: string;
+  realWorldCoordinates?: { latitude: number; longitude: number };
+  category?: string;
+  estimatedWalkTime?: number;
+  openingHours?: string;
+}
+
+
 // Enhanced AR imports (inspired by ViroReact and MapBox AR best practices)
-// import { EnhancedARNavigationService, ARMarker, NavigationState, ARCapabilities } from '../../services/EnhancedARNavigationService';
-// import EnhancedAROverlay from '../../components/ar/EnhancedAROverlay';
-import ARCameraView from '../../components/ar/CameraFeed/ARCameraView';
-import ARNavigationOverlay from '../../components/ar/Overlays/ARNavigationOverlay';
-import ARNavigationScreen from '../../components/ar/ARNavigationScreen';
 
 // Constants for string comparisons (to avoid ESLint text warnings)
 const NAVIGATION_MODES = {
@@ -57,6 +72,63 @@ const VENUE_NAMES = [
   'Gateway Theatre',
   'V&A Waterfront'
 ] as const;
+
+// Internal areas mapping for venues
+const INTERNAL_AREAS_MAP: Record<string, InternalArea[]> = {
+  'sandton-city': [
+    {
+      id: 'sc-entrance-1',
+      name: 'Main Entrance',
+      coordinates: { x: 0, y: 0, floor: 0 },
+      type: 'entrance',
+      venueId: 'sandton-city',
+      category: 'entrance',
+      estimatedWalkTime: 0
+    },
+    {
+      id: 'sc-food-court',
+      name: 'Food Court',
+      coordinates: { x: 100, y: 50, floor: 1 },
+      type: 'destination',
+      venueId: 'sandton-city',
+      category: 'dining',
+      estimatedWalkTime: 5
+    }
+  ],
+  'canal-walk': [
+    {
+      id: 'cw-entrance-1',
+      name: 'West Entrance',
+      coordinates: { x: 0, y: 0, floor: 0 },
+      type: 'entrance',
+      venueId: 'canal-walk',
+      category: 'entrance',
+      estimatedWalkTime: 0
+    }
+  ],
+  'gateway-theatre': [
+    {
+      id: 'gt-entrance-1',
+      name: 'Main Entrance',
+      coordinates: { x: 0, y: 0, floor: 0 },
+      type: 'entrance',
+      venueId: 'gateway-theatre',
+      category: 'entrance',
+      estimatedWalkTime: 0
+    }
+  ],
+  'va-waterfront': [
+    {
+      id: 'va-entrance-1',
+      name: 'Clock Tower Entrance',
+      coordinates: { x: 0, y: 0, floor: 0 },
+      type: 'entrance',
+      venueId: 'va-waterfront',
+      category: 'entrance',
+      estimatedWalkTime: 0
+    }
+  ]
+};
 
 // Enhanced Types for structured flow
 interface UserLocation {
@@ -210,8 +282,8 @@ export default function ARNavigatorEnhanced() {
   const analyzeUserLocation = useCallback(async (userLoc: UserLocation) => {
     try {
       // Initialize venue navigation service if not already done
-      await venueNavigationService.initialize();
-      const venues = await venueNavigationService.getEnhancedVenues(50); // 50km radius
+      await navigationService.current.initialize();
+      const venues = await navigationService.current.getEnhancedVenues(50); // 50km radius
       
       let isAtVenue = false;
       let detectedVenue: VenueWithDistance | null = null;
@@ -423,8 +495,8 @@ export default function ARNavigatorEnhanced() {
   // Load all venues for manual selection
   const loadAllVenues = useCallback(async () => {
     try {
-      await venueNavigationService.initialize();
-      const venues = await venueNavigationService.getEnhancedVenues(100); // Wider radius
+      await navigationService.current.initialize();
+      const venues = await navigationService.current.getEnhancedVenues(100); // Wider radius
       setNearbyVenues(venues);
       setShowVenueModal(true);
     } catch (error) {
@@ -458,7 +530,17 @@ export default function ARNavigatorEnhanced() {
           };
           
           setUserLocation(userLoc);
-          setSelectedVenue(mallVenue);
+          
+          // Add distance property to venue
+          const venueWithDistance: VenueWithDistance = {
+            ...mallVenue,
+            distance: 0, // User is at the venue
+            distanceText: 'At location',
+            internalAreas: INTERNAL_AREAS_MAP[mallVenue.id] || [],
+            arSupported: true
+          };
+          
+          setSelectedVenue(venueWithDistance);
           setShowLocationEntry(false);
           setPhase('internal_area_selection');
           setShowInternalAreaModal(true);
@@ -559,7 +641,7 @@ export default function ARNavigatorEnhanced() {
       console.error('Failed to load venues:', error);
       Alert.alert('Error', 'Failed to load nearby venues. Please try again.');
     }
-  }, [userLocation]);
+  }, [userLocation, calculateDistance]);
 
   const rejectLocationAndRetry = useCallback(() => {
     setUserLocation(null);
@@ -601,7 +683,12 @@ export default function ARNavigatorEnhanced() {
       
       console.log('🗺️ Calculating enhanced route from user location to specific store');
       console.log('📍 From:', userLocation.latitude, userLocation.longitude);
-      console.log('📍 To:', targetCoordinates.latitude, targetCoordinates.longitude);
+      
+      if (targetCoordinates && typeof targetCoordinates === 'object' && 'latitude' in targetCoordinates) {
+        console.log('📍 To:', targetCoordinates.latitude, targetCoordinates.longitude);
+      } else {
+        console.log('📍 To: Using venue coordinates');
+      }
       console.log('🏪 Store Details:', {
         name: area.name,
         category: area.category,
@@ -611,9 +698,13 @@ export default function ARNavigatorEnhanced() {
       });
 
       // Calculate route using Google Maps with enhanced routing
+      const finalTargetCoordinates = targetCoordinates && typeof targetCoordinates === 'object' && 'latitude' in targetCoordinates 
+        ? targetCoordinates 
+        : selectedVenue.location.coordinates;
+        
       const route = await navigationService.current.calculateAdvancedRoute(
         { latitude: userLocation.latitude, longitude: userLocation.longitude },
-        targetCoordinates,
+        finalTargetCoordinates,
         {
           mode: 'walking',
           avoidTolls: true,
@@ -676,10 +767,10 @@ export default function ARNavigatorEnhanced() {
     const entranceArea: InternalArea = {
       id: 'entrance',
       name: `${selectedVenue?.name || 'Venue'} Main Entrance`,
-      type: 'Service',
-      icon: 'building.2',
-      location: { floor: 1, x: 0, y: 0 },
-      tags: ['entrance', 'main'],
+      coordinates: { x: 0, y: 0, floor: 1 },
+      type: 'entrance',
+      venueId: selectedVenue?.id || 'unknown',
+      category: 'entrance',
       estimatedWalkTime: 30,
     };
     handleInternalAreaSelect(entranceArea);
@@ -1284,9 +1375,9 @@ export default function ARNavigatorEnhanced() {
                   </Text>
                   <View style={styles.venueDetails}>
                     <Text style={[styles.venueType, { color: colors.primary }]}>
-                      {venue.type.charAt(0).toUpperCase() + venue.type.slice(1)} • {venue.distanceText}
+                      {venue.type.charAt(0).toUpperCase() + venue.type.slice(1)} • {venue.distance.toFixed(1)}km
                     </Text>
-                    {venue.internalAreas.length > 0 && (
+                    {venue.internalAreas && venue.internalAreas.length > 0 && (
                       <Text style={[styles.venueStores, { color: isDark ? '#AAAAAA' : '#888888' }]}>
                         {venue.internalAreas.length} stores & services{venue.arSupported ? ' • AR Ready' : ''}
                       </Text>
@@ -1721,7 +1812,7 @@ export default function ARNavigatorEnhanced() {
               Walking to {selectedVenue.name}
             </Text>
             <Text style={[styles.navigationSubtitle, { color: isDark ? '#CCCCCC' : '#666666' }]}>
-              Follow the blue route • {selectedVenue.distanceText}
+              Follow the blue route • {selectedVenue.distance.toFixed(1)}km
             </Text>
           </View>
         )}
@@ -1815,18 +1906,69 @@ export default function ARNavigatorEnhanced() {
       {renderIndoorPrompt()}
       
       {/* Internal Area Selection Modal */}
-      <InternalAreaSelection
+      <Modal
         visible={showInternalAreaModal}
-        venue={selectedVenue}
-        onClose={() => {
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => {
           console.log('📱 InternalAreaSelection onClose called');
           setShowInternalAreaModal(false);
           setPhase('venue_selection');
           setShowVenueModal(true);
         }}
-        onAreaSelect={handleInternalAreaSelect}
-        onSkipInternalNav={handleSkipInternalAreaSelection}
-      />
+      >
+        <SafeAreaView style={[styles.modalContainer, { backgroundColor: isDark ? '#1a1a1a' : '#ffffff' }]}>
+          <View style={styles.modalHeader}>
+            <TouchableOpacity 
+              style={styles.closeButton}
+              onPress={() => {
+                setShowInternalAreaModal(false);
+                setPhase('venue_selection');
+                setShowVenueModal(true);
+              }}
+            >
+              <IconSymbol name="xmark" size={24} color={isDark ? '#ffffff' : '#000000'} />
+            </TouchableOpacity>
+            <Text style={[styles.modalTitle, { color: isDark ? '#ffffff' : '#000000' }]}>
+              Select Destination
+            </Text>
+            <TouchableOpacity 
+              style={styles.skipButton}
+              onPress={handleSkipInternalAreaSelection}
+            >
+              <Text style={[styles.skipButtonText, { color: colors.primary }]}>Skip</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <ScrollView style={styles.modalContent}>
+            {selectedVenue?.internalAreas && selectedVenue.internalAreas.length > 0 ? (
+              selectedVenue.internalAreas.map((area) => (
+                <TouchableOpacity
+                  key={area.id}
+                  style={[styles.areaItem, { backgroundColor: isDark ? '#2a2a2a' : '#f5f5f5' }]}
+                  onPress={() => handleInternalAreaSelect(area)}
+                >
+                  <View style={styles.areaInfo}>
+                    <Text style={[styles.areaName, { color: isDark ? '#ffffff' : '#000000' }]}>
+                      {area.name}
+                    </Text>
+                    <Text style={[styles.areaType, { color: isDark ? '#cccccc' : '#666666' }]}>
+                      {area.type.charAt(0).toUpperCase() + area.type.slice(1)}
+                    </Text>
+                  </View>
+                  <IconSymbol name="chevron.right" size={16} color={isDark ? '#666666' : '#999999'} />
+                </TouchableOpacity>
+              ))
+            ) : (
+              <View style={styles.emptyState}>
+                <Text style={[styles.emptyStateText, { color: isDark ? '#cccccc' : '#666666' }]}>
+                  No internal areas available for this venue
+                </Text>
+              </View>
+            )}
+          </ScrollView>
+        </SafeAreaView>
+      </Modal>
       
       {/* Debug Information */}
       {__DEV__ && (
@@ -3473,6 +3615,50 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 12,
     borderRadius: 8,
+  },
+
+
+
+
+
+  skipButton: {
+    padding: 8,
+  },
+  skipButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+  areaItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 12,
+  },
+  areaInfo: {
+    flex: 1,
+  },
+  areaName: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  areaType: {
+    fontSize: 14,
+  },
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 40,
+  },
+  emptyStateText: {
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  compactInput: {
     borderWidth: 1,
     fontSize: 14,
     paddingRight: 40,

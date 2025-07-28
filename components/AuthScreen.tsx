@@ -588,17 +588,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
   },
-  demoButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    borderRadius: 8,
-    marginTop: 12,
-  },
-  demoButtonText: {
-    fontSize: 14,
-    fontWeight: "500",
-  },
   switchModeButton: {
     alignItems: 'center',
     marginTop: 20,

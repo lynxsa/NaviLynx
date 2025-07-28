@@ -351,7 +351,7 @@ export default function VenueNavigateScreen() {
               }}
               activeOpacity={0.8}
             >
-              <IconSymbol name="list" size={28} color={colors.primary[600]} />
+              <IconSymbol name="list.bullet" size={28} color={colors.primary[600]} />
               <Text style={[styles.quickActionText, { color: themeColors.text }]}>
                 Services
               </Text>

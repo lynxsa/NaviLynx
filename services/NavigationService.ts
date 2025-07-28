@@ -73,6 +73,23 @@ const GOOGLE_MAPS_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY || '';
 const OFFLINE_ROUTES_KEY = 'navilynx_offline_routes';
 
 class NavigationService {
+  async initialize() {
+    // Initialize navigation service
+    this.voiceService = VoiceNavigationService.getInstance();
+    return Promise.resolve();
+  }
+  async getEnhancedVenues(radiusKm: number) {
+    // Import venues dynamically to avoid circular dependencies
+    const { southAfricanVenues } = await import('../data/southAfricanVenues');
+    
+    // Return venues with enhanced properties for AR navigation
+    return southAfricanVenues.map(venue => ({
+      ...venue,
+      distance: 0,
+      distanceText: 'Unknown',
+      arSupported: true
+    }));
+  }
   private static instance: NavigationService;
   private client: Client;
   private currentRoute: NavigationRoute | null = null;
