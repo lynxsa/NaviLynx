@@ -62,22 +62,6 @@ export default function ShopAssistantScreen() {
     }
   }, []);
 
-  useEffect(() => {
-    loadInitialData();
-  }, [loadInitialData]);
-  
-  // Services
-  const [shopService] = useState(() => ShopAssistantService.getInstance());
-  const [scannerService] = useState(() => ProductScannerService.getInstance());
-  
-  // State
-  const [isLoading, setIsLoading] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
-  const [scanModalVisible, setScanModalVisible] = useState(false);
-  const [shoppingLists, setShoppingLists] = useState<ShoppingList[]>([]);
-  const [recommendations, setRecommendations] = useState<ShoppingRecommendation[]>([]);
-  const [insights, setInsights] = useState<any>(null);
-
   const loadShoppingLists = useCallback(async () => {
     try {
       const lists = await shopService.getShoppingLists();
@@ -107,21 +91,6 @@ export default function ShopAssistantScreen() {
       // Handle error silently
     }
   }, [shopService]);
-
-  const loadInitialData = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      await Promise.all([
-        loadShoppingLists(),
-        loadRecommendations(),
-        loadInsights()
-      ]);
-    } catch {
-      // Handle error silently
-    } finally {
-      setIsLoading(false);
-    }
-  }, [loadShoppingLists, loadRecommendations, loadInsights]);
 
   useEffect(() => {
     loadInitialData();
@@ -799,42 +768,6 @@ ${priceInfo}`
     </SafeAreaView>
   );
 }
-
-  // Scanning Functions
-  const handleCameraScan = async () => {
-    try {
-      setScanModalVisible(false);
-      setIsLoading(true);
-      
-      const imageResult = await scannerService.captureProductImage();
-      if (!imageResult.success) {
-        Alert.alert('Camera Error', imageResult.error || 'Failed to capture image');
-        return;
-      }
-
-      const scanResult = await scannerService.scanProductFromImage(imageResult.imageUri!);
-      setLastScanResult(scanResult);
-      
-      if (scanResult.success && scanResult.product) {
-        Alert.alert(
-          'Product Scanned!',
-          `Found: ${scanResult.product.name}
-Confidence: ${Math.round(scanResult.confidence * 100)}%`,
-          [
-            { text: 'View Prices', onPress: () => handleViewPrices(scanResult.product!) },
-            { text: 'Add to List', onPress: () => handleAddToList(scanResult.product!) },
-            { text: 'OK' }
-          ]
-        );
-      } else {
-        Alert.alert('Scan Failed', scanResult.message);
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Failed to scan product');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleLibraryScan = async () => {
     try {

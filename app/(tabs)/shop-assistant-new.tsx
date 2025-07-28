@@ -15,15 +15,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { useTheme } from '../../context/ThemeContext';
-import { useLanguage } from '../../context/LanguageContext';
 
 import ShopAssistantService, {
   ShoppingList,
   ShoppingRecommendation,
   Product
 } from '../../services/ShopAssistantService';
-import ProductScannerService, { ScanResult } from '../../services/ProductScannerService';
-import PriceComparisonService from '../../services/PriceComparisonService';
+import ProductScannerService from '../../services/ProductScannerService';
 import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
@@ -55,19 +53,15 @@ export default function ShopAssistantScreen() {
 
   const loadRecommendations = useCallback(async () => {
     try {
-      const recs = await shopService.getPersonalizedRecommendations();
+      const recs = await shopService.getShoppingRecommendations({
+        currentLocation: '',
+        budget: 1000,
+        preferences: [],
+        previousPurchases: []
+      });
       setRecommendations(recs || []);
     } catch (error) {
       console.error('Failed to load recommendations:', error);
-    }
-  }, [shopService]);
-
-  const loadInsights = useCallback(async () => {
-    try {
-      const insightsData = await shopService.getShoppingInsights();
-      setInsights(insightsData);
-    } catch (error) {
-      console.error('Failed to load insights:', error);
     }
   }, [shopService]);
 
@@ -76,8 +70,7 @@ export default function ShopAssistantScreen() {
     try {
       await Promise.all([
         loadShoppingLists(),
-        loadRecommendations(),
-        loadInsights()
+        loadRecommendations()
       ]);
     } catch (error) {
       console.error('Failed to load initial data:', error);
@@ -85,7 +78,7 @@ export default function ShopAssistantScreen() {
     } finally {
       setIsLoading(false);
     }
-  }, [loadShoppingLists, loadRecommendations, loadInsights]);
+  }, [loadShoppingLists, loadRecommendations]);
 
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
