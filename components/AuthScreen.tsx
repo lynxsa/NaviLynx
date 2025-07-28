@@ -11,13 +11,15 @@ import {
   ScrollView,
   Image,
   ActivityIndicator,
-  Button,
+  Dimensions,
 } from 'react-native';
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useThemeSafe } from '@/context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+
+const { width, height } = Dimensions.get('window');
 
 interface FormData {
   fullName: string;
@@ -178,20 +180,26 @@ export default function AuthScreen() {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          {/* Header */}
+          {/* Modern Header */}
           <View style={styles.header}>
-            <Image
-              source={{ uri: 'https://picsum.photos/120/120?random=logo' }}
-              style={styles.logo}
-              resizeMode="contain"
-            />
+            {/* Logo Container */}
+            <View style={styles.logoContainer}>
+              <LinearGradient
+                colors={['rgba(255,255,255,0.2)', 'rgba(255,255,255,0.1)']}
+                style={styles.logoBackground}
+              >
+                <IconSymbol name="location" size={48} color="#FFFFFF" />
+              </LinearGradient>
+              <Text style={styles.brandName}>NaviLynx</Text>
+            </View>
+            
             <Text style={[styles.title, { color: '#FFFFFF' }]}>
               {isLogin ? 'Welcome Back' : 'Join NaviLynx'}
             </Text>
             <Text style={[styles.subtitle, { color: '#FFFFFF90' }]}>
               {isLogin 
-                ? 'Sign in to continue your navigation journey'
-                : 'Create your account and start exploring'
+                ? 'Your smart navigation companion awaits'
+                : 'Discover, navigate, and explore with ease'
               }
             </Text>
           </View>
@@ -476,6 +484,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 32,
     paddingTop: 32,
+  },
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  logoBackground: {
+    width: 80,
+    height: 80,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  brandName: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    letterSpacing: 1,
   },
   logo: {
     width: 80,

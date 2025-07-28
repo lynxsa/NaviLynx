@@ -13,17 +13,80 @@ import { IconSymbol } from './ui/IconSymbol';
 import { BlurView } from './ui/BlurView';
 import { useTheme } from '@/context/ThemeContext';
 import { colors, spacing, borderRadius, shadows } from '@/styles/modernTheme';
-import { advertisements } from '@/data/southAfricanVenues';
 
 const { width: screenWidth } = Dimensions.get('window');
 const BANNER_WIDTH = screenWidth - (spacing.md * 2); // Account for padding
 
+// Enhanced advertisement data with more venue-related and art exhibition banners
+const enhancedAdvertisements = [
+  {
+    id: '1',
+    title: 'Contemporary Art Festival',
+    subtitle: 'Zeitz Museum of Contemporary African Art',
+    description: 'Explore groundbreaking African contemporary art exhibitions',
+    image: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800',
+    venueName: 'Zeitz MOCAA',
+    category: 'Art & Culture',
+    discount: 'Free Entry Today',
+    backgroundColor: '#C41E3A',
+    ctaText: 'Visit Now'
+  },
+  {
+    id: '2',
+    title: 'Mall of Africa Summer Sale',
+    subtitle: 'Up to 70% Off Fashion & Electronics',
+    description: 'Biggest shopping event of the year at Mall of Africa',
+    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800',
+    venueName: 'Mall of Africa',
+    category: 'Shopping',
+    discount: '70% OFF',
+    backgroundColor: '#1E40AF',
+    ctaText: 'Shop Now'
+  },
+  {
+    id: '3',
+    title: 'V&A Waterfront Food Festival',
+    subtitle: 'Taste of Cape Town',
+    description: 'Experience the finest South African cuisine',
+    image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800',
+    venueName: 'V&A Waterfront',
+    category: 'Food & Dining',
+    discount: 'Special Menu',
+    backgroundColor: '#059669',
+    ctaText: 'Book Table'
+  },
+  {
+    id: '4',
+    title: 'Digital Art Exhibition',
+    subtitle: 'Future of African Art',
+    description: 'Immersive digital art experience featuring local artists',
+    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800',
+    venueName: 'Sandton City',
+    category: 'Art & Technology',
+    discount: 'Opening Week',
+    backgroundColor: '#7C3AED',
+    ctaText: 'Experience'
+  },
+  {
+    id: '5',
+    title: 'Menlyn Park Tech Expo',
+    subtitle: 'Latest Gadgets & Innovation',
+    description: 'Discover cutting-edge technology and electronics',
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800',
+    venueName: 'Menlyn Park',
+    category: 'Technology',
+    discount: 'Demo Day',
+    backgroundColor: '#DC2626',
+    ctaText: 'Explore'
+  }
+];
+
 interface AdvertisingBannerProps {
-  banners?: typeof advertisements;
+  banners?: typeof enhancedAdvertisements;
 }
 
 export const AdvertisingBanner: React.FC<AdvertisingBannerProps> = ({ 
-  banners = advertisements 
+  banners = enhancedAdvertisements 
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -54,7 +117,7 @@ export const AdvertisingBanner: React.FC<AdvertisingBannerProps> = ({
     setCurrentIndex(index);
   };
 
-  const renderBanner = (banner: typeof advertisements[0], index: number) => (
+  const renderBanner = (banner: typeof enhancedAdvertisements[0], index: number) => (
     <View key={banner.id} style={{ width: BANNER_WIDTH }}>
       <TouchableOpacity activeOpacity={0.9}>
         <ImageBackground
@@ -105,7 +168,7 @@ export const AdvertisingBanner: React.FC<AdvertisingBannerProps> = ({
           {/* Type Badge */}
           <View style={styles.badgeContainer}>
             <BlurView style={styles.badge} tint="light" intensity={30}>
-              <Text style={styles.badgeText}>{banner.type?.toUpperCase() || 'SPECIAL'}</Text>
+              <Text style={styles.badgeText}>{banner.category?.toUpperCase() || 'SPECIAL'}</Text>
             </BlurView>
           </View>
         </ImageBackground>

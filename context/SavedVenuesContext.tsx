@@ -63,3 +63,6 @@ export const useSavedVenues = () => {
   if (!ctx) throw new Error('useSavedVenues must be used within a SavedVenuesProvider');
   return ctx;
 };
+
+// Add default export
+export default SavedVenuesProvider;

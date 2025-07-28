@@ -8,29 +8,40 @@ import { Deal } from '@/data/southAfricanVenues';
 const { width } = Dimensions.get('window');
 const dealCardWidth = width * 0.6;
 
-// Mock deals data
+// Enhanced deals data with better offers
 const deals: Deal[] = [
   {
     id: '1',
-    title: '20% Off Electronics',
-    description: 'Limited time offer on selected electronics',
-    discount: '20% OFF',
+    title: 'Flash Sale: Electronics',
+    description: 'Smartphones, laptops & accessories at unbeatable prices',
+    discount: '25% OFF',
     validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
     image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400',
-    venueName: 'Electronics Store',
+    venueName: 'TechZone Menlyn',
     venueId: 'store1',
     category: 'Electronics'
   },
   {
     id: '2',
-    title: 'Buy 2 Get 1 Free',
-    description: 'Fashion items - mix and match',
-    discount: 'BUY 2 GET 1 FREE',
+    title: 'Fashion Week Special',
+    description: 'Latest trends from top South African designers',
+    discount: '40% OFF',
     validUntil: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
     image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
-    venueName: 'Fashion Boutique',
+    venueName: 'Trendy Fashion',
     venueId: 'store2',
     category: 'Fashion'
+  },
+  {
+    id: '3',
+    title: 'Gourmet Food Festival',
+    description: 'Taste the finest cuisine at participating restaurants',
+    discount: '30% OFF',
+    validUntil: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+    image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400',
+    venueName: 'Food Court Central',
+    venueId: 'store3',
+    category: 'Dining'
   }
 ];
 
@@ -51,10 +62,10 @@ const DealCard: React.FC<DealCardProps> = ({ deal, onPress }) => {
   return (
     <TouchableOpacity
       onPress={handlePress}
-      activeOpacity={0.9}
+      activeOpacity={0.8}
       style={[
         styles.dealCard,
-        { width: dealCardWidth, height: 120 }
+        { width: dealCardWidth, height: 140 }
       ]}
     >
       <Image
@@ -66,22 +77,24 @@ const DealCard: React.FC<DealCardProps> = ({ deal, onPress }) => {
         <View style={styles.dealHeader}>
           <View style={styles.discountBadge}>
             <Text style={styles.discountText}>
-              {deal.discount} OFF
+              {deal.discount}
             </Text>
           </View>
-          <View style={styles.timeContainer}>
-            <IconSymbol name="clock" size={12} color="rgba(255,255,255,0.8)" />
-            <Text style={styles.timeText}>Until {deal.validUntil}</Text>
-          </View>
+          <IconSymbol name="heart" size={16} color="rgba(255,255,255,0.9)" />
         </View>
         
-        <View>
-          <Text style={styles.dealTitle}>
+        <View style={styles.dealContent}>
+          <Text style={styles.dealTitle} numberOfLines={1}>
             {deal.title}
           </Text>
-          <Text style={styles.dealVenue}>
-            {deal.venueName}
+          <Text style={styles.dealDescription} numberOfLines={2}>
+            {deal.description}
           </Text>
+          <View style={styles.dealFooter}>
+            <Text style={styles.dealVenue}>
+              📍 {deal.venueName}
+            </Text>
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -164,28 +177,34 @@ const styles = StyleSheet.create({
   },
   discountText: {
     color: '#FFFFFF',
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: '700',
   },
-  timeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  timeText: {
-    color: 'rgba(255,255,255,0.8)',
-    fontSize: 10,
-    marginLeft: spacing.xs,
+  dealContent: {
+    flex: 1,
+    justifyContent: 'flex-end',
   },
   dealTitle: {
     color: '#FFFFFF',
-    fontWeight: '600',
-    fontSize: 12,
-    marginBottom: spacing.xs,
+    fontWeight: '700',
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  dealDescription: {
+    color: 'rgba(255,255,255,0.9)',
+    fontSize: 11,
+    lineHeight: 14,
+    marginBottom: 6,
+  },
+  dealFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   dealVenue: {
     color: 'rgba(255,255,255,0.8)',
     fontSize: 10,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   scrollContainer: {
     paddingHorizontal: spacing.md,

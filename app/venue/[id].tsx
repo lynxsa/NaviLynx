@@ -296,6 +296,11 @@ export default function VenuePage() {
           </TouchableOpacity>
           
           <View style={styles.headerTitleContainer}>
+            <Image 
+              source={isDark ? require('@/assets/images/logo-w.png') : require('@/assets/images/logo-p.png')}
+              style={styles.headerLogo}
+              resizeMode="contain"
+            />
             <Text style={[styles.headerTitle, { color: isDark ? '#FFFFFF' : '#1F2937' }]}>
               {venue.name}
             </Text>
@@ -473,6 +478,72 @@ export default function VenuePage() {
               </Animated.View>
             ))}
           </ScrollView>
+        </Animated.View>
+
+        {/* Venue Information Section */}
+        <Animated.View 
+          style={[styles.sectionCard, { backgroundColor: isDark ? colors.surface : '#FFFFFF' }]}
+          entering={SlideInUp.delay(650).duration(600)}
+        >
+          <View style={styles.sectionHeader}>
+            <View style={styles.sectionTitleContainer}>
+              <IconSymbol name="info.circle" size={20} color={colors.primary} />
+              <Text style={[styles.sectionTitle, { color: isDark ? '#FFFFFF' : '#1F2937' }]}>
+                Venue Information
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.venueInfoGrid}>
+            <View style={[styles.infoCard, { backgroundColor: isDark ? '#1F2937' : '#F9FAFB' }]}>
+              <IconSymbol name="clock" size={24} color={colors.primary} />
+              <Text style={[styles.infoTitle, { color: isDark ? '#FFFFFF' : '#1F2937' }]}>Hours</Text>
+              <Text style={[styles.infoText, { color: isDark ? '#9CA3AF' : '#6B7280' }]}>
+                {venue.openingHours || 'Mon-Sun: 9AM-9PM'}
+              </Text>
+            </View>
+
+            <View style={[styles.infoCard, { backgroundColor: isDark ? '#1F2937' : '#F9FAFB' }]}>
+              <IconSymbol name="location" size={24} color={colors.primary} />
+              <Text style={[styles.infoTitle, { color: isDark ? '#FFFFFF' : '#1F2937' }]}>Location</Text>
+              <Text style={[styles.infoText, { color: isDark ? '#9CA3AF' : '#6B7280' }]} numberOfLines={2}>
+                {venue.location.city}, {venue.location.province}
+              </Text>
+            </View>
+
+            <View style={[styles.infoCard, { backgroundColor: isDark ? '#1F2937' : '#F9FAFB' }]}>
+              <IconSymbol name="car" size={24} color={colors.primary} />
+              <Text style={[styles.infoTitle, { color: isDark ? '#FFFFFF' : '#1F2937' }]}>Parking</Text>
+              <Text style={[styles.infoText, { color: isDark ? '#9CA3AF' : '#6B7280' }]}>
+                {venue.parkingInfo?.available ? 'Available' : 'Limited'}
+              </Text>
+            </View>
+
+            <View style={[styles.infoCard, { backgroundColor: isDark ? '#1F2937' : '#F9FAFB' }]}>
+              <IconSymbol name="phone" size={24} color={colors.primary} />
+              <Text style={[styles.infoTitle, { color: isDark ? '#FFFFFF' : '#1F2937' }]}>Contact</Text>
+              <Text style={[styles.infoText, { color: isDark ? '#9CA3AF' : '#6B7280' }]}>
+                {venue.contact.phone}
+              </Text>
+            </View>
+          </View>
+
+          {venue.features && venue.features.length > 0 && (
+            <>
+              <Text style={[styles.amenitiesTitle, { color: isDark ? '#FFFFFF' : '#1F2937' }]}>
+                Features & Amenities
+              </Text>
+              <View style={styles.amenitiesGrid}>
+                {venue.features.slice(0, 8).map((feature: string, index: number) => (
+                  <View key={index} style={[styles.amenityTag, { backgroundColor: colors.primary + '15' }]}>
+                    <Text style={[styles.amenityText, { color: colors.primary }]}>
+                      {feature}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            </>
+          )}
         </Animated.View>
 
         {/* Store Card Wallet Section - Operation Navigate Enhancement */}
@@ -721,9 +792,12 @@ export default function VenuePage() {
           entering={SlideInUp.delay(800).duration(600)}
         >
           <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: isDark ? '#FFFFFF' : '#1F2937' }]}>
-              Featured Stores & Points of Interest
-            </Text>
+            <View style={styles.sectionTitleContainer}>
+              <IconSymbol name="location.fill" size={20} color={colors.primary} />
+              <Text style={[styles.sectionTitle, { color: isDark ? '#FFFFFF' : '#1F2937' }]}>
+                Stores & Points of Interest
+              </Text>
+            </View>
             <TouchableOpacity
               onPress={() => router.push(`/venue/${venue.id}/locations`)}
               style={styles.seeAllButton}
@@ -742,16 +816,19 @@ export default function VenuePage() {
                 activeOpacity={0.7}
               >
                 {location.isPopular && (
-                  <View style={[styles.popularBadge, { backgroundColor: '#FFD700' }]}>
-                    <IconSymbol name="star.fill" size={12} color="#FFFFFF" />
+                  <View style={[styles.popularBadge, { backgroundColor: colors.primary }]}>
+                    <IconSymbol name="star.fill" size={10} color="#FFFFFF" />
+                    <Text style={styles.popularText}>Popular</Text>
                   </View>
                 )}
                 
                 <View style={[styles.locationIcon, { backgroundColor: colors.primary + '15' }]}>
                   <IconSymbol 
-                    name={location.category === 'dining' ? 'tag.fill' : 
+                    name={location.category === 'dining' ? 'fork.knife' : 
                           location.category === 'shopping' ? 'bag.fill' : 
-                          location.category === 'service' ? 'gear' : 'location'} 
+                          location.category === 'service' ? 'gear' : 
+                          location.category === 'entertainment' ? 'gamecontroller.fill' :
+                          'location.fill'} 
                     size={24} 
                     color={colors.primary} 
                   />
@@ -767,22 +844,22 @@ export default function VenuePage() {
                 
                 <View style={styles.locationMeta}>
                   <View style={styles.metaItem}>
-                    <IconSymbol name="clock" size={12} color={isDark ? '#9CA3AF' : '#6B7280'} />
+                    <IconSymbol name="figure.walk" size={12} color={isDark ? '#9CA3AF' : '#6B7280'} />
                     <Text style={[styles.metaText, { color: isDark ? '#9CA3AF' : '#6B7280' }]}>
                       {location.estimatedWalkTime}
                     </Text>
                   </View>
                   
                   {location.hasOffers && (
-                    <View style={[styles.offerIndicator, { backgroundColor: '#22C55E' }]}>
-                      <Text style={styles.offerText}>Offers</Text>
+                    <View style={[styles.offerIndicator, { backgroundColor: colors.success }]}>
+                      <Text style={styles.offerText}>Deal</Text>
                     </View>
                   )}
                 </View>
                 
                 <View style={[
                   styles.statusIndicator,
-                  { backgroundColor: location.currentlyOpen ? '#22C55E' : '#EF4444' }
+                  { backgroundColor: location.currentlyOpen ? colors.success : '#EF4444' }
                 ]}>
                   <Text style={styles.statusText}>
                     {location.currentlyOpen ? 'Open' : 'Closed'}
@@ -862,6 +939,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     marginHorizontal: spacing.md,
+  },
+  headerLogo: {
+    width: 24,
+    height: 24,
+    marginBottom: 4,
   },
   headerTitle: {
     fontSize: 18,
@@ -1094,85 +1176,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
-  // Locations Grid (matching UnifiedCategoryCard style)
-  locationsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.md,
-  },
-  locationCard: {
-    width: (screenWidth - spacing.lg * 2 - spacing.md * 3) / 2,
-    padding: spacing.md,
-    borderRadius: borderRadius.lg,
-    position: 'relative',
-    ...shadows.sm,
-    elevation: 2,
-  },
-  popularBadge: {
-    position: 'absolute',
-    top: spacing.xs,
-    right: spacing.xs,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  locationIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: spacing.sm,
-  },
-  locationName: {
-    fontSize: 14,
-    fontWeight: '700',
-    marginBottom: 4,
-  },
-  locationCategory: {
-    fontSize: 12,
-    marginBottom: spacing.sm,
-  },
-  locationMeta: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: spacing.xs,
-  },
-  metaItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
-  metaText: {
-    fontSize: 11,
-  },
-  offerIndicator: {
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 2,
-    borderRadius: borderRadius.sm,
-  },
-  offerText: {
-    fontSize: 10,
-    fontWeight: '700',
-    color: '#FFFFFF',
-  },
-  statusIndicator: {
-    position: 'absolute',
-    bottom: spacing.sm,
-    right: spacing.sm,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 2,
-    borderRadius: borderRadius.sm,
-  },
-  statusText: {
-    fontSize: 10,
-    fontWeight: '700',
-    color: '#FFFFFF',
-  },
-
   // Floating Button
   floatingButton: {
     position: 'absolute',
@@ -1192,6 +1195,139 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  // Locations Grid Styles
+  locationsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: spacing.md,
+  },
+  locationCard: {
+    width: (screenWidth - (spacing.lg * 2) - spacing.md) / 2,
+    padding: spacing.md,
+    borderRadius: borderRadius.lg,
+    position: 'relative',
+    ...shadows.sm,
+    elevation: 2,
+  },
+  popularBadge: {
+    position: 'absolute',
+    top: spacing.sm,
+    right: spacing.sm,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: spacing.xs + 2,
+    paddingVertical: 2,
+    borderRadius: borderRadius.sm,
+    gap: 2,
+    zIndex: 1,
+  },
+  popularText: {
+    fontSize: 9,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  locationIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+  },
+  locationName: {
+    fontSize: 14,
+    fontWeight: '700',
+    marginBottom: spacing.xs,
+    lineHeight: 18,
+  },
+  locationCategory: {
+    fontSize: 12,
+    marginBottom: spacing.sm,
+    textTransform: 'capitalize',
+  },
+  locationMeta: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+  },
+  metaItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  metaText: {
+    fontSize: 11,
+  },
+  offerIndicator: {
+    paddingHorizontal: spacing.xs,
+    paddingVertical: 2,
+    borderRadius: borderRadius.sm,
+  },
+  offerText: {
+    fontSize: 9,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  statusIndicator: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 4,
+    borderRadius: borderRadius.sm,
+    alignSelf: 'flex-start',
+  },
+  statusText: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+
+  // Venue Information Styles
+  venueInfoGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: spacing.sm,
+    marginBottom: spacing.lg,
+  },
+  infoCard: {
+    width: (screenWidth - (spacing.lg * 2) - spacing.sm) / 2,
+    padding: spacing.md,
+    borderRadius: borderRadius.md,
+    alignItems: 'center',
+    gap: spacing.xs,
+  },
+  infoTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  infoText: {
+    fontSize: 12,
+    textAlign: 'center',
+    lineHeight: 16,
+  },
+  amenitiesTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: spacing.md,
+  },
+  amenitiesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.xs,
+  },
+  amenityTag: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: borderRadius.sm,
+    marginBottom: spacing.xs,
+  },
+  amenityText: {
+    fontSize: 12,
+    fontWeight: '600',
   },
 
   // Spacing
