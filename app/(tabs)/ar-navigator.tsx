@@ -1,9 +1,10 @@
 /**
  * Enhanced AR Navigator Screen - Complete User Flow Implementation
  * Following structured flow: Location Entry → Venue Selection → Routing → Indoor Navigation
+ * Enhanced with Phase 1 Day 4-5 performance optimizations and advanced features
  */
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import {
   View,
   SafeAreaView,
@@ -26,6 +27,12 @@ import { useRouter } from 'expo-router';
 import ARCameraView from '../../components/ar/CameraFeed/ARCameraView';
 import ARNavigationOverlay from '../../components/ar/Overlays/ARNavigationOverlay';
 import ARNavigationScreen from '../../components/ar/ARNavigationScreen';
+import ARPerformanceMonitor from '../../components/ar/ARPerformanceMonitor';
+
+// Enhanced AR imports
+import ARPerformanceManager from '../../services/ARPerformanceManager';
+import ARWaypointRenderer from '../../services/ARWaypointRenderer';
+import ARUserExperienceService from '../../services/ARUserExperienceService';
 
 // Internal imports
 import { useTheme } from '../../context/ThemeContext';
@@ -196,6 +203,10 @@ export default function ARNavigatorEnhanced() {
   const { isDark } = useTheme();
   const router = useRouter();
   
+  // Enhanced AR Services
+  const performanceManager = useRef(ARPerformanceManager.getInstance());
+  const userExperienceService = useRef(ARUserExperienceService.getInstance());
+  
   // Core State
   const [phase, setPhase] = useState<NavigationPhase>('location_entry');
   const [mode, setMode] = useState<NavigationMode>('map');
@@ -217,6 +228,13 @@ export default function ARNavigatorEnhanced() {
   const [estimatedArrival, setEstimatedArrival] = useState<string>('3 min');
   const [currentWaypoint, setCurrentWaypoint] = useState<number>(4);
   const [totalWaypoints] = useState<number>(7);
+  
+  // Performance Metrics State
+  const [performanceMetrics, setPerformanceMetrics] = useState({
+    frameRate: 0,
+    memoryUsage: 0,
+    batteryOptimized: false
+  });
   
   // UI State
   const [showLocationEntry, setShowLocationEntry] = useState(true);
@@ -329,6 +347,60 @@ export default function ARNavigatorEnhanced() {
       };
     }
   }, [calculateDistance, reverseGeocode]);
+
+  // Enhanced initialization with performance monitoring
+  useEffect(() => {
+    const initializeARServices = async () => {
+      try {
+        // Initialize performance monitoring
+        performanceManager.current.optimizeForPerformance();
+        
+        // Setup UX service accessibility settings
+        const accessibilitySettings = userExperienceService.current.getAccessibilitySettings();
+        console.log('AR UX: Initialized with settings:', accessibilitySettings);
+        
+        // Start performance metrics monitoring
+        const metricsInterval = setInterval(() => {
+          const metrics = performanceManager.current.getMetrics();
+          setPerformanceMetrics({
+            frameRate: metrics.frameRate,
+            memoryUsage: metrics.memoryUsage,
+            batteryOptimized: metrics.frameRate < 45 // Enable battery optimization if FPS drops
+          });
+          
+          // Auto-optimize for battery if performance is poor
+          if (metrics.frameRate < 30 && !performanceMetrics.batteryOptimized) {
+            performanceManager.current.optimizeForBattery();
+            userExperienceService.current.announceWarning('Battery optimization enabled for better performance');
+          }
+        }, 5000); // Check every 5 seconds
+        
+        return () => clearInterval(metricsInterval);
+      } catch (error) {
+        console.warn('AR Services initialization failed:', error);
+      }
+    };
+    
+    initializeARServices();
+  }, []);
+
+  // Enhanced navigation announcements
+  const announceNavigationUpdate = useCallback(async (instruction: string, distance: number) => {
+    await userExperienceService.current.announceNavigationStep(
+      instruction, 
+      distance, 
+      selectedVenue?.name
+    );
+  }, [selectedVenue]);
+
+  // Enhanced destination reached announcement
+  const announceDestinationReached = useCallback(async () => {
+    if (selectedInternalArea) {
+      await userExperienceService.current.announceDestinationReached(selectedInternalArea.name);
+    } else if (selectedVenue) {
+      await userExperienceService.current.announceDestinationReached(selectedVenue.name);
+    }
+  }, [selectedVenue, selectedInternalArea]);
 
   // Open Google Maps to search for malls near the location
   const openGoogleMapsSearch = useCallback((address: string) => {
@@ -492,18 +564,106 @@ export default function ARNavigatorEnhanced() {
     };
   }, [calculateDistance]);
 
-  // Load all venues for manual selection
-  const loadAllVenues = useCallback(async () => {
+  // Enhanced indoor navigation with shopping integration
+  const handleIndoorNavigation = useCallback(async (internalArea: InternalArea) => {
     try {
-      await navigationService.current.initialize();
-      const venues = await navigationService.current.getEnhancedVenues(100); // Wider radius
-      setNearbyVenues(venues);
-      setShowVenueModal(true);
+      if (!selectedVenue || !internalArea) {
+        console.error('Missing venue or internal area data');
+        return;
+      }
+
+      setIsLoading(true);
+      
+      // Get shopping integration data for contextual assistance
+      const shoppingData = await userExperienceService.current.getShoppingIntegrationData(selectedVenue.id);
+      
+      // Check for nearby deals at this destination
+      if (shoppingData.nearbyDeals.length > 0) {
+        const nearbyDeal = shoppingData.nearbyDeals[0];
+        await userExperienceService.current.announceNearbyDeal(
+          nearbyDeal.title || 'Special offer',
+          nearbyDeal.discount || '20%',
+          selectedVenue.name
+        );
+      }
+      
+      // Check shopping list items
+      if (shoppingData.shoppingList.length > 0) {
+        const relevantItems = shoppingData.shoppingList.filter((item: any) => 
+          item.location?.toLowerCase().includes(internalArea.name.toLowerCase())
+        );
+        
+        if (relevantItems.length > 0) {
+          await userExperienceService.current.announceShoppingListItem(
+            relevantItems[0].name || 'Shopping list item',
+            true
+          );
+        }
+      }
+
+      // Simulate BLE beacon-based indoor navigation
+      const beacons = mockBLEData[selectedVenue.id] || [];
+      const destination = beacons.find(beacon => beacon.id === internalArea.id);
+      
+      if (!destination) {
+        Alert.alert('Navigation Error', 'Unable to find indoor route to this destination.');
+        return;
+      }
+
+      // Calculate indoor route using mock BLE trilateration
+      const entrance = beacons.find(beacon => beacon.type === 'entrance');
+      if (!entrance) {
+        Alert.alert('Navigation Error', 'Unable to find venue entrance.');
+        return;
+      }
+
+      // Create route with intermediate checkpoints
+      const routeBeacons = [entrance];
+      const intermediateBeacons = beacons.filter(beacon => 
+        beacon.type === 'checkpoint' && 
+        Math.abs(beacon.coordinates.x - destination.coordinates.x) < 50 &&
+        Math.abs(beacon.coordinates.y - destination.coordinates.y) < 50
+      );
+      
+      routeBeacons.push(...intermediateBeacons);
+      routeBeacons.push(destination);
+
+      // Generate step-by-step instructions
+      const pathSteps = routeBeacons.map((beacon, index) => {
+        if (index === 0) return `Start at ${beacon.name}`;
+        if (index === routeBeacons.length - 1) return `Arrive at ${beacon.name}`;
+        return `Pass ${beacon.name}`;
+      });
+
+      const mockRoute: IndoorRoute = {
+        beacons: routeBeacons,
+        pathSteps,
+        estimatedTime: routeBeacons.length * 2, // 2 minutes per checkpoint
+        floor: destination.coordinates.floor,
+      };
+
+      setIndoorRoute(mockRoute);
+      setPhase('indoor_navigation');
+      setShowInternalAreaModal(false);
+      setShowIndoorPrompt(false);
+      setMode('ar'); // Switch to AR for indoor navigation
+
+      // Announce navigation start
+      await announceNavigationUpdate(
+        `Starting indoor navigation to ${internalArea.name}`,
+        mockRoute.estimatedTime
+      );
+
+      // Enhanced AR waypoint setup
+      console.log('AR Navigation: Setting up enhanced waypoints for indoor navigation');
+      
     } catch (error) {
-      console.error('Failed to load venues:', error);
-      Alert.alert('Error', 'Failed to load venues. Please try again.');
+      console.error('Indoor navigation error:', error);
+      Alert.alert('Navigation Error', 'Failed to start indoor navigation. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
-  }, []);
+  }, [selectedVenue, userExperienceService, announceNavigationUpdate]);
 
   const handleManualLocationEntry = useCallback(async () => {
     if (!manualLocationText.trim()) {
@@ -1990,6 +2150,14 @@ export default function ARNavigatorEnhanced() {
           </Text>
         </View>
       )}
+
+      {/* Enhanced AR Performance Monitor */}
+      <ARPerformanceMonitor
+        frameRate={performanceMetrics.frameRate}
+        memoryUsage={performanceMetrics.memoryUsage}
+        batteryOptimized={performanceMetrics.batteryOptimized}
+        isVisible={mode === 'ar' && phase === 'indoor_navigation'}
+      />
     </SafeAreaView>
   );
 }
