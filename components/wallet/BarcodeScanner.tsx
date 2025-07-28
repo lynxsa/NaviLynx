@@ -118,7 +118,7 @@ export const BarcodeScanner: React.FC<{
   const [isScanning, setIsScanning] = useState(true);
   const [scannedData, setScannedData] = useState<string | null>(null);
   const { colors, isDark } = useTheme();
-  const scanTimeoutRef = useRef<number>();
+  const scanTimeoutRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     if (!permission?.granted) {

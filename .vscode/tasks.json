@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Test NaviLynx App",
+			"type": "shell",
+			"command": "npx expo start --clear --reset-cache",
+			"group": "build",
+			"isBackground": true
+		}
+	]
+}

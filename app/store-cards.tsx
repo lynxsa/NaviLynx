@@ -49,13 +49,11 @@ const WalletHeader: React.FC<{
   stats: WalletStats;
   onStatsPress: () => void;
 }> = ({ stats, onStatsPress }) => {
-  const { colors, isDark } = useTheme();
+  const { isDark } = useTheme();
 
-  const gradientColors = isDark 
+  const gradientColors: [string, string] = isDark
     ? ['#6366f1', '#8b5cf6']
-    : ['#6366f1', '#a855f7'];
-
-  return (
+    : ['#6366f1', '#a855f7'];  return (
     <TouchableOpacity onPress={onStatsPress} activeOpacity={0.9}>
       <LinearGradient
         colors={gradientColors}
@@ -240,7 +238,7 @@ export const StoreCardIntegrationScreen: React.FC = () => {
       'Configure backup, privacy settings, and card organization preferences.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Open Settings', onPress: () => router.push('/settings') }
+        { text: 'Open Settings', onPress: () => router.push('/(tabs)/profile') }
       ]
     );
   };

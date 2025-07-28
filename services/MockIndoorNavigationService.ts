@@ -136,6 +136,39 @@ export class MockIndoorNavigationService {
       type: waypoint.type
     }));
   }
+
+  startIndoorNavigation(destination: any, venueId?: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      // Mock implementation for indoor navigation
+      const mockPath = this.generatePath(
+        { x: 0, y: 0, z: 0 }, 
+        { x: 10, y: 0, z: 0 }
+      );
+      this.startNavigation(mockPath);
+      console.log('Mock navigation started for:', destination.name || destination, 'at venue:', venueId);
+      return Promise.resolve({ success: true });
+    } catch (error) {
+      return Promise.resolve({ success: false, error: error instanceof Error ? error.message : 'Unknown error' });
+    }
+  }
+
+  getCurrentInstruction(): string {
+    const waypoint = this.getNextWaypoint();
+    return waypoint?.instruction || 'Continue navigation';
+  }
+
+  getNavigationState() {
+    return {
+      isActive: this.isNavigationActive(),
+      progress: {
+        remainingDistance: this.getRemainingDistance(),
+        currentWaypointIndex: this.currentPath?.currentWaypointIndex || 0,
+        totalWaypoints: this.currentPath?.waypoints.length || 0
+      },
+      currentWaypoint: this.getNextWaypoint(),
+      navigationPoints: this.generateARWaypoints()
+    };
+  }
 }
 
 export default new MockIndoorNavigationService();

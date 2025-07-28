@@ -15,20 +15,17 @@ import {
   Dimensions,
   Alert,
   SafeAreaView,
-  StatusBar,
 } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
 import * as THREE from 'three';
 import { DeviceMotion, DeviceMotionMeasurement } from 'expo-sensors';
-import { LinearGradient } from 'expo-linear-gradient';
-import { BlurView } from 'expo-blur';
 
 // Internal imports
 import { useTheme } from '@/context/ThemeContext';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { MockIndoorNavigationService, ARWaypoint } from '@/services/MockIndoorNavigationService';
+import { MockIndoorNavigationService, ARWaypoint } from '../../services/MockIndoorNavigationService';
 import { InternalArea } from '@/data/venueInternalAreas';
 
 interface ARNavigationScreenProps {
@@ -53,7 +50,7 @@ export default function ARNavigationScreen({
   onNavigationComplete,
   userLocation
 }: ARNavigationScreenProps) {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const [cameraPermission, requestCameraPermission] = useCameraPermissions();
   const [arWaypoints, setArWaypoints] = useState<ARWaypoint[]>([]);
   const [compassHeading, setCompassHeading] = useState(0);
@@ -332,30 +329,29 @@ export default function ARNavigationScreen({
 
     // Create new waypoint meshes
     currentWaypoints.forEach((waypoint: ARWaypoint) => {
-      if (!waypoint.visible) return;
-
       let geometry: THREE.BufferGeometry;
       let material: THREE.Material;
 
       switch (waypoint.type) {
-        case 'arrow':
-          geometry = new THREE.ConeGeometry(waypoint.size, waypoint.size * 2, 8);
+        case 'start':
+        case 'end':
+          geometry = new THREE.SphereGeometry(0.2, 16, 16);
           material = new THREE.MeshPhongMaterial({
             color: waypoint.color,
             transparent: true,
             opacity: 0.7
           });
           break;
-        case 'marker':
-          geometry = new THREE.SphereGeometry(waypoint.size, 16, 16);
+        case 'turn':
+          geometry = new THREE.ConeGeometry(0.15, 0.3, 8);
           material = new THREE.MeshPhongMaterial({
             color: waypoint.color,
             transparent: true,
             opacity: 0.8
           });
           break;
-        case 'destination':
-          geometry = new THREE.CylinderGeometry(waypoint.size, waypoint.size, waypoint.size * 2, 16);
+        case 'landmark':
+          geometry = new THREE.CylinderGeometry(0.2, 0.2, 0.4, 16);
           material = new THREE.MeshPhongMaterial({
             color: waypoint.color,
             transparent: true,

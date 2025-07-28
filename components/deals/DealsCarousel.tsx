@@ -3,10 +3,36 @@ import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions, StyleSheet
 import { router } from 'expo-router';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { colors, spacing, borderRadius, shadows } from '@/styles/modernTheme';
-import { deals } from '@/data/southAfricanVenues';
+import { Deal } from '@/data/southAfricanVenues';
 
 const { width } = Dimensions.get('window');
 const dealCardWidth = width * 0.6;
+
+// Mock deals data
+const deals: Deal[] = [
+  {
+    id: '1',
+    title: '20% Off Electronics',
+    description: 'Limited time offer on selected electronics',
+    discount: '20% OFF',
+    validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400',
+    venueName: 'Electronics Store',
+    venueId: 'store1',
+    category: 'Electronics'
+  },
+  {
+    id: '2',
+    title: 'Buy 2 Get 1 Free',
+    description: 'Fashion items - mix and match',
+    discount: 'BUY 2 GET 1 FREE',
+    validUntil: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
+    venueName: 'Fashion Boutique',
+    venueId: 'store2',
+    category: 'Fashion'
+  }
+];
 
 interface DealCardProps {
   deal: typeof deals[0];

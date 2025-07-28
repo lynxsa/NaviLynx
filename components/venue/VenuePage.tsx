@@ -4,7 +4,6 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Alert,
   SafeAreaView,
   StatusBar,
   FlatList,
@@ -21,8 +20,7 @@ import { spacing, borderRadius, shadows } from '@/styles/modernTheme';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 
-import { getVenueById, Venue } from '@/data/southAfricanVenues';
-import { enhancedDeals, Deal } from '@/data/dealsAndArticles';
+import { getVenueById, Venue, Deal } from '@/data/southAfricanVenues';
 import { getVenueInternalAreas } from '@/data/venueInternalAreas';
 import { IconSymbolName } from '@/components/ui/IconSymbol';
 
@@ -73,7 +71,7 @@ const getValidIconName = (iconName: string): IconSymbolName => {
     'map': 'map',
     'location': 'location',
     'star': 'star',
-    'search': 'search',
+    'search': 'magnifyingglass',
     'home': 'house',
     'building': 'building.2',
     'floor': 'building.2',
@@ -161,7 +159,7 @@ export const VenuePage: React.FC<VenuePageProps> = ({ venueId }) => {
   const [deals, setDeals] = useState<VenueDeal[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedFloor, setSelectedFloor] = useState<number | null>(null);
+  const [selectedFloor] = useState<number | null>(null);
   const [showDirections, setShowDirections] = useState(false);
   const [showContact, setShowContact] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -177,12 +175,7 @@ export const VenuePage: React.FC<VenuePageProps> = ({ venueId }) => {
     { id: 'health', name: 'Health', icon: 'heart', color: '#06b6d4' },
   ], []);
 
-  const floors = useMemo(() => [
-    { number: 1, name: 'Ground Floor', icon: '1.square' },
-    { number: 2, name: 'First Floor', icon: '2.square' },
-    { number: 3, name: 'Second Floor', icon: '3.square' },
-    { number: 4, name: 'Third Floor', icon: '4.square' },
-  ], []);
+  // Mock deals data since enhancedDeals is not available
 
   // Data loading effect (single, clean effect)
   useEffect(() => {
@@ -229,20 +222,19 @@ export const VenuePage: React.FC<VenuePageProps> = ({ venueId }) => {
           contact: generateStableContactInfo(area.name),
         }));
 
-        // Load deals
-        const venueDeals = enhancedDeals
-          .filter(deal => deal.location?.toLowerCase().includes(venueData.name.toLowerCase()))
-          .slice(0, 5)
-          .map(deal => ({
-            id: deal.id,
-            title: deal.title,
-            description: deal.description,
-            discount: deal.discount || '10% OFF',
-            validUntil: deal.validUntil || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-            location: deal.location || venueData.name,
-            image: deal.image,
-            category: deal.category || 'general',
-          }));
+        // Load deals - using mock data
+        const venueDeals: VenueDeal[] = [
+          {
+            id: '1',
+            title: 'Special Venue Offer',
+            description: 'Exclusive deal for this venue',
+            discount: '15% OFF',
+            validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+            location: venueData.name,
+            image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
+            category: 'general'
+          }
+        ];
 
         if (!isMounted) return;
 
