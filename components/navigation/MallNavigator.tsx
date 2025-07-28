@@ -189,7 +189,10 @@ const MallNavigator: React.FC<MallNavigatorProps> = ({
 
   const renderPOISelector = (type: 'origin' | 'destination') => {
     const selectedValue = type === 'origin' ? selectedOrigin : selectedDestination;
-    const poisOnCurrentFloor = currentFloor ? allPOIs.filter(p => p.coordinates.level === currentFloor.level) : [];
+    // Filter POIs on current floor - check if coordinates has level property
+    const poisOnCurrentFloor = currentFloor ? allPOIs.filter(p => 
+      'level' in p.coordinates && p.coordinates.level === currentFloor.level
+    ) : [];
 
     return (
       <View style={styles.selectorContainer}>

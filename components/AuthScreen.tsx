@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
+  StyleSheet,
   TextInput,
   TouchableOpacity,
   Alert,
@@ -10,6 +11,7 @@ import {
   ScrollView,
   Image,
   ActivityIndicator,
+  Button,
 } from 'react-native';
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -165,28 +167,28 @@ export default function AuthScreen() {
 
   return (
     <KeyboardAvoidingView 
-      className="flex-1" 
+      style={styles.container} 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <LinearGradient
-        colors={['#9333ea', '#7c3aed']}
-        className="flex-1"
+        colors={[colors.primary, colors.secondary]}
+        style={styles.gradient}
       >
         <ScrollView 
-          contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 24, paddingVertical: 32 }}
+          contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
           {/* Header */}
-          <View className="items-center mb-8 pt-8">
+          <View style={styles.header}>
             <Image
-              source={{ uri: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=120&h=120&fit=crop&crop=center' }}
-              className="w-20 h-20 rounded-2xl mb-6"
+              source={{ uri: 'https://picsum.photos/120/120?random=logo' }}
+              style={styles.logo}
               resizeMode="contain"
             />
-            <Text className="text-3xl font-bold mb-4 text-center text-white">
+            <Text style={[styles.title, { color: '#FFFFFF' }]}>
               {isLogin ? 'Welcome Back' : 'Join NaviLynx'}
             </Text>
-            <Text className="text-lg text-center leading-6 text-white/70">
+            <Text style={[styles.subtitle, { color: '#FFFFFF90' }]}>
               {isLogin 
                 ? 'Sign in to continue your navigation journey'
                 : 'Create your account and start exploring'
@@ -195,117 +197,156 @@ export default function AuthScreen() {
           </View>
 
           {/* Form Card */}
-          <View className="bg-white dark:bg-gray-900 rounded-3xl p-6 shadow-lg">
+          <View style={[styles.formCard, { backgroundColor: colors.surface }]}>
             {/* Toggle Buttons */}
-            <View className="flex-row bg-gray-100 dark:bg-gray-800 rounded-2xl p-1 mb-6">
+            <View style={[styles.toggleContainer, { backgroundColor: colors.background }]}>
               <TouchableOpacity
-                className={`flex-1 py-3 rounded-xl items-center ${isLogin ? 'bg-purple-600' : ''}`}
+                style={[
+                  styles.toggleButton,
+                  isLogin && { backgroundColor: colors.primary },
+                ]}
                 onPress={() => setIsLogin(true)}
               >
-                <Text className={`text-base font-semibold ${isLogin ? 'text-white' : 'text-gray-600 dark:text-gray-400'}`}>
+                <Text style={[
+                  styles.toggleText,
+                  { color: isLogin ? '#FFFFFF' : colors.mutedForeground }
+                ]}>
                   Sign In
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className={`flex-1 py-3 rounded-xl items-center ${!isLogin ? 'bg-purple-600' : ''}`}
+                style={[
+                  styles.toggleButton,
+                  !isLogin && { backgroundColor: colors.primary },
+                ]}
                 onPress={() => setIsLogin(false)}
               >
-                <Text className={`text-base font-semibold ${!isLogin ? 'text-white' : 'text-gray-600 dark:text-gray-400'}`}>
+                <Text style={[
+                  styles.toggleText,
+                  { color: !isLogin ? '#FFFFFF' : colors.mutedForeground }
+                ]}>
                   Sign Up
                 </Text>
               </TouchableOpacity>
             </View>
 
             {/* Form Fields */}
-            <View className="gap-5">
+            <View style={styles.formFields}>
               {!isLogin && (
                 <>
-                  <View className="gap-2">
-                    <Text className="text-sm font-semibold text-gray-900 dark:text-white">
+                  <View style={styles.inputContainer}>
+                    <Text style={[styles.inputLabel, { color: colors.text }]}>
                       Full Name
                     </Text>
                     <TextInput
-                      className={`border rounded-xl px-3 py-3 text-base bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white ${errors.fullName ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'}`}
+                      style={[
+                        styles.input,
+                        { 
+                          backgroundColor: colors.background,
+                          borderColor: errors.fullName ? colors.error : colors.border,
+                          color: colors.text,
+                        }
+                      ]}
                       placeholder="Enter your full name"
-                      placeholderTextColor="#9CA3AF"
+                      placeholderTextColor={colors.mutedForeground}
                       value={formData.fullName}
                       onChangeText={(value) => handleInputChange('fullName', value)}
                       autoCapitalize="words"
                     />
                     {errors.fullName && (
-                      <Text className="text-sm text-red-500 mt-1">
+                      <Text style={[styles.errorText, { color: colors.error }]}>
                         {errors.fullName}
                       </Text>
                     )}
                   </View>
 
-                  <View className="gap-2">
-                    <Text className="text-sm font-semibold text-gray-900 dark:text-white">
-                      Username
+                  <View style={styles.inputContainer}>
+                    <Text style={[styles.inputLabel, { color: colors.text }]}>
+                      Email
                     </Text>
                     <TextInput
-                      className={`border rounded-xl px-3 py-3 text-base bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white ${errors.username ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'}`}
-                      placeholder="Choose a username"
-                      placeholderTextColor="#9CA3AF"
-                      value={formData.username}
-                      onChangeText={(value) => handleInputChange('username', value)}
+                      style={[
+                        styles.input,
+                        { 
+                          backgroundColor: colors.background,
+                          borderColor: errors.email ? colors.error : colors.border,
+                          color: colors.text,
+                        }
+                      ]}
+                      placeholder="Enter your email"
+                      placeholderTextColor={colors.mutedForeground}
+                      value={formData.email}
+                      onChangeText={(value) => handleInputChange('email', value)}
+                      keyboardType="email-address"
                       autoCapitalize="none"
                     />
-                    {errors.username && (
-                      <Text className="text-sm text-red-500 mt-1">
-                        {errors.username}
+                    {errors.email && (
+                      <Text style={[styles.errorText, { color: colors.error }]}>
+                        {errors.email}
                       </Text>
                     )}
                   </View>
                 </>
               )}
 
-              <View className="gap-2">
-                <Text className="text-sm font-semibold text-gray-900 dark:text-white">
-                  Email
+              <View style={styles.inputContainer}>
+                <Text style={[styles.inputLabel, { color: colors.text }]}>
+                  Username
                 </Text>
                 <TextInput
-                  className={`border rounded-xl px-3 py-3 text-base bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white ${errors.email ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'}`}
-                  placeholder="Enter your email"
-                  placeholderTextColor="#9CA3AF"
-                  value={formData.email}
-                  onChangeText={(value) => handleInputChange('email', value)}
-                  keyboardType="email-address"
+                  style={[
+                    styles.input,
+                    { 
+                      backgroundColor: colors.background,
+                      borderColor: errors.username ? colors.error : colors.border,
+                      color: colors.text,
+                    }
+                  ]}
+                  placeholder="Enter your username"
+                  placeholderTextColor={colors.mutedForeground}
+                  value={formData.username}
+                  onChangeText={(value) => handleInputChange('username', value)}
                   autoCapitalize="none"
                 />
-                {errors.email && (
-                  <Text className="text-sm text-red-500 mt-1">
-                    {errors.email}
+                {errors.username && (
+                  <Text style={[styles.errorText, { color: colors.error }]}>
+                    {errors.username}
                   </Text>
                 )}
               </View>
 
-              <View className="gap-2">
-                <Text className="text-sm font-semibold text-gray-900 dark:text-white">
+              <View style={styles.inputContainer}>
+                <Text style={[styles.inputLabel, { color: colors.text }]}>
                   Password
                 </Text>
-                <View className={`flex-row items-center border rounded-xl px-3 bg-gray-50 dark:bg-gray-800 ${errors.password ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'}`}>
+                <View style={[
+                  styles.passwordContainer,
+                  { 
+                    backgroundColor: colors.background,
+                    borderColor: errors.password ? colors.error : colors.border,
+                  }
+                ]}>
                   <TextInput
-                    className="flex-1 py-3 text-base text-gray-900 dark:text-white"
+                    style={[styles.passwordInput, { color: colors.text }]}
                     placeholder="Enter your password"
-                    placeholderTextColor="#9CA3AF"
+                    placeholderTextColor={colors.mutedForeground}
                     value={formData.password}
                     onChangeText={(value) => handleInputChange('password', value)}
                     secureTextEntry={!showPassword}
                   />
-                  <TouchableOpacity 
-                    className="p-1"
+                  <TouchableOpacity
+                    style={styles.eyeButton}
                     onPress={() => setShowPassword(!showPassword)}
                   >
-                    <IconSymbol 
-                      name={showPassword ? 'eye.slash' : 'eye'} 
-                      size={20} 
-                      color="#9CA3AF" 
+                    <IconSymbol
+                      name={showPassword ? 'eye.slash' : 'eye'}
+                      size={20}
+                      color={colors.mutedForeground}
                     />
                   </TouchableOpacity>
                 </View>
                 {errors.password && (
-                  <Text className="text-sm text-red-500 mt-1">
+                  <Text style={[styles.errorText, { color: colors.error }]}>
                     {errors.password}
                   </Text>
                 )}
@@ -313,33 +354,47 @@ export default function AuthScreen() {
 
               {!isLogin && (
                 <>
-                  <View className="gap-2">
-                    <Text className="text-sm font-semibold text-gray-900 dark:text-white">
+                  <View style={styles.inputContainer}>
+                    <Text style={[styles.inputLabel, { color: colors.text }]}>
                       Confirm Password
                     </Text>
                     <TextInput
-                      className={`border rounded-xl px-3 py-3 text-base bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white ${errors.confirmPassword ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'}`}
+                      style={[
+                        styles.input,
+                        { 
+                          backgroundColor: colors.background,
+                          borderColor: errors.confirmPassword ? colors.error : colors.border,
+                          color: colors.text,
+                        }
+                      ]}
                       placeholder="Confirm your password"
-                      placeholderTextColor="#9CA3AF"
+                      placeholderTextColor={colors.mutedForeground}
                       value={formData.confirmPassword}
                       onChangeText={(value) => handleInputChange('confirmPassword', value)}
-                      secureTextEntry={!showPassword}
+                      secureTextEntry={true}
                     />
                     {errors.confirmPassword && (
-                      <Text className="text-sm text-red-500 mt-1">
+                      <Text style={[styles.errorText, { color: colors.error }]}>
                         {errors.confirmPassword}
                       </Text>
                     )}
                   </View>
 
-                  <View className="gap-2">
-                    <Text className="text-sm font-semibold text-gray-900 dark:text-white">
-                      Address
+                  <View style={styles.inputContainer}>
+                    <Text style={[styles.inputLabel, { color: colors.text }]}>
+                      Address (Optional)
                     </Text>
                     <TextInput
-                      className={`border rounded-xl px-3 py-3 text-base bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white ${errors.address ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'}`}
+                      style={[
+                        styles.input,
+                        { 
+                          backgroundColor: colors.background,
+                          borderColor: colors.border,
+                          color: colors.text,
+                        }
+                      ]}
                       placeholder="Enter your address"
-                      placeholderTextColor="#9CA3AF"
+                      placeholderTextColor={colors.mutedForeground}
                       value={formData.address}
                       onChangeText={(value) => handleInputChange('address', value)}
                       multiline
@@ -352,18 +407,18 @@ export default function AuthScreen() {
 
             {/* Demo Data Button */}
             <TouchableOpacity
-              className="flex-row items-center justify-center py-2 px-3 rounded-xl mt-5 gap-1 bg-purple-100 dark:bg-purple-900/30"
+              style={[styles.demoButton, { backgroundColor: colors.accent + '20' }]}
               onPress={fillDummyData}
             >
-              <IconSymbol name="wand.and.stars" size={16} color="#9333ea" />
-              <Text className="text-sm font-medium text-purple-600 dark:text-purple-400">
+              <IconSymbol name="wand.and.stars" size={16} color={colors.accent} />
+              <Text style={[styles.demoButtonText, { color: colors.accent }]}>
                 Fill Demo Data
               </Text>
             </TouchableOpacity>
 
             {/* Submit Button */}
             <TouchableOpacity
-              className="flex-row items-center justify-center py-5 rounded-xl mt-6 gap-2 bg-purple-600 shadow-lg"
+              style={[styles.submitButton, { backgroundColor: colors.primary }]}
               onPress={handleSubmit}
               disabled={isLoading}
             >
@@ -371,7 +426,7 @@ export default function AuthScreen() {
                 <ActivityIndicator color="#FFFFFF" />
               ) : (
                 <>
-                  <Text className="text-white text-lg font-semibold">
+                  <Text style={styles.submitButtonText}>
                     {isLogin ? 'Sign In' : 'Create Account'}
                   </Text>
                   <IconSymbol name="arrow.right" size={20} color="#FFFFFF" />
@@ -379,11 +434,21 @@ export default function AuthScreen() {
               )}
             </TouchableOpacity>
 
+            {/* Demo Login Helper */}
+            <TouchableOpacity 
+              style={[styles.demoButton, { backgroundColor: colors.muted }]} 
+              onPress={fillDummyData}
+            >
+              <Text style={[styles.demoButtonText, { color: colors.mutedForeground }]}>
+                Fill Demo Data
+              </Text>
+            </TouchableOpacity>
+
             {/* Toggle Auth Mode */}
-            <TouchableOpacity className="items-center mt-5 py-3" onPress={toggleAuthMode}>
-              <Text className="text-base text-gray-600 dark:text-gray-400">
+            <TouchableOpacity style={styles.switchModeButton} onPress={toggleAuthMode}>
+              <Text style={[styles.switchModeText, { color: colors.mutedForeground }]}>
                 {isLogin ? "Don't have an account? " : "Already have an account? "}
-                <Text className="text-purple-600 font-semibold">
+                <Text style={{ color: colors.primary, fontWeight: '600' }}>
                   {isLogin ? 'Sign Up' : 'Sign In'}
                 </Text>
               </Text>
@@ -394,3 +459,152 @@ export default function AuthScreen() {
     </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  gradient: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingHorizontal: 24,
+    paddingVertical: 32,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 32,
+    paddingTop: 32,
+  },
+  logo: {
+    width: 80,
+    height: 80,
+    borderRadius: 20,
+    marginBottom: 24,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "700",
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 18,
+    textAlign: 'center',
+    lineHeight: 24,
+  },
+  formCard: {
+    borderRadius: 24,
+    padding: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    borderRadius: 16,
+    padding: 4,
+    marginBottom: 24,
+  },
+  toggleButton: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  toggleText: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  formFields: {
+    gap: 20,
+  },
+  inputContainer: {
+    gap: 8,
+  },
+  inputLabel: {
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  input: {
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    fontSize: 16,
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+  },
+  passwordInput: {
+    flex: 1,
+    paddingVertical: 12,
+    fontSize: 16,
+  },
+  eyeButton: {
+    padding: 4,
+  },
+  errorText: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+  demoButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+    marginTop: 20,
+    gap: 4,
+  },
+  demoButtonText: {
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  submitButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+    borderRadius: 12,
+    marginTop: 24,
+    gap: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  submitButtonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: "600",
+  },
+  demoButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginTop: 12,
+  },
+  demoButtonText: {
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  switchModeButton: {
+    alignItems: 'center',
+    marginTop: 20,
+    paddingVertical: 12,
+  },
+  switchModeText: {
+    fontSize: 16,
+  },
+});

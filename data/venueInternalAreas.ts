@@ -1,0 +1,1108 @@
+/**
+ * Enhanced Venue Internal Areas Data Structure with Realistic Stores
+ * Complete mock data for Sandton City with all categories populated
+ * Includes BLE beacon coordinates and Google Maps integration
+ */
+
+export interface InternalArea {
+  id: string;
+  name: string;
+  type: 'Medical' | 'Retail' | 'Service' | 'Food' | 'Entertainment' | 'Education' | 'Administration' | 'Emergency';
+  icon: string;
+  description?: string;
+  location: {
+    floor: number;
+    x: number; // Indoor coordinate system (0-200)
+    y: number; // Indoor coordinate system (0-150)
+    z?: number; // For multi-level areas
+  };
+  // Enhanced location data for Google Maps integration
+  realWorldCoordinates?: {
+    latitude: number;
+    longitude: number;
+  };
+  beaconId?: string; // BLE beacon reference
+  tags: string[]; // For fuzzy search
+  isHighPriority?: boolean; // For sorting
+  estimatedWalkTime?: number; // In seconds from entrance
+  openingHours?: string;
+  category?: string; // Sub-category for better filtering
+}
+
+export interface VenueInternalData {
+  venueId: string;
+  name: string;
+  type: 'hospital' | 'mall' | 'school' | 'government' | 'corporate' | 'airport' | 'transport';
+  internalAreas: InternalArea[];
+  floorPlans?: {
+    floor: number;
+    mapUrl?: string;
+    dimensions: { width: number; height: number };
+  }[];
+  entrances: {
+    id: string;
+    name: string;
+    location: { x: number; y: number; floor: number };
+    realWorldCoordinates: { latitude: number; longitude: number };
+    isMain: boolean;
+  }[];
+  // Enhanced venue coordinates for Google Maps
+  realWorldBounds: {
+    northeast: { latitude: number; longitude: number };
+    southwest: { latitude: number; longitude: number };
+  };
+}
+
+// Enhanced South African venue data with realistic stores and coordinates
+export const venueInternalAreas: Record<string, VenueInternalData> = {
+  // === SANDTON CITY - COMPLETE REALISTIC STORE DIRECTORY ===
+  'sandton-city': {
+    venueId: 'sandton-city',
+    name: 'Sandton City',
+    type: 'mall',
+    realWorldBounds: {
+      northeast: { latitude: -26.1073, longitude: 28.0535 },
+      southwest: { latitude: -26.1093, longitude: 28.0515 },
+    },
+    entrances: [
+      { 
+        id: 'main', 
+        name: 'Main Entrance (Rivonia Road)', 
+        location: { x: 0, y: 0, floor: 1 }, 
+        realWorldCoordinates: { latitude: -26.1083, longitude: 28.0525 },
+        isMain: true 
+      },
+      { 
+        id: 'parking-a', 
+        name: 'Parking Entrance A', 
+        location: { x: -20, y: 10, floor: 1 }, 
+        realWorldCoordinates: { latitude: -26.1085, longitude: 28.0520 },
+        isMain: false 
+      },
+      { 
+        id: 'nelson-mandela', 
+        name: 'Nelson Mandela Square Entrance', 
+        location: { x: 50, y: 30, floor: 1 }, 
+        realWorldCoordinates: { latitude: -26.1080, longitude: 28.0530 },
+        isMain: false 
+      },
+    ],
+    floorPlans: [
+      { floor: 1, dimensions: { width: 200, height: 150 } },
+      { floor: 2, dimensions: { width: 180, height: 130 } },
+    ],
+    internalAreas: [
+      // === MEDICAL CATEGORY ===
+      {
+        id: 'clicks-pharmacy',
+        name: 'Clicks Pharmacy',
+        type: 'Medical',
+        icon: 'cross.fill',
+        description: 'Full-service pharmacy with health and beauty products',
+        location: { floor: 1, x: 25, y: 35 },
+        realWorldCoordinates: { latitude: -26.1082, longitude: 28.0527 },
+        beaconId: 'sc-clicks-01',
+        tags: ['pharmacy', 'health', 'medicine', 'beauty', 'clicks'],
+        isHighPriority: true,
+        estimatedWalkTime: 90,
+        openingHours: '8:00 AM - 8:00 PM',
+        category: 'Pharmacy',
+      },
+      {
+        id: 'dischem-pharmacy',
+        name: 'Dis-Chem Pharmacy',
+        type: 'Medical',
+        icon: 'cross.fill',
+        description: 'Large pharmacy with clinic services and health products',
+        location: { floor: 1, x: 140, y: 25 },
+        realWorldCoordinates: { latitude: -26.1081, longitude: 28.0532 },
+        beaconId: 'sc-dischem-01',
+        tags: ['pharmacy', 'clinic', 'health', 'medicine', 'dischem'],
+        isHighPriority: true,
+        estimatedWalkTime: 150,
+        openingHours: '8:00 AM - 9:00 PM',
+        category: 'Pharmacy',
+      },
+      {
+        id: 'optometrist',
+        name: 'Spec-Savers Optometrists',
+        type: 'Medical',
+        icon: 'eye',
+        description: 'Eye care specialists and optical services',
+        location: { floor: 2, x: 45, y: 40 },
+        realWorldCoordinates: { latitude: -26.1082, longitude: 28.0528 },
+        beaconId: 'sc-specsavers-01',
+        tags: ['optometrist', 'glasses', 'eye care', 'vision'],
+        estimatedWalkTime: 180,
+        openingHours: '9:00 AM - 6:00 PM',
+        category: 'Specialist',
+      },
+
+      // === RETAIL CATEGORY ===
+      {
+        id: 'woolworths',
+        name: 'Woolworths',
+        type: 'Retail',
+        icon: 'storefront',
+        description: 'Premium food and clothing retailer',
+        location: { floor: 1, x: 80, y: 45 },
+        realWorldCoordinates: { latitude: -26.1083, longitude: 28.0529 },
+        beaconId: 'sc-woolworths-01',
+        tags: ['grocery', 'food', 'clothing', 'woolies', 'premium'],
+        isHighPriority: true,
+        estimatedWalkTime: 120,
+        openingHours: '8:00 AM - 9:00 PM',
+        category: 'Department Store',
+      },
+      {
+        id: 'checkers',
+        name: 'Checkers Hyper',
+        type: 'Retail',
+        icon: 'cart',
+        description: 'Large supermarket and grocery store',
+        location: { floor: 1, x: 120, y: 60 },
+        realWorldCoordinates: { latitude: -26.1084, longitude: 28.0531 },
+        beaconId: 'sc-checkers-01',
+        tags: ['grocery', 'supermarket', 'food', 'bulk', 'hyper'],
+        isHighPriority: true,
+        estimatedWalkTime: 180,
+        openingHours: '7:00 AM - 10:00 PM',
+        category: 'Supermarket',
+      },
+      {
+        id: 'hm-fashion',
+        name: 'H&M',
+        type: 'Retail',
+        icon: 'tshirt',
+        description: 'International fashion clothing store',
+        location: { floor: 1, x: 60, y: 65 },
+        realWorldCoordinates: { latitude: -26.1084, longitude: 28.0528 },
+        beaconId: 'sc-hm-01',
+        tags: ['fashion', 'clothing', 'international', 'trendy', 'affordable'],
+        isHighPriority: true,
+        estimatedWalkTime: 100,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Fashion',
+      },
+      {
+        id: 'zara',
+        name: 'Zara',
+        type: 'Retail',
+        icon: 'tshirt',
+        description: 'Spanish fast fashion retailer',
+        location: { floor: 2, x: 70, y: 50 },
+        realWorldCoordinates: { latitude: -26.1082, longitude: 28.0529 },
+        beaconId: 'sc-zara-01',
+        tags: ['fashion', 'clothing', 'spanish', 'trendy', 'premium'],
+        estimatedWalkTime: 160,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Fashion',
+      },
+      {
+        id: 'edgars',
+        name: 'Edgars',
+        type: 'Retail',
+        icon: 'storefront',
+        description: 'South African department store',
+        location: { floor: 2, x: 90, y: 60 },
+        realWorldCoordinates: { latitude: -26.1083, longitude: 28.0530 },
+        beaconId: 'sc-edgars-01',
+        tags: ['department store', 'clothing', 'south african', 'traditional'],
+        estimatedWalkTime: 170,
+        openingHours: '9:00 AM - 8:00 PM',
+        category: 'Department Store',
+      },
+      {
+        id: 'game-store',
+        name: 'Game',
+        type: 'Retail',
+        icon: 'gamecontroller',
+        description: 'Electronics, gaming and technology store',
+        location: { floor: 1, x: 150, y: 80 },
+        realWorldCoordinates: { latitude: -26.1085, longitude: 28.0532 },
+        beaconId: 'sc-game-01',
+        tags: ['electronics', 'gaming', 'technology', 'computers'],
+        isHighPriority: true,
+        estimatedWalkTime: 200,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Electronics',
+      },
+      {
+        id: 'incredible-connection',
+        name: 'Incredible Connection',
+        type: 'Retail',
+        icon: 'phone',
+        description: 'Mobile phones and technology accessories',
+        location: { floor: 1, x: 130, y: 70 },
+        realWorldCoordinates: { latitude: -26.1084, longitude: 28.0531 },
+        beaconId: 'sc-ic-01',
+        tags: ['mobile', 'phones', 'technology', 'accessories'],
+        estimatedWalkTime: 175,
+        openingHours: '9:00 AM - 8:00 PM',
+        category: 'Electronics',
+      },
+      {
+        id: 'exclusive-books',
+        name: 'Exclusive Books',
+        type: 'Retail',
+        icon: 'book',
+        description: 'Bookstore with wide selection of books and magazines',
+        location: { floor: 2, x: 110, y: 45 },
+        realWorldCoordinates: { latitude: -26.1082, longitude: 28.0531 },
+        beaconId: 'sc-books-01',
+        tags: ['books', 'reading', 'magazines', 'literature'],
+        estimatedWalkTime: 165,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Books',
+      },
+
+      // === SERVICE CATEGORY ===
+      {
+        id: 'fnb-bank',
+        name: 'FNB Bank',
+        type: 'Service',
+        icon: 'building.columns',
+        description: 'Full-service bank with ATMs and customer service',
+        location: { floor: 1, x: 30, y: 15 },
+        realWorldCoordinates: { latitude: -26.1081, longitude: 28.0526 },
+        beaconId: 'sc-fnb-01',
+        tags: ['bank', 'atm', 'financial', 'money', 'fnb'],
+        isHighPriority: true,
+        estimatedWalkTime: 60,
+        openingHours: '9:00 AM - 4:00 PM',
+        category: 'Banking',
+      },
+      {
+        id: 'absa-bank',
+        name: 'ABSA Bank',
+        type: 'Service',
+        icon: 'building.columns',
+        description: 'Banking services and ATM facilities',
+        location: { floor: 1, x: 160, y: 20 },
+        realWorldCoordinates: { latitude: -26.1081, longitude: 28.0533 },
+        beaconId: 'sc-absa-01',
+        tags: ['bank', 'atm', 'financial', 'absa'],
+        estimatedWalkTime: 140,
+        openingHours: '9:00 AM - 4:00 PM',
+        category: 'Banking',
+      },
+      {
+        id: 'postnet',
+        name: 'PostNet',
+        type: 'Service',
+        icon: 'envelope',
+        description: 'Postal and courier services',
+        location: { floor: 1, x: 40, y: 95 },
+        realWorldCoordinates: { latitude: -26.1086, longitude: 28.0527 },
+        beaconId: 'sc-postnet-01',
+        tags: ['postal', 'courier', 'shipping', 'mail'],
+        estimatedWalkTime: 110,
+        openingHours: '8:00 AM - 5:00 PM',
+        category: 'Postal',
+      },
+      {
+        id: 'vodacom-store',
+        name: 'Vodacom Store',
+        type: 'Service',
+        icon: 'phone',
+        description: 'Mobile network services and device sales',
+        location: { floor: 1, x: 100, y: 25 },
+        realWorldCoordinates: { latitude: -26.1081, longitude: 28.0530 },
+        beaconId: 'sc-vodacom-01',
+        tags: ['mobile', 'network', 'vodacom', 'sim', 'data'],
+        estimatedWalkTime: 85,
+        openingHours: '8:00 AM - 7:00 PM',
+        category: 'Telecommunications',
+      },
+      {
+        id: 'mtn-store',
+        name: 'MTN Store',
+        type: 'Service',
+        icon: 'phone',
+        description: 'Mobile network provider and services',
+        location: { floor: 2, x: 55, y: 30 },
+        realWorldCoordinates: { latitude: -26.1081, longitude: 28.0528 },
+        beaconId: 'sc-mtn-01',
+        tags: ['mobile', 'network', 'mtn', 'sim', 'data'],
+        estimatedWalkTime: 155,
+        openingHours: '8:00 AM - 7:00 PM',
+        category: 'Telecommunications',
+      },
+
+      // === FOOD CATEGORY ===
+      {
+        id: 'nandos',
+        name: "Nando's",
+        type: 'Food',
+        icon: 'fork.knife',
+        description: 'Portuguese-style flame-grilled chicken',
+        location: { floor: 1, x: 60, y: 50 },
+        realWorldCoordinates: { latitude: -26.1083, longitude: 28.0528 },
+        beaconId: 'sc-nandos-01',
+        tags: ['chicken', 'portuguese', 'flame-grilled', 'fast food'],
+        isHighPriority: true,
+        estimatedWalkTime: 95,
+        openingHours: '9:00 AM - 10:00 PM',
+        category: 'Fast Food',
+      },
+      {
+        id: 'kfc',
+        name: 'KFC',
+        type: 'Food',
+        icon: 'fork.knife',
+        description: 'Fried chicken fast food restaurant',
+        location: { floor: 1, x: 50, y: 85 },
+        realWorldCoordinates: { latitude: -26.1085, longitude: 28.0528 },
+        beaconId: 'sc-kfc-01',
+        tags: ['chicken', 'fried', 'fast food', 'kfc'],
+        isHighPriority: true,
+        estimatedWalkTime: 115,
+        openingHours: '9:00 AM - 10:00 PM',
+        category: 'Fast Food',
+      },
+      {
+        id: 'mcdonalds',
+        name: "McDonald's",
+        type: 'Food',
+        icon: 'fork.knife',
+        description: 'International fast food chain',
+        location: { floor: 1, x: 70, y: 90 },
+        realWorldCoordinates: { latitude: -26.1085, longitude: 28.0529 },
+        beaconId: 'sc-mcdonalds-01',
+        tags: ['burgers', 'fast food', 'mcdonalds', 'international'],
+        isHighPriority: true,
+        estimatedWalkTime: 125,
+        openingHours: '6:00 AM - 11:00 PM',
+        category: 'Fast Food',
+      },
+      {
+        id: 'kauai',
+        name: 'Kauai',
+        type: 'Food',
+        icon: 'leaf',
+        description: 'Health-focused smoothies and fresh food',
+        location: { floor: 2, x: 85, y: 40 },
+        realWorldCoordinates: { latitude: -26.1082, longitude: 28.0529 },
+        beaconId: 'sc-kauai-01',
+        tags: ['healthy', 'smoothies', 'fresh', 'salads'],
+        estimatedWalkTime: 160,
+        openingHours: '7:00 AM - 8:00 PM',
+        category: 'Health Food',
+      },
+      {
+        id: 'vida-cafe',
+        name: 'Vida e Caffè',
+        type: 'Food',
+        icon: 'cup.and.saucer',
+        description: 'Premium coffee and light meals',
+        location: { floor: 1, x: 35, y: 55 },
+        realWorldCoordinates: { latitude: -26.1083, longitude: 28.0527 },
+        beaconId: 'sc-vida-01',
+        tags: ['coffee', 'cafe', 'premium', 'light meals'],
+        estimatedWalkTime: 80,
+        openingHours: '6:30 AM - 8:00 PM',
+        category: 'Coffee Shop',
+      },
+      {
+        id: 'mugg-bean',
+        name: 'Mugg & Bean',
+        type: 'Food',
+        icon: 'cup.and.saucer',
+        description: 'Coffee shop with generous portions',
+        location: { floor: 2, x: 65, y: 65 },
+        realWorldCoordinates: { latitude: -26.1083, longitude: 28.0529 },
+        beaconId: 'sc-muggbean-01',
+        tags: ['coffee', 'cafe', 'generous', 'breakfast'],
+        estimatedWalkTime: 180,
+        openingHours: '7:00 AM - 9:00 PM',
+        category: 'Coffee Shop',
+      },
+      {
+        id: 'food-court',
+        name: 'Food Court',
+        type: 'Food',
+        icon: 'fork.knife.circle',
+        description: 'Various food vendors and dining options',
+        location: { floor: 2, x: 120, y: 80 },
+        realWorldCoordinates: { latitude: -26.1084, longitude: 28.0531 },
+        beaconId: 'sc-foodcourt-01',
+        tags: ['food court', 'variety', 'dining', 'multiple options'],
+        isHighPriority: true,
+        estimatedWalkTime: 200,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Food Court',
+      },
+
+      // === ENTERTAINMENT CATEGORY ===
+      {
+        id: 'ster-kinekor',
+        name: 'Ster-Kinekor Cinema',
+        type: 'Entertainment',
+        icon: 'film',
+        description: 'Multi-screen cinema complex',
+        location: { floor: 2, x: 150, y: 70 },
+        realWorldCoordinates: { latitude: -26.1083, longitude: 28.0532 },
+        beaconId: 'sc-cinema-01',
+        tags: ['cinema', 'movies', 'entertainment', 'ster-kinekor'],
+        isHighPriority: true,
+        estimatedWalkTime: 220,
+        openingHours: '9:00 AM - 11:00 PM',
+        category: 'Cinema',
+      },
+      {
+        id: 'timezone-arcade',
+        name: 'Timezone Arcade',
+        type: 'Entertainment',
+        icon: 'gamecontroller',
+        description: 'Gaming arcade with various games',
+        location: { floor: 2, x: 130, y: 90 },
+        realWorldCoordinates: { latitude: -26.1084, longitude: 28.0531 },
+        beaconId: 'sc-timezone-01',
+        tags: ['arcade', 'games', 'entertainment', 'kids'],
+        estimatedWalkTime: 210,
+        openingHours: '10:00 AM - 10:00 PM',
+        category: 'Gaming',
+      },
+      {
+        id: 'kidz-zone',
+        name: 'Kidz Zone',
+        type: 'Entertainment',
+        icon: 'figure.child.circle',
+        description: 'Children\'s play area and activities',
+        location: { floor: 1, x: 90, y: 100 },
+        realWorldCoordinates: { latitude: -26.1086, longitude: 28.0530 },
+        beaconId: 'sc-kids-01',
+        tags: ['kids', 'children', 'play', 'activities'],
+        estimatedWalkTime: 140,
+        openingHours: '9:00 AM - 7:00 PM',
+        category: 'Kids',
+      },
+
+      // === EDUCATION CATEGORY ===
+      {
+        id: 'virgin-active-gym',
+        name: 'Virgin Active Gym',
+        type: 'Education',
+        icon: 'figure.walk',
+        description: 'Fitness center and wellness facilities',
+        location: { floor: 2, x: 40, y: 20 },
+        realWorldCoordinates: { latitude: -26.1081, longitude: 28.0527 },
+        beaconId: 'sc-gym-01',
+        tags: ['fitness', 'gym', 'wellness', 'exercise'],
+        estimatedWalkTime: 200,
+        openingHours: '5:00 AM - 10:00 PM',
+        category: 'Fitness',
+      },
+      {
+        id: 'learning-center',
+        name: 'Sandton Learning Center',
+        type: 'Education',
+        icon: 'book',
+        description: 'Educational courses and training',
+        location: { floor: 2, x: 25, y: 60 },
+        realWorldCoordinates: { latitude: -26.1083, longitude: 28.0526 },
+        beaconId: 'sc-learning-01',
+        tags: ['education', 'learning', 'courses', 'training'],
+        estimatedWalkTime: 190,
+        openingHours: '8:00 AM - 6:00 PM',
+        category: 'Training',
+      },
+
+      // === ADMINISTRATION CATEGORY ===
+      {
+        id: 'customer-service',
+        name: 'Customer Service Centre',
+        type: 'Administration',
+        icon: 'info.circle',
+        description: 'Mall information and customer assistance',
+        location: { floor: 1, x: 15, y: 25 },
+        realWorldCoordinates: { latitude: -26.1082, longitude: 28.0526 },
+        beaconId: 'sc-info-01',
+        tags: ['information', 'customer service', 'help', 'assistance'],
+        isHighPriority: true,
+        estimatedWalkTime: 45,
+        openingHours: '9:00 AM - 6:00 PM',
+        category: 'Information',
+      },
+      {
+        id: 'security-office',
+        name: 'Security Office',
+        type: 'Administration',
+        icon: 'shield',
+        description: 'Mall security and lost property',
+        location: { floor: 1, x: 180, y: 30 },
+        realWorldCoordinates: { latitude: -26.1082, longitude: 28.0533 },
+        beaconId: 'sc-security-01',
+        tags: ['security', 'lost property', 'safety'],
+        estimatedWalkTime: 160,
+        openingHours: '24 hours',
+        category: 'Security',
+      },
+      {
+        id: 'management-office',
+        name: 'Mall Management',
+        type: 'Administration',
+        icon: 'building.2',
+        description: 'Mall administration and management',
+        location: { floor: 2, x: 15, y: 15 },
+        realWorldCoordinates: { latitude: -26.1081, longitude: 28.0526 },
+        beaconId: 'sc-mgmt-01',
+        tags: ['management', 'administration', 'office'],
+        estimatedWalkTime: 180,
+        openingHours: '9:00 AM - 5:00 PM',
+        category: 'Management',
+      },
+
+      // === EMERGENCY CATEGORY ===
+      {
+        id: 'emergency-exit-north',
+        name: 'Emergency Exit - North',
+        type: 'Emergency',
+        icon: 'exclamationmark.triangle',
+        description: 'Emergency exit towards parking area',
+        location: { floor: 1, x: 10, y: 75 },
+        realWorldCoordinates: { latitude: -26.1084, longitude: 28.0525 },
+        beaconId: 'sc-exit-north-01',
+        tags: ['emergency', 'exit', 'safety', 'evacuation'],
+        isHighPriority: true,
+        estimatedWalkTime: 90,
+        openingHours: '24 hours',
+        category: 'Emergency Exit',
+      },
+      {
+        id: 'emergency-exit-south',
+        name: 'Emergency Exit - South',
+        type: 'Emergency',
+        icon: 'exclamationmark.triangle',
+        description: 'Emergency exit towards Rivonia Road',
+        location: { floor: 1, x: 190, y: 100 },
+        realWorldCoordinates: { latitude: -26.1086, longitude: 28.0533 },
+        beaconId: 'sc-exit-south-01',
+        tags: ['emergency', 'exit', 'safety', 'evacuation'],
+        isHighPriority: true,
+        estimatedWalkTime: 180,
+        openingHours: '24 hours',
+        category: 'Emergency Exit',
+      },
+      {
+        id: 'first-aid-station',
+        name: 'First Aid Station',
+        type: 'Emergency',
+        icon: 'cross.case.fill',
+        description: 'Medical emergency assistance',
+        location: { floor: 1, x: 75, y: 25 },
+        realWorldCoordinates: { latitude: -26.1082, longitude: 28.0529 },
+        beaconId: 'sc-firstaid-01',
+        tags: ['first aid', 'medical', 'emergency', 'help'],
+        isHighPriority: true,
+        estimatedWalkTime: 70,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Medical Emergency',
+      },
+    ],
+  },
+
+  // === V&A WATERFRONT - COMPREHENSIVE SOUTH AFRICAN DESTINATION ===
+  'v-a-waterfront': {
+    venueId: 'v-a-waterfront',
+    name: 'V&A Waterfront',
+    type: 'mall',
+    realWorldBounds: {
+      northeast: { latitude: -33.9015, longitude: 18.4194 },
+      southwest: { latitude: -33.9045, longitude: 18.4164 },
+    },
+    entrances: [
+      { 
+        id: 'clock-tower', 
+        name: 'Clock Tower Entrance', 
+        location: { x: 0, y: 0, floor: 1 }, 
+        realWorldCoordinates: { latitude: -33.9030, longitude: 18.4179 },
+        isMain: true 
+      },
+      { 
+        id: 'waterfront-parking', 
+        name: 'Waterfront Parking Entrance', 
+        location: { x: -30, y: 20, floor: 1 }, 
+        realWorldCoordinates: { latitude: -33.9035, longitude: 18.4174 },
+        isMain: false 
+      },
+      { 
+        id: 'amphitheatre', 
+        name: 'Amphitheatre Entrance', 
+        location: { x: 40, y: 30, floor: 1 }, 
+        realWorldCoordinates: { latitude: -33.9025, longitude: 18.4184 },
+        isMain: false 
+      },
+    ],
+    floorPlans: [
+      { floor: 1, dimensions: { width: 250, height: 180 } },
+      { floor: 2, dimensions: { width: 200, height: 150 } },
+    ],
+    internalAreas: [
+      // === RETAIL - FASHION & LIFESTYLE ===
+      {
+        id: 'woolworths-vna',
+        name: 'Woolworths',
+        type: 'Retail',
+        icon: 'bag',
+        description: 'Premium South African retailer',
+        location: { floor: 1, x: 80, y: 60 },
+        realWorldCoordinates: { latitude: -33.9028, longitude: 18.4182 },
+        beaconId: 'vna-woolworths-01',
+        tags: ['clothing', 'fashion', 'premium', 'south african'],
+        isHighPriority: true,
+        estimatedWalkTime: 180,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Fashion',
+      },
+      {
+        id: 'truworths-vna',
+        name: 'Truworths',
+        type: 'Retail',
+        icon: 'bag',
+        description: 'South African fashion retailer',
+        location: { floor: 1, x: 120, y: 65 },
+        realWorldCoordinates: { latitude: -33.9027, longitude: 18.4185 },
+        beaconId: 'vna-truworths-01',
+        tags: ['fashion', 'clothing', 'south african', 'men', 'women'],
+        isHighPriority: true,
+        estimatedWalkTime: 240,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Fashion',
+      },
+      {
+        id: 'foschini-vna',
+        name: 'Foschini',
+        type: 'Retail',
+        icon: 'bag',
+        description: 'Popular South African fashion chain',
+        location: { floor: 2, x: 90, y: 70 },
+        realWorldCoordinates: { latitude: -33.9026, longitude: 18.4183 },
+        beaconId: 'vna-foschini-01',
+        tags: ['fashion', 'trendy', 'affordable', 'young'],
+        isHighPriority: false,
+        estimatedWalkTime: 300,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Fashion',
+      },
+
+      // === FOOD & DINING ===
+      {
+        id: 'ocean-basket-vna',
+        name: 'Ocean Basket',
+        type: 'Food',
+        icon: 'fork.knife',
+        description: 'Popular South African seafood restaurant',
+        location: { floor: 2, x: 150, y: 80 },
+        realWorldCoordinates: { latitude: -33.9024, longitude: 18.4188 },
+        beaconId: 'vna-oceanbasket-01',
+        tags: ['seafood', 'restaurant', 'south african', 'casual dining'],
+        isHighPriority: true,
+        estimatedWalkTime: 360,
+        openingHours: '11:00 AM - 10:00 PM',
+        category: 'Casual Dining',
+      },
+      {
+        id: 'nandos-vna',
+        name: 'Nando\'s',
+        type: 'Food',
+        icon: 'fork.knife',
+        description: 'Famous South African peri-peri chicken',
+        location: { floor: 1, x: 180, y: 90 },
+        realWorldCoordinates: { latitude: -33.9023, longitude: 18.4191 },
+        beaconId: 'vna-nandos-01',
+        tags: ['chicken', 'peri-peri', 'south african', 'fast casual'],
+        isHighPriority: true,
+        estimatedWalkTime: 420,
+        openingHours: '11:00 AM - 10:00 PM',
+        category: 'Fast Casual',
+      },
+      {
+        id: 'vida-e-caffe-vna',
+        name: 'Vida e Caffè',
+        type: 'Food',
+        icon: 'cup.and.saucer',
+        description: 'Premium South African coffee chain',
+        location: { floor: 1, x: 60, y: 45 },
+        realWorldCoordinates: { latitude: -33.9031, longitude: 18.4180 },
+        beaconId: 'vna-vida-01',
+        tags: ['coffee', 'cafe', 'premium', 'south african'],
+        isHighPriority: true,
+        estimatedWalkTime: 150,
+        openingHours: '7:00 AM - 9:00 PM',
+        category: 'Coffee Shop',
+      },
+
+      // === ENTERTAINMENT ===
+      {
+        id: 'ster-kinekor-vna',
+        name: 'Ster-Kinekor Nouveau',
+        type: 'Entertainment',
+        icon: 'tv',
+        description: 'Premium cinema experience',
+        location: { floor: 2, x: 200, y: 120 },
+        realWorldCoordinates: { latitude: -33.9021, longitude: 18.4193 },
+        beaconId: 'vna-cinema-01',
+        tags: ['movies', 'cinema', 'entertainment', 'premium'],
+        isHighPriority: true,
+        estimatedWalkTime: 480,
+        openingHours: '10:00 AM - 11:00 PM',
+        category: 'Cinema',
+      },
+      {
+        id: 'two-oceans-aquarium',
+        name: 'Two Oceans Aquarium',
+        type: 'Entertainment',
+        icon: 'fish',
+        description: 'World-class marine aquarium',
+        location: { floor: 1, x: 30, y: 120 },
+        realWorldCoordinates: { latitude: -33.9040, longitude: 18.4175 },
+        beaconId: 'vna-aquarium-01',
+        tags: ['aquarium', 'marine life', 'family', 'education'],
+        isHighPriority: true,
+        estimatedWalkTime: 600,
+        openingHours: '9:30 AM - 6:00 PM',
+        category: 'Attraction',
+      },
+
+      // === SERVICES ===
+      {
+        id: 'fnb-atm-vna',
+        name: 'FNB ATM',
+        type: 'Service',
+        icon: 'creditcard',
+        description: 'First National Bank ATM',
+        location: { floor: 1, x: 40, y: 50 },
+        realWorldCoordinates: { latitude: -33.9032, longitude: 18.4177 },
+        beaconId: 'vna-fnb-atm-01',
+        tags: ['banking', 'atm', 'fnb', 'cash'],
+        isHighPriority: true,
+        estimatedWalkTime: 120,
+        openingHours: '24/7',
+        category: 'Banking',
+      },
+      {
+        id: 'absa-atm-vna',
+        name: 'ABSA ATM',
+        type: 'Service',
+        icon: 'creditcard',
+        description: 'ABSA Bank ATM',
+        location: { floor: 2, x: 70, y: 90 },
+        realWorldCoordinates: { latitude: -33.9027, longitude: 18.4181 },
+        beaconId: 'vna-absa-atm-01',
+        tags: ['banking', 'atm', 'absa', 'cash'],
+        isHighPriority: false,
+        estimatedWalkTime: 280,
+        openingHours: '24/7',
+        category: 'Banking',
+      },
+      {
+        id: 'information-desk-vna',
+        name: 'Information Desk',
+        type: 'Service',
+        icon: 'info.circle',
+        description: 'Tourist and visitor information',
+        location: { floor: 1, x: 20, y: 30 },
+        realWorldCoordinates: { latitude: -33.9035, longitude: 18.4172 },
+        beaconId: 'vna-info-01',
+        tags: ['information', 'help', 'tourist', 'directions'],
+        isHighPriority: true,
+        estimatedWalkTime: 90,
+        openingHours: '9:00 AM - 6:00 PM',
+        category: 'Information',
+      },
+
+      // === SPECIALIZED SOUTH AFRICAN STORES ===
+      {
+        id: 'african-craft-market',
+        name: 'African Craft Market',
+        type: 'Retail',
+        icon: 'gift',
+        description: 'Authentic South African crafts and souvenirs',
+        location: { floor: 1, x: 160, y: 140 },
+        realWorldCoordinates: { latitude: -33.9020, longitude: 18.4190 },
+        beaconId: 'vna-crafts-01',
+        tags: ['crafts', 'souvenirs', 'african', 'handmade', 'local'],
+        isHighPriority: true,
+        estimatedWalkTime: 450,
+        openingHours: '9:00 AM - 6:00 PM',
+        category: 'Souvenirs',
+      },
+      {
+        id: 'cape-union-mart',
+        name: 'Cape Union Mart',
+        type: 'Retail',
+        icon: 'figure.hiking',
+        description: 'South African outdoor and adventure gear',
+        location: { floor: 1, x: 140, y: 110 },
+        realWorldCoordinates: { latitude: -33.9022, longitude: 18.4187 },
+        beaconId: 'vna-cum-01',
+        tags: ['outdoor', 'adventure', 'hiking', 'south african'],
+        isHighPriority: false,
+        estimatedWalkTime: 390,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Outdoor',
+      },
+    ],
+  },
+
+  // Canal Walk Shopping Centre
+  'canal-walk': {
+    venueId: 'canal-walk',
+    name: 'Canal Walk Shopping Centre',
+    type: 'mall',
+    realWorldBounds: {
+      northeast: { latitude: -33.8896, longitude: 18.5108 },
+      southwest: { latitude: -33.8916, longitude: 18.5088 },
+    },
+    entrances: [
+      { 
+        id: 'main', 
+        name: 'Main Entrance', 
+        location: { x: 0, y: 0, floor: 1 }, 
+        realWorldCoordinates: { latitude: -33.8906, longitude: 18.5098 },
+        isMain: true 
+      },
+    ],
+    floorPlans: [
+      { floor: 1, dimensions: { width: 180, height: 120 } },
+      { floor: 2, dimensions: { width: 160, height: 100 } },
+    ],
+    internalAreas: [
+      {
+        id: 'pick-n-pay',
+        name: 'Pick n Pay',
+        type: 'Retail',
+        icon: 'cart',
+        description: 'Large supermarket chain',
+        location: { floor: 1, x: 70, y: 40 },
+        realWorldCoordinates: { latitude: -33.8908, longitude: 18.5100 },
+        beaconId: 'cw-pnp-01',
+        tags: ['grocery', 'supermarket', 'food'],
+        isHighPriority: true,
+        estimatedWalkTime: 120,
+        openingHours: '8:00 AM - 8:00 PM',
+        category: 'Supermarket',
+      },
+    ],
+  },
+
+  // === GATEWAY THEATRE OF SHOPPING - DURBAN'S PREMIER DESTINATION ===
+  'gateway-theatre': {
+    venueId: 'gateway-theatre',
+    name: 'Gateway Theatre of Shopping',
+    type: 'mall',
+    realWorldBounds: {
+      northeast: { latitude: -29.7431, longitude: 31.0767 },
+      southwest: { latitude: -29.7451, longitude: 31.0747 },
+    },
+    entrances: [
+      { 
+        id: 'main-entrance', 
+        name: 'Main Entrance (N2)', 
+        location: { x: 0, y: 0, floor: 1 }, 
+        realWorldCoordinates: { latitude: -29.7441, longitude: 31.0757 },
+        isMain: true 
+      },
+      { 
+        id: 'wave-house', 
+        name: 'Wave House Entrance', 
+        location: { x: 50, y: -20, floor: 1 }, 
+        realWorldCoordinates: { latitude: -29.7445, longitude: 31.0762 },
+        isMain: false 
+      },
+    ],
+    floorPlans: [
+      { floor: 1, dimensions: { width: 300, height: 200 } },
+      { floor: 2, dimensions: { width: 280, height: 180 } },
+      { floor: 3, dimensions: { width: 200, height: 120 } },
+    ],
+    internalAreas: [
+      // === MAJOR RETAIL CHAINS ===
+      {
+        id: 'game-gateway',
+        name: 'Game',
+        type: 'Retail',
+        icon: 'gamecontroller',
+        description: 'Electronics and appliance megastore',
+        location: { floor: 2, x: 180, y: 120 },
+        realWorldCoordinates: { latitude: -29.7438, longitude: 31.0763 },
+        beaconId: 'gt-game-01',
+        tags: ['electronics', 'appliances', 'gaming', 'technology'],
+        isHighPriority: true,
+        estimatedWalkTime: 420,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Electronics',
+      },
+      {
+        id: 'edgars-gateway',
+        name: 'Edgars',
+        type: 'Retail',
+        icon: 'bag',
+        description: 'Leading South African department store',
+        location: { floor: 1, x: 120, y: 80 },
+        realWorldCoordinates: { latitude: -29.7440, longitude: 31.0760 },
+        beaconId: 'gt-edgars-01',
+        tags: ['department store', 'fashion', 'cosmetics', 'home'],
+        isHighPriority: true,
+        estimatedWalkTime: 300,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Department Store',
+      },
+      {
+        id: 'jet-gateway',
+        name: 'Jet',
+        type: 'Retail',
+        icon: 'bag',
+        description: 'Affordable fashion retailer',
+        location: { floor: 1, x: 90, y: 60 },
+        realWorldCoordinates: { latitude: -29.7442, longitude: 31.0758 },
+        beaconId: 'gt-jet-01',
+        tags: ['fashion', 'affordable', 'clothing', 'accessories'],
+        isHighPriority: false,
+        estimatedWalkTime: 240,
+        openingHours: '9:00 AM - 9:00 PM',
+        category: 'Fashion',
+      },
+
+      // === FOOD COURT & RESTAURANTS ===
+      {
+        id: 'steers-gateway',
+        name: 'Steers',
+        type: 'Food',
+        icon: 'fork.knife',
+        description: 'South African burger chain',
+        location: { floor: 3, x: 100, y: 60 },
+        realWorldCoordinates: { latitude: -29.7436, longitude: 31.0759 },
+        beaconId: 'gt-steers-01',
+        tags: ['burgers', 'south african', 'fast food', 'local'],
+        isHighPriority: true,
+        estimatedWalkTime: 480,
+        openingHours: '10:00 AM - 10:00 PM',
+        category: 'Fast Food',
+      },
+      {
+        id: 'wimpy-gateway',
+        name: 'Wimpy',
+        type: 'Food',
+        icon: 'fork.knife',
+        description: 'Family restaurant chain',
+        location: { floor: 3, x: 130, y: 70 },
+        realWorldCoordinates: { latitude: -29.7435, longitude: 31.0761 },
+        beaconId: 'gt-wimpy-01',
+        tags: ['family restaurant', 'burgers', 'breakfast', 'south african'],
+        isHighPriority: true,
+        estimatedWalkTime: 510,
+        openingHours: '7:00 AM - 10:00 PM',
+        category: 'Family Dining',
+      },
+      {
+        id: 'debonairs-gateway',
+        name: 'Debonairs Pizza',
+        type: 'Food',
+        icon: 'fork.knife',
+        description: 'South African pizza chain',
+        location: { floor: 3, x: 80, y: 50 },
+        realWorldCoordinates: { latitude: -29.7437, longitude: 31.0757 },
+        beaconId: 'gt-debonairs-01',
+        tags: ['pizza', 'south african', 'fast food', 'delivery'],
+        isHighPriority: false,
+        estimatedWalkTime: 450,
+        openingHours: '11:00 AM - 11:00 PM',
+        category: 'Pizza',
+      },
+
+      // === ENTERTAINMENT ===
+      {
+        id: 'nu-metro-gateway',
+        name: 'Nu Metro',
+        type: 'Entertainment',
+        icon: 'tv',
+        description: 'Modern cinema complex',
+        location: { floor: 3, x: 200, y: 100 },
+        realWorldCoordinates: { latitude: -29.7433, longitude: 31.0765 },
+        beaconId: 'gt-numetro-01',
+        tags: ['cinema', 'movies', 'entertainment', 'imax'],
+        isHighPriority: true,
+        estimatedWalkTime: 600,
+        openingHours: '10:00 AM - 11:00 PM',
+        category: 'Cinema',
+      },
+      {
+        id: 'wave-house-gateway',
+        name: 'Wave House',
+        type: 'Entertainment',
+        icon: 'water.waves',
+        description: 'Artificial wave surfing attraction',
+        location: { floor: 1, x: 250, y: 40 },
+        realWorldCoordinates: { latitude: -29.7444, longitude: 31.0768 },
+        beaconId: 'gt-wavehouse-01',
+        tags: ['surfing', 'adventure', 'unique', 'sport'],
+        isHighPriority: true,
+        estimatedWalkTime: 360,
+        openingHours: '10:00 AM - 10:00 PM',
+        category: 'Adventure',
+      },
+
+      // === SERVICES ===
+      {
+        id: 'standard-bank-gateway',
+        name: 'Standard Bank',
+        type: 'Service',
+        icon: 'building.columns',
+        description: 'Full-service bank branch',
+        location: { floor: 1, x: 60, y: 40 },
+        realWorldCoordinates: { latitude: -29.7443, longitude: 31.0756 },
+        beaconId: 'gt-stdbank-01',
+        tags: ['banking', 'atm', 'financial services', 'standard bank'],
+        isHighPriority: true,
+        estimatedWalkTime: 180,
+        openingHours: '9:00 AM - 4:00 PM',
+        category: 'Banking',
+      },
+      {
+        id: 'capitec-atm-gateway',
+        name: 'Capitec ATM',
+        type: 'Service',
+        icon: 'creditcard',
+        description: 'Capitec Bank ATM',
+        location: { floor: 2, x: 150, y: 90 },
+        realWorldCoordinates: { latitude: -29.7439, longitude: 31.0762 },
+        beaconId: 'gt-capitec-01',
+        tags: ['banking', 'atm', 'capitec', 'cash'],
+        isHighPriority: false,
+        estimatedWalkTime: 360,
+        openingHours: '24/7',
+        category: 'Banking',
+      },
+    ],
+  },
+};
+
+// Helper functions for accessing venue data
+export function getVenueInternalAreas(venueId: string): InternalArea[] {
+  const venue = venueInternalAreas[venueId];
+  return venue ? venue.internalAreas : [];
+}
+
+export function searchInternalAreas(venueId: string, query: string): InternalArea[] {
+  const areas = getVenueInternalAreas(venueId);
+  const lowercaseQuery = query.toLowerCase();
+  
+  return areas.filter(area => 
+    area.name.toLowerCase().includes(lowercaseQuery) ||
+    area.description?.toLowerCase().includes(lowercaseQuery) ||
+    area.tags.some(tag => tag.toLowerCase().includes(lowercaseQuery)) ||
+    area.type.toLowerCase().includes(lowercaseQuery)
+  );
+}
+
+export function getAreasByType(venueId: string, type: InternalArea['type']): InternalArea[] {
+  const areas = getVenueInternalAreas(venueId);
+  return areas.filter(area => area.type === type);
+}
+
+export function getPriorityAreas(venueId: string): InternalArea[] {
+  const areas = getVenueInternalAreas(venueId);
+  return areas.filter(area => area.isHighPriority);
+}

@@ -71,13 +71,24 @@ export const DealsCarousel: React.FC<DealsCarouselProps> = ({
   dealsData = deals, 
   onDealPress 
 }) => {
+  // Ensure dealsData is always an array
+  const safeDealsData = Array.isArray(dealsData) && dealsData.length > 0 ? dealsData : [];
+
+  if (safeDealsData.length === 0) {
+    return (
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyText}>No deals available</Text>
+      </View>
+    );
+  }
+
   return (
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.scrollContainer}
     >
-      {dealsData.map((deal) => (
+      {safeDealsData.map((deal) => (
         <DealCard
           key={deal.id}
           deal={deal}
@@ -152,6 +163,19 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingHorizontal: spacing.md,
+  },
+  emptyContainer: {
+    height: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.gray[100],
+    borderRadius: borderRadius.lg,
+    margin: spacing.md,
+  },
+  emptyText: {
+    color: colors.gray[600],
+    fontSize: 16,
+    fontWeight: '500',
   },
 });
 

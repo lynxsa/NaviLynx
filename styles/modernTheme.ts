@@ -183,7 +183,7 @@ export const styles = StyleSheet.create({
   
   // Buttons
   buttonPrimary: {
-    backgroundColor: colors.primary[600],
+    backgroundColor: colors.primary,
     borderRadius: borderRadius.lg,
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.lg,
@@ -321,7 +321,11 @@ export const styles = StyleSheet.create({
   
   // Gradients (using solid color for now)
   gradientPrimary: {
-    backgroundColor: colors.primary[600],
+    backgroundColor: colors.primary,
+  },
+  
+  // Hero Card
+  heroCard: {
     borderRadius: borderRadius['2xl'],
     padding: spacing.lg,
     ...shadows.md,

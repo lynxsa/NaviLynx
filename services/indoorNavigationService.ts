@@ -3,7 +3,7 @@ import {
   MallLayout, 
   PointOfInterest, 
   Route, 
-  Coordinates, 
+  IndoorCoordinates, 
   NavigationUserPreferences, 
   PathSegment,
   MallFloor
@@ -472,15 +472,20 @@ class IndoorNavigationService {
         const fromName = fromPoi?.name || 'previous point';
         const toName = toPoi?.name || 'next point';
         let instruction = '';
+        // Helper to get level safely
+        const getLevel = (poi: any) => {
+          return poi?.coordinates && 'level' in poi.coordinates ? poi.coordinates.level : 0;
+        };
+        
         switch (seg.type) {
           case 'elevator': 
-            instruction = `Take Elevator from ${fromName} (Level ${fromPoi?.coordinates.level}) to ${toName} (Level ${toPoi?.coordinates.level})`; 
+            instruction = `Take Elevator from ${fromName} (Level ${getLevel(fromPoi)}) to ${toName} (Level ${getLevel(toPoi)})`; 
             break;
           case 'escalator': 
-            instruction = `Take Escalator from ${fromName} (Level ${fromPoi?.coordinates.level}) to ${toName} (Level ${toPoi?.coordinates.level})`; 
+            instruction = `Take Escalator from ${fromName} (Level ${getLevel(fromPoi)}) to ${toName} (Level ${getLevel(toPoi)})`; 
             break;
           case 'stairs': 
-            instruction = `Use Stairs from ${fromName} (Level ${fromPoi?.coordinates.level}) to ${toName} (Level ${toPoi?.coordinates.level})`; 
+            instruction = `Use Stairs from ${fromName} (Level ${getLevel(fromPoi)}) to ${toName} (Level ${getLevel(toPoi)})`; 
             break;
           default: 
             instruction = `Walk from ${fromName} to ${toName}`;
@@ -570,8 +575,8 @@ class IndoorNavigationService {
   }
 
   public findAccessibleRoute(originPOIId: string, destinationPOIId: string, activePreferences: NavigationUserPreferences): Route | null {
-    // Example usage of Coordinates and MallFloor for type validation and logging
-    const exampleCoordinate: Coordinates = { x: 0, y: 0, level: 0 };
+    // Example usage of IndoorCoordinates and MallFloor for type validation and logging
+    const exampleCoordinate: IndoorCoordinates = { x: 0, y: 0, level: 0 };
     const exampleFloor: MallFloor = {
       level: 2,
       name: 'Example Floor',

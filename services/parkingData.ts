@@ -1,44 +1,22 @@
-// Local storage service for parking data (replaces Firebase)
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { db } from './firebaseConfig';
+import { doc, setDoc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { getParkingDataWithCache, cacheParkingData } from '../utils/parkingCache';
 
 export async function saveParkingData(uid: string, parking: any) {
-  try {
-    await AsyncStorage.setItem(`parking_${uid}`, JSON.stringify(parking));
-  } catch (error) {
-    console.error('Error saving parking data:', error);
-  }
+  await setDoc(doc(db, 'parking', uid), parking, { merge: true });
 }
 
 export async function getParkingData(uid: string) {
-  try {
-    const data = await AsyncStorage.getItem(`parking_${uid}`);
-    return data ? JSON.parse(data) : null;
-  } catch (error) {
-    console.error('Error loading parking data:', error);
-    return null;
-  }
-}
-
-export async function updateParkingData(uid: string, updates: any) {
-  try {
-    const existing = await getParkingData(uid);
-    const updated = { ...existing, ...updates };
-    await saveParkingData(uid, updated);
-  } catch (error) {
-    console.error('Error updating parking data:', error);
-  }
+  return getParkingDataWithCache(async () => {
+    const docSnap = await getDoc(doc(db, 'parking', uid));
+    const data = docSnap.exists() ? docSnap.data() : null;
+    if (data) await cacheParkingData([data]);
+    return data ? [data] : [];
+  });
 }
 
 export async function addParkingHistory(uid: string, event: any) {
-  try {
-    const existing = await getParkingData(uid);
-    const history = existing?.history || [];
-    const updated = {
-      ...existing,
-      history: [...history, event]
-    };
-    await saveParkingData(uid, updated);
-  } catch (error) {
-    console.error('Error adding parking history:', error);
-  }
+  await updateDoc(doc(db, 'parking', uid), {
+    history: arrayUnion(event)
+  });
 }
