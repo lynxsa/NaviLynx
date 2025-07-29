@@ -31,7 +31,6 @@ import ARPerformanceMonitor from '../../components/ar/ARPerformanceMonitor';
 
 // Enhanced AR imports
 import ARPerformanceManager from '../../services/ARPerformanceManager';
-import ARWaypointRenderer from '../../services/ARWaypointRenderer';
 import ARUserExperienceService from '../../services/ARUserExperienceService';
 
 // Internal imports
@@ -41,6 +40,7 @@ import { colors, spacing, borderRadius } from '../../styles/modernTheme';
 import { LocationService } from '../../services/LocationService';
 import { NavigationService } from '../../services/NavigationService';
 import { southAfricanVenues, Venue } from '../../data/southAfricanVenues';
+import { getAllEnhancedVenues } from '../../data/enhancedVenues';
 
 // Type definitions
 interface VenueWithDistance extends Venue {
@@ -279,6 +279,41 @@ export default function ARNavigatorEnhanced() {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     return R * c; // Distance in km
   }, []);
+
+  // Load all venues for manual selection
+  const loadAllVenues = useCallback(() => {
+    try {
+      console.log('Loading all enhanced venues...');
+      
+      // Get all enhanced venues and convert to VenueWithDistance format
+      const allVenues = getAllEnhancedVenues();
+      const venuesWithDistance: VenueWithDistance[] = allVenues.map((venue) => ({
+        id: venue.id,
+        name: venue.name,
+        type: venue.type as any, // Cast to resolve type mismatch
+        description: venue.description,
+        shortDescription: venue.shortDescription,
+        image: venue.images?.[0] || '', // Use first image or empty string
+        location: venue.location,
+        openingHours: venue.openingHours,
+        features: venue.features || [],
+        rating: venue.rating || 0,
+        contact: venue.contact,
+        distance: userLocation && venue.location?.coordinates ? calculateDistance(
+          userLocation.latitude,
+          userLocation.longitude,
+          venue.location.coordinates.latitude,
+          venue.location.coordinates.longitude
+        ) : 0
+      })).sort((a, b) => a.distance - b.distance);
+      
+      console.log('🏢 Loaded all venues:', venuesWithDistance.length);
+      setNearbyVenues(venuesWithDistance);
+    } catch (error) {
+      console.error('Failed to load all venues:', error);
+      Alert.alert('Error', 'Failed to load venues. Please try again.');
+    }
+  }, [userLocation, calculateDistance]);
 
   // Mock reverse geocoding function
   const reverseGeocode = useCallback(async (lat: number, lon: number): Promise<string> => {
