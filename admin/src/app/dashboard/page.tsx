@@ -240,7 +240,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <AdminLayout userRole="admin">
+    <AdminLayout userRole="admin" title="Dashboard Overview">
       <div className="min-h-screen bg-gradient-to-br from-slate-50/50 via-purple-50/20 to-indigo-50/10">
         <div className="max-w-8xl mx-auto px-4 py-8">
           {/* Enhanced Header */}

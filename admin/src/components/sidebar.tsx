@@ -1,10 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   LayoutDashboard,
   Users,
@@ -14,7 +16,6 @@ import {
   Settings,
   ShoppingBag,
   MessageSquare,
-  Globe,
   Star,
   FileText,
   Shield,
@@ -22,6 +23,15 @@ import {
   LogOut,
   ChevronRight,
   ChevronLeft,
+  Camera,
+  Wifi,
+  Brain,
+  CreditCard,
+  Package,
+  ChevronDown,
+  ChevronUp,
+  Zap,
+  Globe
 } from "lucide-react";
 
 export interface UserRole {
@@ -41,6 +51,7 @@ interface NavItem {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   badge?: string;
+  color?: string;
   roles?: string[];
   children?: NavItem[];
 }
@@ -48,6 +59,149 @@ interface NavItem {
 const navItems: NavItem[] = [
   {
     title: "Dashboard",
+    href: "/dashboard",
+    icon: LayoutDashboard,
+    color: "text-blue-600",
+    roles: ["admin", "manager", "moderator", "viewer"]
+  },
+  {
+    title: "User Management",
+    href: "/users",
+    icon: Users,
+    color: "text-green-600",
+    badge: "Live",
+    roles: ["admin", "manager"]
+  },
+  {
+    title: "Venue Management",
+    href: "/venues",
+    icon: MapPin,
+    color: "text-purple-600",
+    roles: ["admin", "manager"],
+    children: [
+      {
+        title: "All Venues",
+        href: "/venues",
+        icon: MapPin,
+        color: "text-purple-500"
+      },
+      {
+        title: "AR Content",
+        href: "/ar-content",
+        icon: Camera,
+        color: "text-orange-500",
+        badge: "AR"
+      },
+      {
+        title: "Beacons",
+        href: "/beacons",
+        icon: Wifi,
+        color: "text-cyan-500",
+        badge: "IoT"
+      }
+    ]
+  },
+  {
+    title: "Commerce",
+    href: "/products",
+    icon: ShoppingBag,
+    color: "text-emerald-600",
+    roles: ["admin", "manager", "moderator"],
+    children: [
+      {
+        title: "Products",
+        href: "/products",
+        icon: Package,
+        color: "text-emerald-500"
+      },
+      {
+        title: "Deals",
+        href: "/deals",
+        icon: Tag,
+        color: "text-yellow-500",
+        badge: "Active"
+      },
+      {
+        title: "Store Cards",
+        href: "/store-cards",
+        icon: CreditCard,
+        color: "text-indigo-500"
+      }
+    ]
+  },
+  {
+    title: "Analytics",
+    href: "/analytics",
+    icon: BarChart3,
+    color: "text-cyan-600",
+    badge: "Real-time",
+    roles: ["admin", "manager", "moderator"]
+  },
+  {
+    title: "Reviews",
+    href: "/reviews",
+    icon: Star,
+    color: "text-amber-600",
+    roles: ["admin", "manager", "moderator"]
+  },
+  {
+    title: "AI & Smart",
+    href: "/navigenie",
+    icon: Brain,
+    color: "text-violet-600",
+    badge: "AI",
+    roles: ["admin", "manager"],
+    children: [
+      {
+        title: "NaviGenie AI",
+        href: "/navigenie",
+        icon: Brain,
+        color: "text-violet-500",
+        badge: "AI"
+      },
+      {
+        title: "Chat System",
+        href: "/chat",
+        icon: MessageSquare,
+        color: "text-pink-500"
+      }
+    ]
+  },
+  {
+    title: "User Profiles",
+    href: "/profiles",
+    icon: FileText,
+    color: "text-slate-600",
+    roles: ["admin", "manager"]
+  },
+  {
+    title: "System",
+    href: "/settings",
+    icon: Settings,
+    color: "text-gray-600",
+    roles: ["admin"],
+    children: [
+      {
+        title: "Settings",
+        href: "/settings",
+        icon: Settings,
+        color: "text-gray-500"
+      },
+      {
+        title: "Security",
+        href: "/settings?tab=security",
+        icon: Shield,
+        color: "text-red-500"
+      },
+      {
+        title: "Notifications",
+        href: "/settings?tab=notifications",
+        icon: Bell,
+        color: "text-blue-500"
+      }
+    ]
+  }
+];
     href: "/dashboard",
     icon: LayoutDashboard,
     roles: ["admin", "manager", "moderator", "viewer"],
