@@ -1,3 +1,7 @@
+'use client'
+
+import React, { useState, useMemo } from 'react'
+import { motion } from 'framer-motion'
 import { AdminLayout } from "@/components/admin-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,7 +25,13 @@ import {
   Smartphone,
   Navigation,
   Eye as EyeIcon,
-  Zap
+  Zap,
+  UserPlus,
+  RefreshCw,
+  Calendar,
+  Clock,
+  Star,
+  CreditCard
 } from "lucide-react";
 
 // Mobile App Aligned User Interface
@@ -339,36 +349,63 @@ function getVenueNames(venueIds: string[]): string {
 }
 
 export default function UsersPage() {
+  const [searchTerm, setSearchTerm] = useState("")
+  const [filterStatus, setFilterStatus] = useState("all")
+  const [sortBy, setSortBy] = useState("newest")
+
+  const filteredUsers = useMemo(() => {
+    return mockUsers.filter(user => {
+      const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           user.location.toLowerCase().includes(searchTerm.toLowerCase())
+      
+      const matchesStatus = filterStatus === "all" || user.status === filterStatus
+      
+      return matchesSearch && matchesStatus
+    })
+  }, [searchTerm, filterStatus])
+
   return (
     <AdminLayout userRole="admin">
-      <div className="space-y-8 animate-fade-in-up">
-        {/* Enhanced Page Header - Mobile App Focused */}
-        <div className="relative overflow-hidden bg-gradient-to-r from-navilynx-primary/10 via-navilynx-secondary/10 to-navilynx-accent/10 rounded-2xl p-8 border border-navilynx-primary/20">
-          <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-navilynx-purple-50/80 backdrop-blur-sm"></div>
-          <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 gradient-purple rounded-2xl flex items-center justify-center shadow-lg">
-                <Users className="h-8 w-8 text-white" />
+      <div className="p-8 max-w-8xl mx-auto space-y-8 bg-gradient-to-br from-slate-50/50 via-purple-50/20 to-indigo-50/10 min-h-screen">
+        {/* Enhanced Header Section */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 p-8 shadow-2xl"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-48 translate-x-48"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full translate-y-32 -translate-x-32"></div>
+          
+          <div className="relative z-10">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 bg-white/20 backdrop-blur-sm rounded-2xl">
+                    <Users className="h-8 w-8 text-white" />
+                  </div>
+                  <div>
+                    <h1 className="text-4xl font-bold text-white mb-2">User Management</h1>
+                    <p className="text-blue-100 text-lg font-medium">Monitor and manage NaviLynx mobile app users</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h1 className="text-4xl font-bold text-gradient-purple mb-2">Mobile App Users</h1>
-                <p className="text-lg text-gray-600 max-w-2xl">
-                  Manage admin users with mobile app access, AR navigation permissions, and venue-specific controls across South African locations.
-                </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border-white/30 transition-all duration-300 hover:scale-105 shadow-lg">
+                  <Download className="h-5 w-5 mr-2" />
+                  Export Users
+                </Button>
+                <Button className="bg-emerald-500/80 backdrop-blur-sm hover:bg-emerald-500 text-white transition-all duration-300 hover:scale-105 shadow-lg">
+                  <UserPlus className="h-5 w-5 mr-2" />
+                  Add User
+                </Button>
               </div>
-            </div>
-            <div className="mt-6 sm:mt-0 flex space-x-3">
-              <Button variant="outline" size="sm" className="glass-effect hover:shadow-purple-soft transition-all duration-300">
-                <Download className="h-4 w-4 mr-2" />
-                Export Mobile Data
-              </Button>
-              <Button size="sm" className="gradient-purple hover:shadow-purple-medium transition-all duration-300 transform hover:scale-105">
-                <Plus className="h-4 w-4 mr-2" />
-                Add Mobile User
-              </Button>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Enhanced Stats Overview - Mobile App Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
