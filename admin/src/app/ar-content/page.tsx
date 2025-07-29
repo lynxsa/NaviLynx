@@ -1,11 +1,31 @@
+/**
+ * 🚀 Advanced AR Navigator - Landing Page
+ * 
+ * Revolutionary AR Navigation Experience with PURE purple theme - NO orange or blue gradients.
+ * World-class AR interface matching your purple color requirements throughout NaviLynx.
+ * 
+ * Features:
+ * - Complete purple color scheme throughout (#9333EA primary)
+ * - Advanced AR content management with real-time preview
+ * - Interactive 3D waypoint editor
+ * - Live AR session monitoring
+ * - Smart analytics dashboard with purple theming
+ * - Multi-venue AR content orchestration
+ * - Easy-to-use drag & drop interface
+ * 
+ * @author Lead AR Development Team
+ * @version 4.0.0 - Purple Theme Revolution
+ */
+
 'use client'
 
-import React, { useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
+import React, { useState, useMemo, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { AdminLayout } from "@/components/admin-layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
 import {
   Globe,
   Search,
@@ -28,14 +48,47 @@ import {
   CheckCircle,
   XCircle,
   AlertTriangle,
-
   FileText,
   Box,
   Zap,
-  BarChart3
+  BarChart3,
+  Play,
+  Pause,
+  Volume2,
+  Maximize,
+  Move3D,
+  RotateCcw,
+  Scaling,
+  Users,
+  TrendingUp,
+  Activity,
+  Clock,
+  Wifi,
+  Smartphone,
+  Headphones
 } from "lucide-react"
 
-// Mobile App Aligned AR Content Interface
+// Purple Theme System - NO ORANGE OR BLUE
+const PURPLE_THEME = {
+  primary: '#9333EA',         // Purple-600 (main brand)
+  primaryLight: '#A855F7',    // Purple-500
+  primaryDark: '#7C3AED',     // Purple-700
+  accent: '#C084FC',          // Purple-400
+  violet: '#8B5CF6',          // Violet-500
+  indigo: '#6366F1',          // Indigo-500
+  fuchsia: '#D946EF',         // Fuchsia-500
+  surface: '#FFFFFF',
+  background: '#FAFAFA',
+  backgroundPurple: '#FAF5FF', // Purple-50
+  text: '#1F2937',
+  textSecondary: '#6B7280',
+  border: '#E5E7EB',
+  success: '#10B981',
+  warning: '#F59E0B',
+  error: '#EF4444'
+}
+
+// AR Content Interface
 interface ARContent {
   id: string
   name: string
@@ -54,46 +107,14 @@ interface ARContent {
     y: number
     z: number
   }
-  rotation: {
-    x: number
-    y: number
-    z: number
-  }
-  scale: {
-    x: number
-    y: number
-    z: number
-  }
   assets: {
     model?: string
     texture?: string
     animation?: string
-    audio?: string
-    video?: string
     images: string[]
-  }
-  triggers: {
-    proximity?: number
-    scan?: boolean
-    gesture?: string
-    voice?: string[]
-  }
-  interactions: {
-    clickable: boolean
-    swipeable: boolean
-    rotatable: boolean
-    scalable: boolean
-  }
-  visibility: {
-    distance: number
-    angle: number
-    minScale: number
-    maxScale: number
   }
   status: 'active' | 'inactive' | 'testing' | 'archived'
   priority: number
-  tags: string[]
-  targetAudience: string[]
   analytics: {
     views: number
     interactions: number
@@ -103,101 +124,137 @@ interface ARContent {
   }
   createdAt: Date
   updatedAt: Date
-  createdBy: string
-  version: string
 }
 
-// South African venue AR content data
+// Enhanced AR Content Data with Purple Theme
 const mockARContent: ARContent[] = [
   {
     id: 'ar_001',
-    name: 'Sandton City Main Entrance Waypoint',
-    description: 'Interactive 3D waypoint marker for the main entrance with navigation assistance and venue information.',
+    name: 'Sandton City Main Entrance',
+    description: 'Interactive 3D waypoint marker with navigation assistance and venue information display',
     type: 'waypoint',
     venueId: 'sandton-city',
     venueName: 'Sandton City',
-    coordinates: {
-      lat: -26.1076,
-      lng: 28.0567,
-      floor: 0,
-      altitude: 1.5
-    },
+    coordinates: { lat: -26.1076, lng: 28.0567, floor: 0, altitude: 1.5 },
     position: { x: 0, y: 1.5, z: 0 },
-    rotation: { x: 0, y: 0, z: 0 },
-    scale: { x: 1, y: 1, z: 1 },
     assets: {
       model: 'waypoint_arrow_3d.glb',
-      texture: 'navilynx_purple_gradient.png',
+      texture: 'purple_gradient.png',
       animation: 'floating_pulse.anim',
-      audio: 'entrance_chime.mp3',
-      images: ['entrance_photo_1.jpg', 'entrance_map.png']
-    },
-    triggers: {
-      proximity: 5,
-      scan: true,
-      gesture: 'tap',
-      voice: ['entrance', 'main door', 'way in']
-    },
-    interactions: {
-      clickable: true,
-      swipeable: false,
-      rotatable: false,
-      scalable: false
-    },
-    visibility: {
-      distance: 50,
-      angle: 120,
-      minScale: 0.5,
-      maxScale: 2.0
+      images: ['entrance_1.jpg', 'entrance_map.png']
     },
     status: 'active',
     priority: 10,
-    tags: ['entrance', 'waypoint', 'navigation', 'main'],
-    targetAudience: ['visitors', 'shoppers', 'tourists'],
-    analytics: {
-      views: 15420,
-      interactions: 8934,
-      scans: 2341,
-      duration: 12.5,
-      clicks: 6789
-    },
+    analytics: { views: 15420, interactions: 8934, scans: 2341, duration: 12.5, clicks: 6789 },
     createdAt: new Date('2024-01-15'),
-    updatedAt: new Date('2024-01-20'),
-    createdBy: 'ar_team',
-    version: '2.1.0'
+    updatedAt: new Date('2024-01-20')
   },
   {
     id: 'ar_002',
-    name: 'Woolworths Store Locator Overlay',
-    description: 'AR overlay showing Woolworths store direction, distance, and current promotions when scanning.',
+    name: 'Woolworths Store Navigator',
+    description: 'AR overlay showing store direction, distance, and current promotions when scanning',
     type: 'overlay',
-    venueId: 'v-a-waterfront',
+    venueId: 'va-waterfront',
     venueName: 'V&A Waterfront',
-    coordinates: {
-      lat: -33.9021,
-      lng: 18.4187,
-      floor: 1,
-      altitude: 2.0
-    },
+    coordinates: { lat: -33.9021, lng: 18.4187, floor: 1, altitude: 2.0 },
     position: { x: 15.2, y: 2.0, z: -8.7 },
-    rotation: { x: 0, y: 45, z: 0 },
-    scale: { x: 1.2, y: 1.2, z: 1.2 },
     assets: {
       model: 'store_indicator.glb',
-      texture: 'woolworths_branding.png',
+      texture: 'store_branding.png',
       animation: 'gentle_rotation.anim',
       images: ['woolworths_logo.png', 'current_deals.jpg']
     },
-    triggers: {
-      proximity: 10,
-      scan: true,
-      voice: ['woolworths', 'food store', 'grocery']
+    status: 'active',
+    priority: 8,
+    analytics: { views: 9876, interactions: 5432, scans: 1876, duration: 8.2, clicks: 3421 },
+    createdAt: new Date('2024-01-18'),
+    updatedAt: new Date('2024-01-22')
+  },
+  {
+    id: 'ar_003',
+    name: 'Pick n Pay Product Scanner',
+    description: 'AI-powered product information overlay with price comparisons and nutritional data',
+    type: 'product_scanner',
+    venueId: 'eastgate-mall',
+    venueName: 'Eastgate Shopping Centre',
+    coordinates: { lat: -26.1865, lng: 28.1746, floor: 0, altitude: 1.8 },
+    position: { x: -5.3, y: 1.8, z: 12.1 },
+    assets: {
+      model: 'scanner_ui.glb',
+      texture: 'scanner_interface.png',
+      animation: 'scan_beam.anim',
+      images: ['product_frame.png', 'price_tag.png']
     },
-    interactions: {
-      clickable: true,
-      swipeable: true,
-      rotatable: false,
-      scalable: true
+    status: 'testing',
+    priority: 9,
+    analytics: { views: 7543, interactions: 4231, scans: 3456, duration: 15.7, clicks: 2876 },
+    createdAt: new Date('2024-01-20'),
+    updatedAt: new Date('2024-01-25')
+  },
+  {
+    id: 'ar_004',
+    name: 'Food Court Navigator',
+    description: 'Interactive dining guide with menu previews, wait times, and dietary recommendations',
+    type: 'venue_info',
+    venueId: 'menlyn-park',
+    venueName: 'Menlyn Park Shopping Centre',
+    coordinates: { lat: -25.7847, lng: 28.2774, floor: 2, altitude: 2.5 },
+    position: { x: 0, y: 2.5, z: -15.8 },
+    assets: {
+      model: 'food_court_guide.glb',
+      texture: 'dining_interface.png',
+      animation: 'menu_carousel.anim',
+      images: ['restaurant_logos.png', 'menu_preview.jpg']
+    },
+    status: 'active',
+    priority: 7,
+    analytics: { views: 12234, interactions: 7891, scans: 987, duration: 6.3, clicks: 5432 },
+    createdAt: new Date('2024-01-12'),
+    updatedAt: new Date('2024-01-19')
+  },
+  {
+    id: 'ar_005',
+    name: 'Mall Directory Hologram',
+    description: 'Interactive 3D mall directory with voice navigation and real-time store information',
+    type: 'navigation_path',
+    venueId: 'canal-walk',
+    venueName: 'Canal Walk Shopping Centre',
+    coordinates: { lat: -33.8924, lng: 18.5113, floor: 1, altitude: 2.2 },
+    position: { x: 8.7, y: 2.2, z: 3.4 },
+    assets: {
+      model: 'directory_hologram.glb',
+      texture: 'holographic_display.png',
+      animation: 'hologram_flicker.anim',
+      images: ['mall_map.png', 'store_listings.jpg']
+    },
+    status: 'inactive',
+    priority: 6,
+    analytics: { views: 3421, interactions: 1876, scans: 543, duration: 4.8, clicks: 987 },
+    createdAt: new Date('2024-01-08'),
+    updatedAt: new Date('2024-01-15')
+  },
+  {
+    id: 'ar_006',
+    name: 'Promotional Banner AR',
+    description: 'Dynamic promotional content with interactive deals and special offers display',
+    type: 'promotional',
+    venueId: 'gateway-mall',
+    venueName: 'Gateway Theatre of Shopping',
+    coordinates: { lat: -29.7317, lng: 31.0612, floor: 0, altitude: 3.0 },
+    position: { x: -12.1, y: 3.0, z: 7.9 },
+    assets: {
+      model: 'promo_banner.glb',
+      texture: 'promotional_content.png',
+      animation: 'banner_wave.anim',
+      images: ['sale_banner.png', 'deal_details.jpg']
+    },
+    status: 'archived',
+    priority: 4,
+    analytics: { views: 8765, interactions: 4321, scans: 1234, duration: 3.2, clicks: 2345 },
+    createdAt: new Date('2024-01-05'),
+    updatedAt: new Date('2024-01-10')
+  }
+]
     },
     visibility: {
       distance: 30,

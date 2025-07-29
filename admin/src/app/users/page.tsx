@@ -355,9 +355,9 @@ export default function UsersPage() {
 
   const filteredUsers = useMemo(() => {
     return mockUsers.filter(user => {
-      const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      const matchesSearch = `${user.firstName} ${user.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           user.location.toLowerCase().includes(searchTerm.toLowerCase())
+                           (user.profile.location && user.profile.location.toLowerCase().includes(searchTerm.toLowerCase()))
       
       const matchesStatus = filterStatus === "all" || user.status === filterStatus
       
@@ -367,104 +367,119 @@ export default function UsersPage() {
 
   return (
     <AdminLayout userRole="admin">
-      <div className="p-8 max-w-8xl mx-auto space-y-8 bg-gradient-to-br from-slate-50/50 via-purple-50/20 to-indigo-50/10 min-h-screen">
-        {/* Enhanced Header Section */}
+      <div className="p-6 max-w-7xl mx-auto space-y-6 min-h-screen">
+        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 p-8 shadow-2xl"
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="bg-white rounded-lg border border-slate-200 p-6 shadow-sm"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
-          <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-48 translate-x-48"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full translate-y-32 -translate-x-32"></div>
-          
-          <div className="relative z-10">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 bg-white/20 backdrop-blur-sm rounded-2xl">
-                    <Users className="h-8 w-8 text-white" />
-                  </div>
-                  <div>
-                    <h1 className="text-4xl font-bold text-white mb-2">User Management</h1>
-                    <p className="text-blue-100 text-lg font-medium">Monitor and manage NaviLynx mobile app users</p>
-                  </div>
-                </div>
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-50 rounded-lg">
+                <Users className="h-5 w-5 text-blue-600" />
               </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border-white/30 transition-all duration-300 hover:scale-105 shadow-lg">
-                  <Download className="h-5 w-5 mr-2" />
-                  Export Users
-                </Button>
-                <Button className="bg-emerald-500/80 backdrop-blur-sm hover:bg-emerald-500 text-white transition-all duration-300 hover:scale-105 shadow-lg">
-                  <UserPlus className="h-5 w-5 mr-2" />
-                  Add User
-                </Button>
+              <div>
+                <h1 className="text-xl font-semibold text-slate-800 tracking-tight">User Management</h1>
+                <p className="text-sm text-slate-600">Monitor and manage NaviLynx mobile app users</p>
               </div>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button variant="outline" className="text-sm">
+                <Download className="h-4 w-4 mr-2" />
+                Export Users
+              </Button>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white text-sm">
+                <UserPlus className="h-4 w-4 mr-2" />
+                Add User
+              </Button>
             </div>
           </div>
         </motion.div>
 
-        {/* Enhanced Stats Overview - Mobile App Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card className="relative group card-hover overflow-hidden border-navilynx-primary/20">
-            <div className="absolute inset-0 bg-gradient-to-br from-navilynx-primary/5 to-navilynx-secondary/5"></div>
-            <CardContent className="relative p-6">
+        {/* Stats Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <Card className="border border-slate-200 shadow-sm">
+            <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1">Total Mobile Users</p>
-                  <p className="text-3xl font-bold text-gray-900 mb-2">{mockUsers.length}</p>
-                  <div className="flex items-center text-sm">
-                    <TrendingUp className="h-4 w-4 text-green-500 mr-1" />
-                    <span className="text-green-600 font-medium">+15%</span>
-                    <span className="text-gray-500 ml-1">mobile adoption</span>
+                  <p className="text-sm font-medium text-slate-600 mb-1">Total Mobile Users</p>
+                  <p className="text-2xl font-semibold text-slate-900">{mockUsers.length}</p>
+                  <div className="flex items-center text-xs mt-2">
+                    <TrendingUp className="h-3 w-3 text-emerald-500 mr-1" />
+                    <span className="text-emerald-600 font-medium">+15%</span>
+                    <span className="text-slate-500 ml-1">adoption</span>
                   </div>
                 </div>
-                <div className="w-14 h-14 gradient-purple rounded-xl flex items-center justify-center shadow-lg card-glow">
-                  <Smartphone className="h-7 w-7 text-white" />
+                <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                  <Smartphone className="h-5 w-5 text-blue-600" />
                 </div>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 h-1 gradient-purple opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </CardContent>
           </Card>
 
-          <Card className="relative group card-hover overflow-hidden border-blue-200">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50"></div>
-            <CardContent className="relative p-6">
+          <Card className="border border-slate-200 shadow-sm">
+            <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1">AR Enabled Users</p>
-                  <p className="text-3xl font-bold text-gray-900 mb-2">
+                  <p className="text-sm font-medium text-slate-600 mb-1">AR Enabled Users</p>
+                  <p className="text-2xl font-semibold text-slate-900">
                     {mockUsers.filter(u => u.arCapability).length}
                   </p>
-                  <div className="flex items-center text-sm">
-                    <Navigation className="h-4 w-4 text-blue-500 mr-1" />
+                  <div className="flex items-center text-xs mt-2">
+                    <Navigation className="h-3 w-3 text-blue-500 mr-1" />
                     <span className="text-blue-600 font-medium">AR Navigation</span>
-                    <span className="text-gray-500 ml-1">active</span>
                   </div>
                 </div>
-                <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg card-glow">
-                  <Navigation className="h-7 w-7 text-white" />
+                <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                  <Navigation className="h-5 w-5 text-blue-600" />
                 </div>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </CardContent>
           </Card>
 
-          <Card className="relative group card-hover overflow-hidden border-green-200">
-            <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-emerald-50"></div>
-            <CardContent className="relative p-6">
+          <Card className="border border-slate-200 shadow-sm">
+            <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1">Total AR Sessions</p>
-                  <p className="text-3xl font-bold text-gray-900 mb-2">
+                  <p className="text-sm font-medium text-slate-600 mb-1">Total AR Sessions</p>
+                  <p className="text-2xl font-semibold text-slate-900">
                     {mockUsers.reduce((sum, user) => sum + user.mobileAppUsage.arNavigations, 0)}
                   </p>
-                  <div className="flex items-center text-sm">
-                    <Activity className="h-4 w-4 text-green-500 mr-1" />
-                    <span className="text-green-600 font-medium">Navigation</span>
+                  <div className="flex items-center text-xs mt-2">
+                    <Activity className="h-3 w-3 text-emerald-500 mr-1" />
+                    <span className="text-emerald-600 font-medium">Navigation</span>
+                  </div>
+                </div>
+                <div className="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center">
+                  <Activity className="h-5 w-5 text-emerald-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border border-slate-200 shadow-sm">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-slate-600 mb-1">Active Users</p>
+                  <p className="text-2xl font-semibold text-slate-900">
+                    {mockUsers.filter(u => u.status === 'active').length}
+                  </p>
+                  <div className="flex items-center text-xs mt-2">
+                    <Zap className="h-3 w-3 text-emerald-500 mr-1" />
+                    <span className="text-emerald-600 font-medium">Online</span>
+                  </div>
+                </div>
+                <div className="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center">
+                  <Zap className="h-5 w-5 text-emerald-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
                     <span className="text-gray-500 ml-1">sessions</span>
                   </div>
                 </div>

@@ -225,10 +225,10 @@ export function Sidebar({ userRole, collapsed, onToggle }: SidebarProps) {
       initial={false}
       animate={{ width: collapsed ? 80 : 280 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="relative h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border-r border-slate-700/50 shadow-2xl"
+      className="relative h-screen bg-white border-r border-slate-200/60 shadow-sm"
     >
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-slate-700/50">
+      <div className="flex items-center justify-between p-4 border-b border-slate-200/60">
         <AnimatePresence mode="wait">
           {!collapsed && (
             <motion.div
@@ -236,14 +236,14 @@ export function Sidebar({ userRole, collapsed, onToggle }: SidebarProps) {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.2 }}
-              className="flex items-center space-x-3"
+              className="flex items-center space-x-2"
             >
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Globe className="h-6 w-6 text-white" />
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-sm">
+                <Globe className="h-4 w-4 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">NaviLynx</h1>
-                <p className="text-xs text-slate-400 uppercase tracking-wider">Admin Panel</p>
+                <h1 className="text-base font-semibold text-slate-800 tracking-tight">NaviLynx</h1>
+                <p className="text-xs text-slate-500">Admin Panel</p>
               </div>
             </motion.div>
           )}
@@ -253,21 +253,21 @@ export function Sidebar({ userRole, collapsed, onToggle }: SidebarProps) {
           onClick={onToggle}
           variant="ghost"
           size="icon"
-          className="text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all duration-200"
+          className="text-slate-500 hover:text-slate-700 hover:bg-slate-100/70 transition-all duration-200 h-8 w-8"
         >
           {collapsed ? (
-            <ChevronRight className="h-5 w-5" />
+            <ChevronRight className="h-4 w-4" />
           ) : (
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-4 w-4" />
           )}
         </Button>
       </div>
 
       {/* User Info */}
-      <div className="p-4 border-b border-slate-700/50">
+      <div className="p-4 border-b border-slate-200/60">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg">
-            <Users className="h-5 w-5 text-white" />
+          <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-sm">
+            <Users className="h-4 w-4 text-white" />
           </div>
           <AnimatePresence mode="wait">
             {!collapsed && (
@@ -278,8 +278,8 @@ export function Sidebar({ userRole, collapsed, onToggle }: SidebarProps) {
                 transition={{ duration: 0.2 }}
                 className="flex-1 min-w-0"
               >
-                <p className="text-sm font-semibold text-white truncate">Administrator</p>
-                <p className="text-xs text-slate-400 truncate capitalize">{userRole} Access</p>
+                <p className="text-sm font-medium text-slate-800 truncate">Administrator</p>
+                <p className="text-xs text-slate-500 truncate capitalize">{userRole} Access</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -287,7 +287,7 @@ export function Sidebar({ userRole, collapsed, onToggle }: SidebarProps) {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+      <nav className="flex-1 overflow-y-auto p-3 space-y-1">
         {filteredNavItems.map((item) => (
           <NavItemComponent
             key={item.href}

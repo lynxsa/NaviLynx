@@ -416,53 +416,44 @@ export function QuickActions() {
     }
   }
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'high': return 'border-red-200 bg-gradient-to-br from-red-50/80 to-rose-50/60 hover:from-red-100/80 hover:to-rose-100/60'
-      case 'medium': return 'border-amber-200 bg-gradient-to-br from-amber-50/80 to-yellow-50/60 hover:from-amber-100/80 hover:to-yellow-100/60'
-      case 'low': return 'border-emerald-200 bg-gradient-to-br from-emerald-50/80 to-green-50/60 hover:from-emerald-100/80 hover:to-green-100/60'
-      default: return 'border-gray-200 bg-gradient-to-br from-gray-50/80 to-slate-50/60 hover:from-gray-100/80 hover:to-slate-100/60'
-    }
-  }
-
   return (
-    <Card className="w-full shadow-2xl border-0 bg-gradient-to-br from-white via-gray-50/50 to-blue-50/30 backdrop-blur-sm">
-      <CardHeader className="pb-6">
+    <Card className="w-full shadow-sm border border-slate-200/60 bg-white">
+      <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
-          <div className="space-y-2">
-            <CardTitle className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-              Quick Actions Control Center
+          <div className="space-y-1">
+            <CardTitle className="text-lg font-semibold text-slate-800 tracking-tight">
+              Quick Actions
             </CardTitle>
-            <p className="text-gray-600 font-medium">
-              Complete administrative control over NaviLynx platform
+            <p className="text-sm text-slate-600">
+              Administrative controls and shortcuts
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <Badge variant="outline" className="text-sm font-semibold px-4 py-2 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700">
-              <Activity className="h-4 w-4 mr-2" />
-              {filteredActions.length} Actions Available
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="text-xs font-medium px-2 py-1 bg-emerald-50 border-emerald-200 text-emerald-700">
+              <Activity className="h-3 w-3 mr-1" />
+              {filteredActions.length} Actions
             </Badge>
-            <Badge variant="outline" className="text-sm font-semibold px-4 py-2 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 text-blue-700">
+            <Badge variant="outline" className="text-xs font-medium px-2 py-1 bg-blue-50 border-blue-200 text-blue-700">
               System Online
             </Badge>
           </div>
         </div>
         
         {/* Search and Filter */}
-        <div className="flex flex-col lg:flex-row gap-6 mt-6">
+        <div className="flex flex-col lg:flex-row gap-3 mt-4">
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
             <input
               type="text"
-              placeholder="Search actions by name or description..."
+              placeholder="Search actions..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white/80 backdrop-blur-sm text-gray-900 placeholder-gray-500 shadow-sm hover:shadow-md transition-all duration-300 text-base"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 bg-white text-slate-900 placeholder-slate-500 transition-all duration-200 text-sm"
             />
           </div>
           
           {/* Category Filter */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2">
             {categories.map((category) => {
               const CategoryIcon = category.icon
               return (
@@ -473,11 +464,11 @@ export function QuickActions() {
                   onClick={() => setSelectedCategory(category.name)}
                   className={`${
                     selectedCategory === category.name 
-                      ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg border-blue-600 hover:from-blue-700 hover:to-blue-800' 
-                      : `hover:bg-gradient-to-r ${category.color} hover:text-gray-800 border-2 hover:border-gray-300 hover:shadow-md`
-                  } transition-all duration-300 flex items-center gap-2 px-4 py-2 font-semibold`}
+                      ? 'bg-blue-600 text-white shadow-sm border-blue-600 hover:bg-blue-700' 
+                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                  } transition-all duration-200 flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium`}
                 >
-                  <CategoryIcon className="h-4 w-4" />
+                  <CategoryIcon className="h-3.5 w-3.5" />
                   {category.name}
                 </Button>
               )
@@ -486,8 +477,8 @@ export function QuickActions() {
         </div>
       </CardHeader>
 
-      <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <CardContent className="pt-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
           {filteredActions.map((action: QuickAction, index: number) => {
             const IconComponent = action.icon
             
@@ -496,50 +487,50 @@ export function QuickActions() {
                 key={action.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
+                transition={{ delay: index * 0.03 }}
                 className="relative group"
               >
                 <Button
                   variant="outline"
-                  className={`w-full h-auto p-6 flex flex-col items-start gap-4 text-left hover:shadow-2xl transition-all duration-300 ${getPriorityColor(action.priority)} group-hover:scale-105 border-2 hover:border-opacity-50 backdrop-blur-sm`}
+                  className="w-full h-auto p-3 flex flex-col items-start gap-3 text-left hover:shadow-md transition-all duration-200 border-slate-200 hover:border-blue-200 hover:bg-blue-50/30 group"
                   onClick={() => handleActionClick(action)}
                 >
                   <div className="flex items-center justify-between w-full">
-                    <div className={`p-3 rounded-xl bg-gradient-to-br ${action.color} text-white shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110`}>
-                      <IconComponent className="h-6 w-6" />
+                    <div className={`p-2 rounded-lg bg-gradient-to-br ${action.color} text-white shadow-sm`}>
+                      <IconComponent className="h-4 w-4" />
                     </div>
                     {action.badge && (
                       <Badge 
                         variant="secondary" 
-                        className="text-xs font-semibold px-3 py-1 bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm"
+                        className="text-xs font-medium px-2 py-0.5 bg-slate-100 text-slate-700 border-slate-200"
                       >
                         {action.badge}
                       </Badge>
                     )}
                   </div>
                   
-                  <div className="w-full space-y-2">
-                    <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors leading-tight">
+                  <div className="w-full space-y-1">
+                    <h3 className="font-medium text-sm text-slate-800 group-hover:text-blue-700 transition-colors leading-tight">
                       {action.title}
                     </h3>
-                    <p className="text-sm text-gray-600 leading-relaxed font-medium">
+                    <p className="text-xs text-slate-500 leading-relaxed">
                       {action.description}
                     </p>
                   </div>
                   
-                  <div className="flex items-center justify-between w-full mt-auto pt-2">
+                  <div className="flex items-center justify-between w-full mt-auto pt-1">
                     <Badge 
                       variant="outline" 
-                      className={`text-xs font-semibold px-2 py-1 ${
-                        action.priority === 'high' ? 'border-red-300 text-red-700 bg-red-50' :
-                        action.priority === 'medium' ? 'border-amber-300 text-amber-700 bg-amber-50' :
-                        'border-emerald-300 text-emerald-700 bg-emerald-50'
+                      className={`text-xs font-medium px-2 py-0.5 ${
+                        action.priority === 'high' ? 'border-red-200 text-red-600 bg-red-50' :
+                        action.priority === 'medium' ? 'border-amber-200 text-amber-600 bg-amber-50' :
+                        'border-emerald-200 text-emerald-600 bg-emerald-50'
                       }`}
                     >
-                      {action.priority} priority
+                      {action.priority}
                     </Badge>
-                    <div className="flex items-center space-x-1 text-gray-400 group-hover:text-blue-500 transition-colors">
-                      <ArrowUpRight className="h-4 w-4" />
+                    <div className="flex items-center space-x-1 text-slate-400 group-hover:text-blue-500 transition-colors">
+                      <ArrowUpRight className="h-3.5 w-3.5" />
                     </div>
                   </div>
                 </Button>

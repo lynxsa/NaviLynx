@@ -46,8 +46,8 @@ export function AdminLayout({ children, userRole = "admin", title }: AdminLayout
         {/* Main Content */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Enhanced Header */}
-          <header className="bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
-            <div className="px-6 py-4">
+          <header className="bg-white/90 backdrop-blur-md border-b border-slate-200/60 shadow-sm">
+            <div className="px-6 py-3.5">
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -67,12 +67,12 @@ export function AdminLayout({ children, userRole = "admin", title }: AdminLayout
 
                   <div>
                     {title && (
-                      <h1 className="text-2xl font-bold text-slate-800">{title}</h1>
+                      <h1 className="text-xl font-semibold text-slate-800 tracking-tight">{title}</h1>
                     )}
-                    <div className="flex items-center space-x-2 text-sm text-slate-600 mt-1">
-                      <span>NaviLynx Admin Dashboard</span>
+                    <div className="flex items-center space-x-2 text-sm text-slate-500 mt-0.5">
+                      <span className="font-medium">NaviLynx Admin</span>
                       <span>•</span>
-                      <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+                      <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded-full text-xs font-medium border border-emerald-200">
                         Online
                       </span>
                     </div>
@@ -86,29 +86,29 @@ export function AdminLayout({ children, userRole = "admin", title }: AdminLayout
                     <input
                       type="text"
                       placeholder="Search..."
-                      className="pl-10 pr-4 py-2 w-64 rounded-lg border border-slate-200 bg-slate-50/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                      className="pl-10 pr-4 py-2 w-60 rounded-lg border border-slate-200/80 bg-slate-50/60 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 text-sm"
                     />
                   </div>
 
                   {/* Theme Toggle */}
-                  <Button variant="ghost" size="icon">
-                    <Sun className="h-5 w-5" />
+                  <Button variant="ghost" size="icon" className="text-slate-500 hover:text-slate-700 hover:bg-slate-100/70">
+                    <Sun className="h-4 w-4" />
                   </Button>
 
                   {/* Notifications */}
-                  <Button variant="ghost" size="icon" className="relative">
-                    <Bell className="h-5 w-5" />
-                    <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
+                  <Button variant="ghost" size="icon" className="relative text-slate-500 hover:text-slate-700 hover:bg-slate-100/70">
+                    <Bell className="h-4 w-4" />
+                    <span className="absolute -top-0.5 -right-0.5 h-2 w-2 bg-red-500 rounded-full"></span>
                   </Button>
 
                   {/* User Menu */}
-                  <div className="flex items-center space-x-3 pl-4 border-l border-slate-200">
+                  <div className="flex items-center space-x-3 pl-4 border-l border-slate-200/60">
                     <div className="hidden sm:block text-right">
-                      <p className="text-sm font-semibold text-slate-900">Admin User</p>
+                      <p className="text-sm font-medium text-slate-800">Admin User</p>
                       <p className="text-xs text-slate-500 capitalize">{userRole}</p>
                     </div>
-                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                      <span className="text-sm font-semibold text-white">A</span>
+                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-sm">
+                      <span className="text-sm font-medium text-white">A</span>
                     </div>
                   </div>
                 </div>

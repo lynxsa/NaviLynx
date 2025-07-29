@@ -241,41 +241,41 @@ export default function DashboardPage() {
 
   return (
     <AdminLayout userRole="admin" title="Dashboard Overview">
-      <div className="min-h-screen bg-gradient-to-br from-slate-50/50 via-purple-50/20 to-indigo-50/10">
-        <div className="max-w-8xl mx-auto px-4 py-8">
-          {/* Enhanced Header */}
+      <div className="min-h-screen bg-gradient-to-br from-slate-50/30 via-blue-50/20 to-indigo-50/30">
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          {/* Enhanced Header with Improved Typography */}
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8"
+            className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6"
           >
             <div>
-              <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-3">
-                NaviLynx Command Center
+              <h1 className="text-3xl font-semibold text-slate-800 mb-2 tracking-tight">
+                Dashboard Overview
               </h1>
-              <p className="text-xl text-gray-600 font-medium">
+              <p className="text-base text-slate-600 leading-relaxed">
                 Real-time insights across {mockDashboardData.venues.total} South African venues
               </p>
-              <div className="flex items-center gap-4 mt-2">
-                <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 px-3 py-1">
+              <div className="flex items-center gap-3 mt-3">
+                <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 px-3 py-1 font-medium">
                   <div className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
                   System Healthy
                 </Badge>
-                <Badge variant="outline" className="px-3 py-1">
+                <Badge variant="outline" className="px-3 py-1 text-slate-600 border-slate-200">
                   v{mockDashboardData.technical.appVersion}
                 </Badge>
-                <Badge variant="outline" className="px-3 py-1">
+                <Badge variant="outline" className="px-3 py-1 text-slate-600 border-slate-200">
                   {mockDashboardData.users.online.toLocaleString()} online
                 </Badge>
               </div>
             </div>
-            <div className="flex items-center gap-3 mt-6 lg:mt-0">
+            <div className="flex items-center gap-3 mt-4 lg:mt-0">
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => setTimeRange('24h')}
-                  className={timeRange === '24h' ? 'bg-purple-100 text-purple-700' : ''}
+                  className={`${timeRange === '24h' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'border-slate-200 text-slate-600'} transition-all duration-200`}
                 >
                   24h
                 </Button>
@@ -283,7 +283,7 @@ export default function DashboardPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => setTimeRange('7d')}
-                  className={timeRange === '7d' ? 'bg-purple-100 text-purple-700' : ''}
+                  className={`${timeRange === '7d' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'border-slate-200 text-slate-600'} transition-all duration-200`}
                 >
                   7d
                 </Button>
@@ -291,7 +291,7 @@ export default function DashboardPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => setTimeRange('30d')}
-                  className={timeRange === '30d' ? 'bg-purple-100 text-purple-700' : ''}
+                  className={`${timeRange === '30d' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'border-slate-200 text-slate-600'} transition-all duration-200`}
                 >
                   30d
                 </Button>
@@ -299,7 +299,7 @@ export default function DashboardPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => setTimeRange('90d')}
-                  className={timeRange === '90d' ? 'bg-purple-100 text-purple-700' : ''}
+                  className={`${timeRange === '90d' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'border-slate-200 text-slate-600'} transition-all duration-200`}
                 >
                   90d
                 </Button>
@@ -307,51 +307,51 @@ export default function DashboardPage() {
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors"
                 onClick={handleRefresh}
                 disabled={refreshing}
               >
                 <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
                 Refresh
               </Button>
-              <Button variant="outline" size="sm" className="flex items-center gap-2">
+              <Button variant="outline" size="sm" className="flex items-center gap-2 border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors">
                 <Download className="w-4 h-4" />
                 Export
               </Button>
-              <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl">
+              <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-sm hover:shadow-md">
                 <Settings className="w-4 h-4 mr-2" />
                 Configure
               </Button>
             </div>
           </motion.div>
 
-          {/* Enhanced Key Metrics */}
+          {/* Enhanced Key Metrics with Better Spacing */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-6 mb-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-6"
           >
             {/* Total Users */}
-            <Card className="bg-gradient-to-br from-blue-50 to-indigo-100 border-blue-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-blue-500 rounded-xl shadow-lg">
-                    <Users className="w-6 h-6 text-white" />
+            <Card className="bg-white border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:border-blue-200">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2.5 bg-blue-50 rounded-lg">
+                    <Users className="w-5 h-5 text-blue-600" />
                   </div>
                   <div className={`flex items-center gap-1 ${getChangeColor(mockDashboardData.users.growth)}`}>
                     {getChangeIcon(mockDashboardData.users.growth)}
-                    <span className="text-sm font-semibold">
+                    <span className="text-xs font-medium">
                       {mockDashboardData.users.growth > 0 ? '+' : ''}{mockDashboardData.users.growth}%
                     </span>
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Total Users</p>
-                  <p className="text-3xl font-bold text-gray-900">
+                  <p className="text-xs text-slate-500 mb-1 font-medium">Total Users</p>
+                  <p className="text-2xl font-semibold text-slate-800">
                     {mockDashboardData.users.total.toLocaleString()}
                   </p>
-                  <p className="text-sm text-blue-600 mt-1">
+                  <p className="text-xs text-blue-600 mt-1 font-medium">
                     {mockDashboardData.users.active.toLocaleString()} active
                   </p>
                 </div>
@@ -359,25 +359,25 @@ export default function DashboardPage() {
             </Card>
 
             {/* Revenue */}
-            <Card className="bg-gradient-to-br from-emerald-50 to-green-100 border-emerald-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-emerald-500 rounded-xl shadow-lg">
-                    <DollarSign className="w-6 h-6 text-white" />
+            <Card className="bg-white border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:border-emerald-200">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2.5 bg-emerald-50 rounded-lg">
+                    <DollarSign className="w-5 h-5 text-emerald-600" />
                   </div>
                   <div className={`flex items-center gap-1 ${getChangeColor(mockDashboardData.revenue.growth)}`}>
                     {getChangeIcon(mockDashboardData.revenue.growth)}
-                    <span className="text-sm font-semibold">
+                    <span className="text-xs font-medium">
                       {mockDashboardData.revenue.growth > 0 ? '+' : ''}{mockDashboardData.revenue.growth}%
                     </span>
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Revenue (ZAR)</p>
-                  <p className="text-3xl font-bold text-gray-900">
+                  <p className="text-xs text-slate-500 mb-1 font-medium">Revenue (ZAR)</p>
+                  <p className="text-2xl font-semibold text-slate-800">
                     R{(mockDashboardData.revenue.total / 1000).toFixed(0)}K
                   </p>
-                  <p className="text-sm text-emerald-600 mt-1">
+                  <p className="text-xs text-emerald-600 mt-1 font-medium">
                     R{mockDashboardData.revenue.arpu} ARPU
                   </p>
                 </div>
@@ -385,25 +385,25 @@ export default function DashboardPage() {
             </Card>
 
             {/* Venues */}
-            <Card className="bg-gradient-to-br from-purple-50 to-violet-100 border-purple-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-purple-500 rounded-xl shadow-lg">
-                    <MapPin className="w-6 h-6 text-white" />
+            <Card className="bg-white border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:border-purple-200">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2.5 bg-purple-50 rounded-lg">
+                    <MapPin className="w-5 h-5 text-purple-600" />
                   </div>
                   <div className="flex items-center gap-1">
-                    <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                    <span className="text-sm font-semibold text-gray-600">
+                    <Star className="w-3.5 h-3.5 text-yellow-500 fill-current" />
+                    <span className="text-xs font-medium text-slate-600">
                       {mockDashboardData.venues.avgRating}
                     </span>
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Active Venues</p>
-                  <p className="text-3xl font-bold text-gray-900">
+                  <p className="text-xs text-slate-500 mb-1 font-medium">Active Venues</p>
+                  <p className="text-2xl font-semibold text-slate-800">
                     {mockDashboardData.venues.active}
                   </p>
-                  <p className="text-sm text-purple-600 mt-1">
+                  <p className="text-xs text-purple-600 mt-1 font-medium">
                     {mockDashboardData.venues.verified} verified
                   </p>
                 </div>
@@ -411,25 +411,25 @@ export default function DashboardPage() {
             </Card>
 
             {/* AR Usage */}
-            <Card className="bg-gradient-to-br from-orange-50 to-amber-100 border-orange-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-orange-500 rounded-xl shadow-lg">
-                    <Camera className="w-6 h-6 text-white" />
+            <Card className="bg-white border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:border-orange-200">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2.5 bg-orange-50 rounded-lg">
+                    <Camera className="w-5 h-5 text-orange-600" />
                   </div>
                   <div className={`flex items-center gap-1 text-orange-600`}>
-                    <TrendingUp className="w-4 h-4" />
-                    <span className="text-sm font-semibold">
+                    <TrendingUp className="w-3.5 h-3.5" />
+                    <span className="text-xs font-medium">
                       {mockDashboardData.engagement.arUsage}%
                     </span>
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">AR Engagement</p>
-                  <p className="text-3xl font-bold text-gray-900">
+                  <p className="text-xs text-slate-500 mb-1 font-medium">AR Engagement</p>
+                  <p className="text-2xl font-semibold text-slate-800">
                     {mockDashboardData.engagement.arUsage}%
                   </p>
-                  <p className="text-sm text-orange-600 mt-1">
+                  <p className="text-xs text-orange-600 mt-1 font-medium">
                     {mockDashboardData.engagement.scanRate}% scan rate
                   </p>
                 </div>
@@ -437,23 +437,23 @@ export default function DashboardPage() {
             </Card>
 
             {/* Session Duration */}
-            <Card className="bg-gradient-to-br from-teal-50 to-cyan-100 border-teal-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-teal-500 rounded-xl shadow-lg">
-                    <Clock className="w-6 h-6 text-white" />
+            <Card className="bg-white border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:border-teal-200">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2.5 bg-teal-50 rounded-lg">
+                    <Clock className="w-5 h-5 text-teal-600" />
                   </div>
                   <div className="flex items-center gap-1 text-teal-600">
-                    <Activity className="w-4 h-4" />
-                    <span className="text-sm font-semibold">avg</span>
+                    <Activity className="w-3.5 h-3.5" />
+                    <span className="text-xs font-medium">avg</span>
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Session Duration</p>
-                  <p className="text-3xl font-bold text-gray-900">
+                  <p className="text-xs text-slate-500 mb-1 font-medium">Session Duration</p>
+                  <p className="text-2xl font-semibold text-slate-800">
                     {mockDashboardData.engagement.duration}m
                   </p>
-                  <p className="text-sm text-teal-600 mt-1">
+                  <p className="text-xs text-teal-600 mt-1 font-medium">
                     {mockDashboardData.engagement.sessions.toLocaleString()} sessions
                   </p>
                 </div>
@@ -461,23 +461,23 @@ export default function DashboardPage() {
             </Card>
 
             {/* System Health */}
-            <Card className="bg-gradient-to-br from-rose-50 to-pink-100 border-rose-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-rose-500 rounded-xl shadow-lg">
-                    <Activity className="w-6 h-6 text-white" />
+            <Card className="bg-white border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:border-rose-200">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2.5 bg-rose-50 rounded-lg">
+                    <Activity className="w-5 h-5 text-rose-600" />
                   </div>
                   <div className="flex items-center gap-1 text-emerald-600">
-                    <CheckCircle className="w-4 h-4" />
-                    <span className="text-sm font-semibold">healthy</span>
+                    <CheckCircle className="w-3.5 h-3.5" />
+                    <span className="text-xs font-medium">healthy</span>
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">System Uptime</p>
-                  <p className="text-3xl font-bold text-gray-900">
+                  <p className="text-xs text-slate-500 mb-1 font-medium">System Uptime</p>
+                  <p className="text-2xl font-semibold text-slate-800">
                     {mockDashboardData.technical.uptime}%
                   </p>
-                  <p className="text-sm text-rose-600 mt-1">
+                  <p className="text-xs text-rose-600 mt-1 font-medium">
                     {mockDashboardData.technical.performance}% performance
                   </p>
                 </div>
@@ -490,14 +490,14 @@ export default function DashboardPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
-            className="mb-8"
+            className="mb-6"
           >
             <QuickActions />
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Enhanced Charts Section */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-6">
               {/* Weekly Activity Chart */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
