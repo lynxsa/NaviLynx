@@ -7,6 +7,7 @@ A comprehensive Next.js 14 admin dashboard for managing the NaviLynx mobile appl
 ## 🚀 Features
 
 ### Core Functionality
+
 - **📊 Real-time Dashboard** - Monitor key metrics, system health, and recent activity
 - **👥 User Management** - Manage admin users with role-based permissions
 - **🏢 Venue Management** - Control shopping venues, stores, and locations
@@ -15,6 +16,7 @@ A comprehensive Next.js 14 admin dashboard for managing the NaviLynx mobile appl
 - **🔐 Role-based Access Control** - Admin, Manager, Moderator, and Viewer roles
 
 ### Design & UX
+
 - **🎨 NaviLynx Brand Styling** - Consistent colors and design with mobile app
 - **📱 Responsive Design** - Mobile-first approach with adaptive layouts
 - **🌗 Dark Mode Support** - Toggle between light and dark themes
@@ -22,6 +24,7 @@ A comprehensive Next.js 14 admin dashboard for managing the NaviLynx mobile appl
 - **⚡ Performance Optimized** - Fast loading with Next.js 14 optimizations
 
 ### Technical Features
+
 - **🔒 Secure Authentication** - NextAuth.js integration with multiple providers
 - **🗄️ Database Integration** - MongoDB with Mongoose ODM
 - **🔍 Advanced Search & Filtering** - Real-time search across all data
@@ -68,19 +71,22 @@ admin/
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 - MongoDB database (local or cloud)
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/lynxsa/NaviLynx.git
    cd NaviLynx/admin
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    # or
@@ -88,11 +94,13 @@ admin/
    ```
 
 3. **Set up environment variables**
+
    ```bash
    cp .env.example .env.local
    ```
-   
+
    Configure the following variables:
+
    ```env
    NEXTAUTH_URL=http://localhost:3000
    NEXTAUTH_SECRET=your-secret-key
@@ -100,6 +108,7 @@ admin/
    ```
 
 4. **Run the development server**
+
    ```bash
    npm run dev
    # or
@@ -112,6 +121,7 @@ admin/
 ## � User Roles & Permissions
 
 ### Admin
+
 - Full system access
 - User management (create, edit, delete)
 - System configuration
@@ -120,6 +130,7 @@ admin/
 - Security settings
 
 ### Manager
+
 - User management (view, edit)
 - Full venue management
 - Full deal management
@@ -127,6 +138,7 @@ admin/
 - No system configuration access
 
 ### Moderator
+
 - Limited user management (view only)
 - Venue management (view, edit)
 - Deal management (view, edit, create)
@@ -134,6 +146,7 @@ admin/
 - Content moderation tools
 
 ### Viewer
+
 - Read-only access to dashboards
 - View analytics and reports
 - No creation or editing capabilities
@@ -142,30 +155,35 @@ admin/
 ## 📊 Dashboard Features
 
 ### Main Dashboard
+
 - **Key Metrics**: Total users, venues, deals, AR scans
 - **System Status**: API health, database performance, service uptime
 - **Quick Actions**: Shortcuts to common tasks
 - **Recent Activity**: Live feed of platform activity
 
 ### User Management
+
 - **User Overview**: Total, active, pending, and inactive users
 - **User Profiles**: Complete user information and permissions
 - **Role Management**: Assign and modify user roles
 - **Activity Tracking**: Monitor user login and activity patterns
 
 ### Venue Management
+
 - **Venue Directory**: All shopping venues and stores
 - **AR Waypoints**: Manage navigation waypoints
 - **Floor Plans**: Upload and manage venue layouts
 - **Store Management**: Individual store information and deals
 
 ### Deal Management
+
 - **Deal Creation**: Rich deal editor with templates
 - **Performance Tracking**: Views, claims, and engagement rates
 - **Scheduling**: Set deal activation and expiration dates
 - **Category Management**: Organize deals by category and venue
 
 ### Analytics Dashboard
+
 - **User Behavior**: Session duration, retention, and engagement
 - **Platform Usage**: Device distribution, feature adoption
 - **Performance Metrics**: Top venues, deals, and user patterns
@@ -174,6 +192,7 @@ admin/
 ## 🎨 Design System
 
 ### NaviLynx Brand Colors
+
 ```css
 Primary: #3B82F6   /* Blue - main brand color */
 Secondary: #8B5CF6 /* Purple - secondary accent */
@@ -186,6 +205,7 @@ Light: #F8FAFC     /* Light background */
 ```
 
 ### Components
+
 - **Consistent Styling**: All components follow NaviLynx design language
 - **Responsive Design**: Mobile-first approach with breakpoint optimization
 - **Accessibility**: ARIA labels, keyboard navigation, screen reader support
@@ -194,6 +214,7 @@ Light: #F8FAFC     /* Light background */
 ## 🔧 Development
 
 ### Available Scripts
+
 ```bash
 npm run dev          # Start development server
 npm run build        # Build for production
@@ -203,6 +224,7 @@ npm run type-check   # Run TypeScript compiler
 ```
 
 ### Code Style Guidelines
+
 - **TypeScript**: Strict mode enabled, proper typing required
 - **ESLint**: Next.js recommended rules with custom overrides
 - **Prettier**: Automatic code formatting
@@ -210,6 +232,7 @@ npm run type-check   # Run TypeScript compiler
 - **Import Order**: External libraries → Internal modules → Relative imports
 
 ### Adding New Features
+
 1. Create component in appropriate directory
 2. Add TypeScript interfaces in `src/types/`
 3. Implement proper error handling
@@ -220,12 +243,14 @@ npm run type-check   # Run TypeScript compiler
 ## 🚢 Deployment
 
 ### Vercel (Recommended)
+
 ```bash
 npm run build
 vercel --prod
 ```
 
 ### Docker
+
 ```dockerfile
 FROM node:18-alpine
 WORKDIR /app
@@ -238,6 +263,7 @@ CMD ["npm", "start"]
 ```
 
 ### Environment Variables (Production)
+
 ```env
 NEXTAUTH_URL=https://your-domain.com
 NEXTAUTH_SECRET=your-production-secret
@@ -288,6 +314,7 @@ npm run test:coverage # Generate coverage report
 5. Open a Pull Request
 
 ### Development Guidelines
+
 - Follow TypeScript strict mode
 - Maintain 90%+ test coverage
 - Use semantic commit messages
@@ -298,7 +325,7 @@ npm run test:coverage # Generate coverage report
 
 - **Documentation**: [docs.navilynx.com](https://docs.navilynx.com)
 - **Issues**: [GitHub Issues](https://github.com/lynxsa/NaviLynx/issues)
-- **Email**: admin@navilynx.com
+- **Email**: <admin@navilynx.com>
 - **Discord**: [NaviLynx Community](https://discord.gg/navilynx)
 
 ## 📄 License

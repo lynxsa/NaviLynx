@@ -1,0 +1,35 @@
+{
+  "name": "navilynx-monorepo",
+  "version": "1.0.0", 
+  "private": true,
+  "workspaces": [
+    "packages/mobile",
+    "packages/admin",
+    "packages/shared"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:admin\" \"npm run dev:mobile\"",
+    "dev:admin": "cd packages/admin && npm run dev",
+    "dev:mobile": "cd packages/mobile && expo start",
+    "build": "npm run build:shared && npm run build:admin",
+    "build:shared": "cd packages/shared && npm run build",
+    "build:admin": "cd packages/admin && npm run build",
+    "lint": "npm run lint:admin && npm run lint:mobile",
+    "lint:admin": "cd packages/admin && npm run lint",
+    "lint:mobile": "cd packages/mobile && expo lint",
+    "test": "npm run test:shared && npm run test:admin",
+    "test:shared": "cd packages/shared && npm test",
+    "test:admin": "cd packages/admin && npm test",
+    "clean": "rm -rf node_modules packages/*/node_modules",
+    "reset": "npm run clean && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
