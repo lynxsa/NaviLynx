@@ -112,7 +112,52 @@ export default function PurpleNavigenie({
   const fadeAnim = useRef(new Animated.Value(0)).current
   const slideAnim = useRef(new Animated.Value(height)).current
   const typingAnim = useRef(new Animated.Value(0)).current
-  const scrollViewRef = useRef<ScrollView>(null)
+  const flatListRef = useRef<FlatList<ChatMessage>>(null)
+
+  const initializeChat = useCallback(() => {
+    const welcomeMessage: ChatMessage = {
+      id: '1',
+      text: "Hi! I'm Navigenie, your AI shopping and navigation assistant. How can I help you today?",
+      isUser: false,
+      timestamp: new Date(),
+      suggestions: [
+        'Find stores near me',
+        'Show my store cards',
+        'Best deals today',
+        'Navigate to checkout'
+      ]
+    }
+
+    const suggestions: QuickSuggestion[] = [
+      {
+        id: '1',
+        text: 'Find nearest stores',
+        icon: 'location',
+        gradient: [PURPLE_THEME.primary, PURPLE_THEME.primaryDark] as [string, string]
+      },
+      {
+        id: '2',
+        text: 'Show store cards',
+        icon: 'wallet',
+        gradient: [PURPLE_THEME.violet, PURPLE_THEME.indigo] as [string, string]
+      },
+      {
+        id: '3',
+        text: 'Current deals',
+        icon: 'tag',
+        gradient: [PURPLE_THEME.fuchsia, PURPLE_THEME.primary] as [string, string]
+      },
+      {
+        id: '4',
+        text: 'Product scanner',
+        icon: 'scan',
+        gradient: [PURPLE_THEME.accent, PURPLE_THEME.violet] as [string, string]
+      }
+    ]
+
+    setMessages([welcomeMessage])
+    setQuickSuggestions(suggestions)
+  }, [])
 
   const startAnimations = useCallback(() => {
     Animated.parallel([
@@ -142,73 +187,7 @@ export default function PurpleNavigenie({
     } else {
       resetAnimations()
     }
-  }, [visible, startAnimations, resetAnimations])
-
-  const startAnimations = () => {
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }),
-      Animated.spring(slideAnim, {
-        toValue: 0,
-        tension: 100,
-        friction: 8,
-        useNativeDriver: true,
-      })
-    ]).start()
-  }
-
-  const resetAnimations = () => {
-    fadeAnim.setValue(0)
-    slideAnim.setValue(height)
-  }
-
-  const initializeChat = () => {
-    const welcomeMessage: ChatMessage = {
-      id: '1',
-      text: "Hi! I'm Navigenie, your AI shopping and navigation assistant. How can I help you today?",
-      isUser: false,
-      timestamp: new Date(),
-      suggestions: [
-        'Find stores near me',
-        'Show my store cards',
-        'Best deals today',
-        'Navigate to checkout'
-      ]
-    }
-
-    const suggestions: QuickSuggestion[] = [
-      {
-        id: '1',
-        text: 'Find nearest stores',
-        icon: 'location',
-        gradient: [PURPLE_THEME.primary, PURPLE_THEME.primaryDark]
-      },
-      {
-        id: '2',
-        text: 'Show store cards',
-        icon: 'wallet',
-        gradient: [PURPLE_THEME.violet, PURPLE_THEME.indigo]
-      },
-      {
-        id: '3',
-        text: 'Current deals',
-        icon: 'tag',
-        gradient: [PURPLE_THEME.fuchsia, PURPLE_THEME.primary]
-      },
-      {
-        id: '4',
-        text: 'Product scanner',
-        icon: 'scan',
-        gradient: [PURPLE_THEME.accent, PURPLE_THEME.violet]
-      }
-    ]
-
-    setMessages([welcomeMessage])
-    setQuickSuggestions(suggestions)
-  }
+  }, [visible, startAnimations, resetAnimations, initializeChat])
 
   const handleSendMessage = useCallback(async (text: string) => {
     if (!text.trim()) return
@@ -251,7 +230,7 @@ export default function PurpleNavigenie({
       
       // Scroll to bottom
       setTimeout(() => {
-        scrollViewRef.current?.scrollToEnd({ animated: true })
+        flatListRef.current?.scrollToEnd({ animated: true })
       }, 100)
     }, 1500)
   }, [typingAnim])
@@ -579,7 +558,7 @@ export default function PurpleNavigenie({
             renderQuickSuggestions()
           ) : (
             <FlatList
-              ref={scrollViewRef}
+              ref={flatListRef}
               data={messages}
               renderItem={renderMessage}
               keyExtractor={(item) => item.id}
@@ -587,7 +566,7 @@ export default function PurpleNavigenie({
               contentContainerStyle={styles.messagesContent}
               showsVerticalScrollIndicator={false}
               ListFooterComponent={renderTypingIndicator}
-              onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}
+              onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
             />
           )}
         </View>
