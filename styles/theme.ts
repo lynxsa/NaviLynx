@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { designSystem } from './designSystem';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -174,13 +175,13 @@ export const globalStyles = StyleSheet.create({
   card: {
     backgroundColor: colors.light.card,
     borderRadius: borderRadius.xl,
-    padding: spacing.md,
+    padding: designSystem.spacing.md,
     ...shadows.md,
   },
   cardDark: {
     backgroundColor: colors.dark.card,
     borderRadius: borderRadius.xl,
-    padding: spacing.md,
+    padding: designSystem.spacing.md,
     ...shadows.lg,
   },
   
@@ -254,8 +255,8 @@ export const globalStyles = StyleSheet.create({
   buttonPrimary: {
     backgroundColor: colors.primary[600],
     borderRadius: borderRadius.xl,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
+    paddingVertical: designSystem.spacing.md,
+    paddingHorizontal: designSystem.spacing.lg,
     alignItems: 'center',
     justifyContent: 'center',
     ...shadows.sm,
@@ -264,8 +265,8 @@ export const globalStyles = StyleSheet.create({
   buttonSecondary: {
     backgroundColor: colors.gray[100],
     borderRadius: borderRadius.xl,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
+    paddingVertical: designSystem.spacing.md,
+    paddingHorizontal: designSystem.spacing.lg,
     alignItems: 'center',
     justifyContent: 'center',
     ...shadows.sm,
@@ -273,8 +274,8 @@ export const globalStyles = StyleSheet.create({
   buttonSecondaryDark: {
     backgroundColor: colors.gray[700],
     borderRadius: borderRadius.xl,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
+    paddingVertical: designSystem.spacing.md,
+    paddingHorizontal: designSystem.spacing.lg,
     alignItems: 'center',
     justifyContent: 'center',
     ...shadows.sm,
@@ -301,8 +302,8 @@ export const globalStyles = StyleSheet.create({
   input: {
     backgroundColor: colors.gray[50],
     borderRadius: borderRadius.lg,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.md,
+    paddingVertical: designSystem.spacing.md,
+    paddingHorizontal: designSystem.spacing.md,
     fontSize: typography.fontSize.base,
     color: colors.light.text,
     borderWidth: 1,
@@ -311,8 +312,8 @@ export const globalStyles = StyleSheet.create({
   inputDark: {
     backgroundColor: colors.gray[800],
     borderRadius: borderRadius.lg,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.md,
+    paddingVertical: designSystem.spacing.md,
+    paddingHorizontal: designSystem.spacing.md,
     fontSize: typography.fontSize.base,
     color: colors.dark.text,
     borderWidth: 1,
@@ -340,19 +341,19 @@ export const globalStyles = StyleSheet.create({
   gridContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginHorizontal: -spacing.sm,
+    marginHorizontal: -designSystem.spacing.sm,
   },
   gridItem2: {
     width: '50%',
-    paddingHorizontal: spacing.sm,
+    paddingHorizontal: designSystem.spacing.sm,
   },
   gridItem3: {
     width: '33.333%',
-    paddingHorizontal: spacing.sm,
+    paddingHorizontal: designSystem.spacing.sm,
   },
   gridItem4: {
     width: '25%',
-    paddingHorizontal: spacing.sm,
+    paddingHorizontal: designSystem.spacing.sm,
   },
 });
 
