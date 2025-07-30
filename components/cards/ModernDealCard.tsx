@@ -1,0 +1,704 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ViewStyle } from 'react-native';
+import { BaseCard } from './EnhancedBaseCard';
+import { designSystem } from '../../styles/designSystem';
+import { IconSymbol } from '../ui/IconSymbol';
+
+interface EnhancedDeal {
+  id: string;
+  title: string;
+  description: string;
+  originalPrice: number;
+  discountedPrice: number;
+  discountPercentage: number;
+  image: string;
+  venue: string;
+  category: string;
+  validUntil: string;
+  isLimited: boolean;
+  badge?: string;
+}, useEffect } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ViewStyle } from 'react-native';
+import { BaseCard } from './EnhancedBaseCard';
+import { designSystem } from '../../styles/designSystem';
+import { IconSymbol } from '../ui/IconSymbol';
+
+interface EnhancedDeal {
+  id: string;
+  title: string;
+  description: string;
+  originalPrice: number;
+  discountedPrice: number;
+  discountPercentage: number;
+  image: string;
+  category: string;
+  venue: string;
+  validUntil: string;
+  termsAndConditions: string[];
+  isActive: boolean;
+  isLimitedTime: boolean;
+  usageCount?: number;
+  maxUsage?: number;
+  tags?: string[];
+}
+
+interface ModernDealCardProps {
+  deal: EnhancedDeal;
+  onPress: (dealId: string) => void;
+  onClaim?: (dealId: string) => void;
+  onShare?: (dealId: string) => void;
+  style?: ViewStyle;
+  variant?: 'compact' | 'standard' | 'featured';
+  showCountdown?: boolean;
+  showProgress?: boolean;
+}
+
+export function ModernDealCard({
+  deal,
+  onPress,
+  onClaim,
+  onShare,
+  style,
+  variant = 'standard',
+  showCountdown = true,
+  showProgress = false,
+}: ModernDealCardProps) {
+  const [timeLeft, setTimeLeft] = useState<string>('');
+
+  useEffect(() => {
+    if (!showCountdown || !deal.isLimitedTime) return;
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const deadline = new Date(deal.validUntil).getTime();
+      const distance = deadline - now;
+
+      if (distance > 0) {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        if (days > 0) {
+          setTimeLeft(`${days}d ${hours}h`);
+        } else if (hours > 0) {
+          setTimeLeft(`${hours}h ${minutes}m`);
+        } else {
+          setTimeLeft(`${minutes}m`);
+        }
+      } else {
+        setTimeLeft('Expired');
+      }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 60000); // Update every minute
+
+    return () => clearInterval(interval);
+  }, [deal.validUntil, deal.isLimitedTime, showCountdown]);
+
+  const handlePress = () => {
+    onPress(deal.id);
+  };
+
+  const handleClaim = () => {
+    if (onClaim) {
+      onClaim(deal.id);
+    }
+  };
+
+  const handleShare = () => {
+    if (onShare) {
+      onShare(deal.id);
+    }
+  };
+
+  const calculateSavings = () => {
+    return deal.originalPrice - deal.discountedPrice;
+  };
+
+  const getProgressPercentage = () => {
+    if (!deal.maxUsage || !deal.usageCount) return 0;
+    return (deal.usageCount / deal.maxUsage) * 100;
+  };
+
+  const renderDiscountBadge = () => {
+    return (
+      <View style={styles.discountBadge}>
+        <Text style={styles.discountText}>-{deal.discountPercentage}%</Text>
+      </View>
+    );
+  };
+
+  const renderCountdown = () => {
+    if (!showCountdown || !deal.isLimitedTime || !timeLeft) return null;
+
+    return (
+      <View style={[
+        styles.countdownBadge,
+        { backgroundColor: timeLeft === 'Expired' ? designSystem.colors.error[500] : designSystem.colors.warning[500] }
+      ]}>
+        <IconSymbol name="clock.fill" size={12} color="#FFFFFF" />
+        <Text style={styles.countdownText}>{timeLeft}</Text>
+      </View>
+    );
+  };
+
+  const renderProgress = () => {
+    if (!showProgress || !deal.maxUsage) return null;
+
+    const percentage = getProgressPercentage();
+    
+    return (
+      <View style={styles.progressContainer}>
+        <View style={styles.progressBarBg}>
+          <View style={[styles.progressBarFill, { width: `${percentage}%` }]} />
+        </View>
+        <Text style={styles.progressText}>
+          {deal.usageCount || 0}/{deal.maxUsage} claimed
+        </Text>
+      </View>
+    );
+  };
+
+  const renderCTAButtons = () => {
+    return (
+      <View style={styles.ctaContainer}>
+        {onClaim && (
+          <TouchableOpacity style={styles.claimButton} onPress={handleClaim}>
+            <IconSymbol name="tag.fill" size={16} color="#FFFFFF" />
+            <Text style={styles.claimButtonText}>Claim Deal</Text>
+          </TouchableOpacity>
+        )}
+        {onShare && (
+          <TouchableOpacity style={styles.shareButton} onPress={handleShare}>
+            <IconSymbol name="square.and.arrow.up" size={14} color={designSystem.colors.primary[600]} />
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  };
+
+  // Modernized Compact Variant
+  if (variant === 'compact') {
+    return (
+      <BaseCard
+        style={[styles.modernCompactCard, style]}
+        onPress={handlePress}
+        variant="elevated"
+        trackingProps={{
+          category: 'deal',
+          action: 'view',
+          label: deal.title,
+        }}
+        id={deal.id}
+      >
+        <View style={styles.modernCompactContent}>
+          {/* Large image with overlays */}
+          <View style={styles.modernCompactImageContainer}>
+            <Image source={{ uri: deal.image }} style={styles.modernCompactImage} />
+            <View style={styles.modernCompactOverlay}>
+              {renderDiscountBadge()}
+              {renderCountdown()}
+            </View>
+          </View>
+          
+          {/* Content section */}
+          <View style={styles.modernCompactInfo}>
+            <Text style={styles.modernCompactTitle} numberOfLines={2}>{deal.title}</Text>
+            <Text style={styles.modernCompactVenue} numberOfLines={1}>{deal.venue}</Text>
+            
+            <View style={styles.modernCompactPricing}>
+              <Text style={styles.originalPrice}>${deal.originalPrice}</Text>
+              <Text style={styles.discountedPrice}>${deal.discountedPrice}</Text>
+              <Text style={styles.savingsText}>Save ${calculateSavings()}</Text>
+            </View>
+            
+            {renderProgress()}
+            {renderCTAButtons()}
+          </View>
+        </View>
+      </BaseCard>
+    );
+  }
+
+  // Modernized Standard Variant
+  if (variant === 'standard') {
+    return (
+      <BaseCard
+        style={[styles.modernStandardCard, style]}
+        onPress={handlePress}
+        variant="elevated"
+        trackingProps={{
+          category: 'deal',
+          action: 'view',
+          label: deal.title,
+        }}
+        id={deal.id}
+      >
+        <View style={styles.modernStandardContent}>
+          {/* Hero image */}
+          <View style={styles.modernStandardImageContainer}>
+            <Image source={{ uri: deal.image }} style={styles.modernStandardImage} />
+            <View style={styles.modernStandardOverlay}>
+              {renderDiscountBadge()}
+              {renderCountdown()}
+            </View>
+          </View>
+          
+          {/* Detailed content */}
+          <View style={styles.modernStandardInfo}>
+            <View style={styles.modernStandardHeader}>
+              <View style={styles.modernStandardTitleSection}>
+                <Text style={styles.modernStandardTitle} numberOfLines={2}>{deal.title}</Text>
+                <Text style={styles.modernStandardVenue}>{deal.venue}</Text>
+              </View>
+            </View>
+            
+            <Text style={styles.modernStandardDescription} numberOfLines={2}>
+              {deal.description}
+            </Text>
+            
+            <View style={styles.modernStandardPricing}>
+              <View style={styles.priceSection}>
+                <Text style={styles.originalPriceStandard}>${deal.originalPrice}</Text>
+                <Text style={styles.discountedPriceStandard}>${deal.discountedPrice}</Text>
+              </View>
+              <Text style={styles.savingsTextStandard}>You save ${calculateSavings()}</Text>
+            </View>
+            
+            {renderProgress()}
+            {renderCTAButtons()}
+          </View>
+        </View>
+      </BaseCard>
+    );
+  }
+
+  // Modernized Featured Variant
+  if (variant === 'featured') {
+    return (
+      <BaseCard
+        style={[styles.modernFeaturedCard, style]}
+        onPress={handlePress}
+        variant="elevated"
+        trackingProps={{
+          category: 'deal',
+          action: 'view',
+          label: deal.title,
+        }}
+        id={deal.id}
+      >
+        <View style={styles.modernFeaturedContent}>
+          {/* Large hero image with gradient */}
+          <View style={styles.modernFeaturedImageContainer}>
+            <Image source={{ uri: deal.image }} style={styles.modernFeaturedImage} />
+            <View style={styles.modernFeaturedGradient}>
+              <View style={styles.modernFeaturedTopBadges}>
+                {renderDiscountBadge()}
+                {renderCountdown()}
+              </View>
+              
+              <View style={styles.modernFeaturedBottomContent}>
+                <View style={styles.modernFeaturedTitleSection}>
+                  <Text style={styles.modernFeaturedTitle} numberOfLines={2}>{deal.title}</Text>
+                  <Text style={styles.modernFeaturedVenue}>{deal.venue}</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+          
+          {/* Rich content */}
+          <View style={styles.modernFeaturedInfo}>
+            <Text style={styles.modernFeaturedDescription} numberOfLines={3}>
+              {deal.description}
+            </Text>
+            
+            <View style={styles.modernFeaturedPricing}>
+              <View style={styles.priceSectionFeatured}>
+                <Text style={styles.originalPriceFeatured}>${deal.originalPrice}</Text>
+                <Text style={styles.discountedPriceFeatured}>${deal.discountedPrice}</Text>
+              </View>
+              <Text style={styles.savingsTextFeatured}>You save ${calculateSavings()} ({deal.discountPercentage}% off)</Text>
+            </View>
+            
+            {renderProgress()}
+            {renderCTAButtons()}
+          </View>
+        </View>
+      </BaseCard>
+    );
+  }
+
+  return null;
+}
+
+const styles = StyleSheet.create({
+  // Common styles
+  discountBadge: {
+    backgroundColor: designSystem.colors.error[500],
+    paddingHorizontal: designSystem.spacing.sm,
+    paddingVertical: 4,
+    borderRadius: designSystem.borderRadius.lg,
+    position: 'absolute',
+    top: designSystem.spacing.sm,
+    left: designSystem.spacing.sm,
+  },
+  
+  discountText: {
+    color: '#FFFFFF',
+    fontSize: designSystem.typography.fontSizes.sm,
+    fontWeight: designSystem.typography.fontWeights.bold,
+  },
+  
+  countdownBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: designSystem.spacing.sm,
+    paddingVertical: 4,
+    borderRadius: designSystem.borderRadius.lg,
+    gap: 4,
+    position: 'absolute',
+    top: designSystem.spacing.sm,
+    right: designSystem.spacing.sm,
+  },
+  
+  countdownText: {
+    color: '#FFFFFF',
+    fontSize: designSystem.typography.fontSizes.xs,
+    fontWeight: designSystem.typography.fontWeights.bold,
+  },
+  
+  progressContainer: {
+    marginTop: designSystem.spacing.sm,
+  },
+  
+  progressBarBg: {
+    height: 4,
+    backgroundColor: designSystem.colors.neutral[200],
+    borderRadius: 2,
+    overflow: 'hidden',
+    marginBottom: 4,
+  },
+  
+  progressBarFill: {
+    height: '100%',
+    backgroundColor: designSystem.colors.success[500],
+    borderRadius: 2,
+  },
+  
+  progressText: {
+    fontSize: designSystem.typography.fontSizes.xs,
+    color: designSystem.colors.neutral[600],
+    textAlign: 'right',
+  },
+  
+  // CTA Buttons
+  ctaContainer: {
+    flexDirection: 'row',
+    gap: designSystem.spacing.sm,
+    marginTop: designSystem.spacing.md,
+  },
+  
+  claimButton: {
+    backgroundColor: designSystem.colors.success[600],
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: designSystem.spacing.md,
+    paddingVertical: designSystem.spacing.sm,
+    borderRadius: designSystem.borderRadius.lg,
+    gap: 6,
+    flex: 1,
+    justifyContent: 'center',
+  },
+  
+  claimButtonText: {
+    color: '#FFFFFF',
+    fontSize: designSystem.typography.fontSizes.sm,
+    fontWeight: designSystem.typography.fontWeights.semibold,
+  },
+  
+  shareButton: {
+    backgroundColor: designSystem.colors.primary[50],
+    borderWidth: 1,
+    borderColor: designSystem.colors.primary[200],
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: designSystem.spacing.md,
+    paddingVertical: designSystem.spacing.sm,
+    borderRadius: designSystem.borderRadius.lg,
+  },
+
+  // Compact Variant - Modernized
+  modernCompactCard: {
+    width: 320, // Increased width for better image visibility
+    marginRight: designSystem.spacing.md,
+  },
+  
+  modernCompactContent: {
+    flex: 1,
+  },
+  
+  modernCompactImageContainer: {
+    position: 'relative',
+    height: 200, // Larger image height
+    borderRadius: designSystem.borderRadius.lg,
+    overflow: 'hidden',
+    marginBottom: designSystem.spacing.md,
+  },
+  
+  modernCompactImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  
+  modernCompactOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  
+  modernCompactInfo: {
+    paddingHorizontal: designSystem.spacing.sm,
+  },
+  
+  modernCompactTitle: {
+    fontSize: designSystem.typography.fontSizes.lg,
+    fontWeight: designSystem.typography.fontWeights.bold,
+    color: designSystem.colors.neutral[900],
+    marginBottom: designSystem.spacing.xs,
+  },
+  
+  modernCompactVenue: {
+    fontSize: designSystem.typography.fontSizes.sm,
+    color: designSystem.colors.neutral[600],
+    fontWeight: designSystem.typography.fontWeights.medium,
+    marginBottom: designSystem.spacing.sm,
+  },
+  
+  modernCompactPricing: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: designSystem.spacing.sm,
+    marginBottom: designSystem.spacing.sm,
+  },
+  
+  originalPrice: {
+    fontSize: designSystem.typography.fontSizes.sm,
+    color: designSystem.colors.neutral[500],
+    textDecorationLine: 'line-through',
+  },
+  
+  discountedPrice: {
+    fontSize: designSystem.typography.fontSizes.lg,
+    fontWeight: designSystem.typography.fontWeights.bold,
+    color: designSystem.colors.success[600],
+  },
+  
+  savingsText: {
+    fontSize: designSystem.typography.fontSizes.sm,
+    color: designSystem.colors.success[600],
+    fontWeight: designSystem.typography.fontWeights.semibold,
+  },
+
+  // Standard Variant - Modernized
+  modernStandardCard: {
+    width: '100%',
+    marginBottom: designSystem.spacing.lg,
+  },
+  
+  modernStandardContent: {
+    flex: 1,
+  },
+  
+  modernStandardImageContainer: {
+    position: 'relative',
+    height: 240, // Generous image height
+    borderRadius: designSystem.borderRadius.lg,
+    overflow: 'hidden',
+    marginBottom: designSystem.spacing.md,
+  },
+  
+  modernStandardImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  
+  modernStandardOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  
+  modernStandardInfo: {
+    paddingHorizontal: designSystem.spacing.md,
+    paddingBottom: designSystem.spacing.md,
+  },
+  
+  modernStandardHeader: {
+    marginBottom: designSystem.spacing.sm,
+  },
+  
+  modernStandardTitleSection: {
+    marginBottom: designSystem.spacing.xs,
+  },
+  
+  modernStandardTitle: {
+    fontSize: designSystem.typography.fontSizes.xl,
+    fontWeight: designSystem.typography.fontWeights.bold,
+    color: designSystem.colors.neutral[900],
+    marginBottom: designSystem.spacing.xs,
+  },
+  
+  modernStandardVenue: {
+    fontSize: designSystem.typography.fontSizes.md,
+    color: designSystem.colors.neutral[600],
+    fontWeight: designSystem.typography.fontWeights.medium,
+  },
+  
+  modernStandardDescription: {
+    fontSize: designSystem.typography.fontSizes.md,
+    color: designSystem.colors.neutral[700],
+    lineHeight: 20,
+    marginBottom: designSystem.spacing.md,
+  },
+  
+  modernStandardPricing: {
+    marginBottom: designSystem.spacing.md,
+  },
+  
+  priceSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: designSystem.spacing.md,
+    marginBottom: designSystem.spacing.xs,
+  },
+  
+  originalPriceStandard: {
+    fontSize: designSystem.typography.fontSizes.lg,
+    color: designSystem.colors.neutral[500],
+    textDecorationLine: 'line-through',
+  },
+  
+  discountedPriceStandard: {
+    fontSize: designSystem.typography.fontSizes['2xl'],
+    fontWeight: designSystem.typography.fontWeights.bold,
+    color: designSystem.colors.success[600],
+  },
+  
+  savingsTextStandard: {
+    fontSize: designSystem.typography.fontSizes.md,
+    color: designSystem.colors.success[600],
+    fontWeight: designSystem.typography.fontWeights.semibold,
+  },
+
+  // Featured Variant - Premium
+  modernFeaturedCard: {
+    width: '100%',
+    marginBottom: designSystem.spacing.xl,
+  },
+  
+  modernFeaturedContent: {
+    flex: 1,
+  },
+  
+  modernFeaturedImageContainer: {
+    position: 'relative',
+    height: 300, // Large hero image
+    borderRadius: designSystem.borderRadius.lg,
+    overflow: 'hidden',
+    marginBottom: designSystem.spacing.md,
+  },
+  
+  modernFeaturedImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  
+  modernFeaturedGradient: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    justifyContent: 'space-between',
+    padding: designSystem.spacing.md,
+  },
+  
+  modernFeaturedTopBadges: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  
+  modernFeaturedBottomContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  },
+  
+  modernFeaturedTitleSection: {
+    flex: 1,
+  },
+  
+  modernFeaturedTitle: {
+    fontSize: designSystem.typography.fontSizes['2xl'],
+    fontWeight: designSystem.typography.fontWeights.bold,
+    color: '#FFFFFF',
+    marginBottom: designSystem.spacing.xs,
+  },
+  
+  modernFeaturedVenue: {
+    fontSize: designSystem.typography.fontSizes.lg,
+    color: 'rgba(255,255,255,0.9)',
+    fontWeight: designSystem.typography.fontWeights.medium,
+  },
+  
+  modernFeaturedInfo: {
+    paddingHorizontal: designSystem.spacing.md,
+    paddingBottom: designSystem.spacing.md,
+  },
+  
+  modernFeaturedDescription: {
+    fontSize: designSystem.typography.fontSizes.lg,
+    color: designSystem.colors.neutral[700],
+    lineHeight: 24,
+    marginBottom: designSystem.spacing.md,
+  },
+  
+  modernFeaturedPricing: {
+    marginBottom: designSystem.spacing.md,
+  },
+  
+  priceSectionFeatured: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: designSystem.spacing.lg,
+    marginBottom: designSystem.spacing.sm,
+  },
+  
+  originalPriceFeatured: {
+    fontSize: designSystem.typography.fontSizes.xl,
+    color: designSystem.colors.neutral[500],
+    textDecorationLine: 'line-through',
+  },
+  
+  discountedPriceFeatured: {
+    fontSize: designSystem.typography.fontSizes['3xl'],
+    fontWeight: designSystem.typography.fontWeights.bold,
+    color: designSystem.colors.success[600],
+  },
+  
+  savingsTextFeatured: {
+    fontSize: designSystem.typography.fontSizes.lg,
+    color: designSystem.colors.success[600],
+    fontWeight: designSystem.typography.fontWeights.semibold,
+  },
+});

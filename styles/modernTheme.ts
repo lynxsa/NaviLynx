@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { designSystem } from './designSystem';
 
 // Color system with proper values
 export const colors = {
@@ -171,13 +172,13 @@ export const styles = StyleSheet.create({
   card: {
     backgroundColor: '#FFFFFF',
     borderRadius: borderRadius.xl,
-    padding: spacing.md,
+    padding: designSystem.spacing.md,
     ...shadows.md,
   },
   cardDark: {
     backgroundColor: colors.gray[800],
     borderRadius: borderRadius.xl,
-    padding: spacing.md,
+    padding: designSystem.spacing.md,
     ...shadows.lg,
   },
   
@@ -185,8 +186,8 @@ export const styles = StyleSheet.create({
   buttonPrimary: {
     backgroundColor: colors.primary,
     borderRadius: borderRadius.lg,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
+    paddingVertical: designSystem.spacing.md,
+    paddingHorizontal: designSystem.spacing.lg,
     alignItems: 'center',
     justifyContent: 'center',
     ...shadows.sm,
@@ -194,8 +195,8 @@ export const styles = StyleSheet.create({
   buttonSecondary: {
     backgroundColor: colors.gray[100],
     borderRadius: borderRadius.lg,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
+    paddingVertical: designSystem.spacing.md,
+    paddingHorizontal: designSystem.spacing.lg,
     alignItems: 'center',
     justifyContent: 'center',
     ...shadows.sm,
@@ -203,8 +204,8 @@ export const styles = StyleSheet.create({
   buttonSecondaryDark: {
     backgroundColor: colors.gray[700],
     borderRadius: borderRadius.lg,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
+    paddingVertical: designSystem.spacing.md,
+    paddingHorizontal: designSystem.spacing.lg,
     alignItems: 'center',
     justifyContent: 'center',
     ...shadows.sm,
@@ -274,8 +275,8 @@ export const styles = StyleSheet.create({
   input: {
     backgroundColor: colors.gray[50],
     borderRadius: borderRadius.lg,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.md,
+    paddingVertical: designSystem.spacing.md,
+    paddingHorizontal: designSystem.spacing.md,
     fontSize: 16,
     color: colors.gray[900],
     borderWidth: 1,
@@ -284,8 +285,8 @@ export const styles = StyleSheet.create({
   inputDark: {
     backgroundColor: colors.gray[800],
     borderRadius: borderRadius.lg,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.md,
+    paddingVertical: designSystem.spacing.md,
+    paddingHorizontal: designSystem.spacing.md,
     fontSize: 16,
     color: '#FFFFFF',
     borderWidth: 1,
@@ -295,14 +296,14 @@ export const styles = StyleSheet.create({
   // Quick Action
   quickAction: {
     alignItems: 'center',
-    padding: spacing.md,
+    padding: designSystem.spacing.md,
     borderRadius: borderRadius.lg,
     backgroundColor: colors.gray[50],
     ...shadows.sm,
   },
   quickActionDark: {
     alignItems: 'center',
-    padding: spacing.md,
+    padding: designSystem.spacing.md,
     borderRadius: borderRadius.lg,
     backgroundColor: colors.gray[800],
     ...shadows.sm,
@@ -327,7 +328,7 @@ export const styles = StyleSheet.create({
   // Hero Card
   heroCard: {
     borderRadius: borderRadius['2xl'],
-    padding: spacing.lg,
+    padding: designSystem.spacing.lg,
     ...shadows.md,
   },
   
@@ -336,7 +337,7 @@ export const styles = StyleSheet.create({
     width: 200,
     height: 120,
     borderRadius: borderRadius.xl,
-    marginRight: spacing.md,
+    marginRight: designSystem.spacing.md,
     overflow: 'hidden',
     ...shadows.md,
   },
@@ -345,7 +346,7 @@ export const styles = StyleSheet.create({
   venueCard: {
     borderRadius: borderRadius.xl,
     overflow: 'hidden',
-    marginBottom: spacing.md,
+    marginBottom: designSystem.spacing.md,
     ...shadows.md,
   },
   
@@ -353,17 +354,17 @@ export const styles = StyleSheet.create({
   statCard: {
     backgroundColor: colors.gray[50],
     borderRadius: borderRadius.xl,
-    padding: spacing.lg,
+    padding: designSystem.spacing.lg,
     flex: 1,
-    marginHorizontal: spacing.xs,
+    marginHorizontal: designSystem.spacing.xs,
     ...shadows.sm,
   },
   statCardDark: {
     backgroundColor: colors.gray[800],
     borderRadius: borderRadius.xl,
-    padding: spacing.lg,
+    padding: designSystem.spacing.lg,
     flex: 1,
-    marginHorizontal: spacing.xs,
+    marginHorizontal: designSystem.spacing.xs,
     ...shadows.sm,
   },
 });

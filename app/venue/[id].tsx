@@ -33,7 +33,7 @@ import Animated, {
 // Components & Theme
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useTheme } from '@/context/ThemeContext';
-import { colors, spacing, borderRadius, shadows } from '@/styles/modernTheme';
+import { colors, spacing, borderRadius, shadows, designSystem } from '@/styles/modernTheme';
 import { StoreCardWalletSection } from '@/components/venue/StoreCardWalletSection';
 
 // Data & Services

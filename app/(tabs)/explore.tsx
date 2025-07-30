@@ -5,7 +5,6 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
-  Image,
   StyleSheet,
   FlatList,
   Dimensions,
@@ -24,6 +23,7 @@ import {
   type VenueCategory
 } from '@/data/enhancedVenues';
 import { UnifiedCategoryCard } from '@/components/categories/UnifiedCategoryCard';
+import { VenueCard } from '../../components/cards/index';
 
 const { width } = Dimensions.get('window');
 const CATEGORY_CARD_WIDTH = (width - 60) / 2;
@@ -139,39 +139,11 @@ export default function ExploreScreen() {
   );
 
   const renderVenueCard = ({ item: venue }: { item: EnhancedVenue }) => (
-    <TouchableOpacity
-      style={[styles.venueCard, { backgroundColor: colors.surface }]}
-      onPress={() => handleVenuePress(venue)}
-    >
-      <Image source={{ uri: venue.headerImage }} style={styles.venueImage} />
-      <View style={styles.venueContent}>
-        <View style={styles.venueHeader}>
-          <Text style={[styles.venueName, { color: colors.text }]} numberOfLines={1}>
-            {venue.name}
-          </Text>
-          {venue.isFeatured && (
-            <View style={[styles.featuredBadge, { backgroundColor: colors.primary }]}>
-              <IconSymbol name="star.fill" size={10} color="#FFFFFF" />
-            </View>
-          )}
-        </View>
-        <Text style={[styles.venueLocation, { color: colors.textSecondary }]} numberOfLines={1}>
-          {venue.location.city}, {venue.location.province}
-        </Text>
-        <Text style={[styles.venueDescription, { color: colors.textSecondary }]} numberOfLines={2}>
-          {venue.shortDescription}
-        </Text>
-        <View style={styles.venueFooter}>
-          <View style={styles.venueRating}>
-            <IconSymbol name="star.fill" size={12} color="#FFD700" />
-            <Text style={[styles.venueRatingText, { color: colors.text }]}>{venue.rating}</Text>
-            <Text style={[styles.venueReviewCount, { color: colors.textSecondary }]}>
-              ({venue.reviewCount})
-            </Text>
-          </View>
-        </View>
-      </View>
-    </TouchableOpacity>
+    <VenueCard
+      venue={venue}
+      onPress={handleVenuePress}
+      variant="list"
+    />
   );
   const renderContent = () => {
     if (selectedCategory || searchQuery.trim()) {

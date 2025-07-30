@@ -14,17 +14,21 @@ import { router } from 'expo-router';
 
 // Theme and styling
 import { useTheme } from '@/context/ThemeContext';
-import { styles as modernStyles, colors, spacing, borderRadius, shadows } from '@/styles/modernTheme';
+import { styles as modernStyles, colors, borderRadius, shadows, spacing } from '@/styles/modernTheme';
+import { designSystem } from '@/styles/designSystem';
 
 // Enhanced components
 import AdvertisingBanner from '@/components/AdvertisingBanner';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { UnifiedCategoryCard } from '@/components/categories/UnifiedCategoryCard';
-import { EnhancedVenueCard } from '@/components/venues/EnhancedVenueCard';
 import { EnhancedNavigateButton } from '@/components/ui/EnhancedNavigateButton';
-import { ModernCard } from '@/components/ui/ModernCard';
 import { ModernStoreCard } from '@/components/ui/ModernStoreCard';
+
+// New modern card components with enhanced image visibility
+import { ModernVenueCard } from '@/components/cards/ModernVenueCard';
+import { ModernDealCard } from '@/components/cards/index';
+import { ModernArticleCard } from '@/components/cards/ModernArticleCard';
 
 // Data imports
 import { 
@@ -127,9 +131,9 @@ export default function HomeScreen() {
       
       {/* Header with Logo and Icons */}
       <View style={{ 
-        paddingHorizontal: spacing.lg, 
-        paddingTop: spacing.xl + 8, 
-        paddingBottom: spacing.lg,
+        paddingHorizontal: designSystem.spacing.lg, 
+        paddingTop: designSystem.spacing.xl + 8, 
+        paddingBottom: designSystem.spacing.lg,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -149,7 +153,7 @@ export default function HomeScreen() {
               width: 28,
               height: 28,
               resizeMode: 'contain',
-              marginRight: spacing.sm,
+              marginRight: designSystem.spacing.sm,
             }}
           />
           <Text style={{
@@ -163,14 +167,14 @@ export default function HomeScreen() {
         </View>
         
         {/* Elegant Header Icons */}
-        <View style={[modernStyles.row, { gap: spacing.xs }]}>
+        <View style={[modernStyles.row, { gap: designSystem.spacing.xs }]}>
           {/* Theme Toggle Icon */}
           <TouchableOpacity 
             style={[
               {
                 backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)',
                 borderRadius: borderRadius.xl,
-                padding: spacing.sm + 2,
+                padding: designSystem.spacing.sm + 2,
                 borderWidth: 1,
                 borderColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)',
                 ...shadows.sm,
@@ -190,7 +194,7 @@ export default function HomeScreen() {
               {
                 backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)',
                 borderRadius: borderRadius.xl,
-                padding: spacing.sm + 2,
+                padding: designSystem.spacing.sm + 2,
                 borderWidth: 1,
                 borderColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)',
                 ...shadows.sm,
@@ -210,7 +214,7 @@ export default function HomeScreen() {
               {
                 backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)',
                 borderRadius: borderRadius.xl,
-                padding: spacing.sm + 2,
+                padding: designSystem.spacing.sm + 2,
                 borderWidth: 1,
                 borderColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)',
                 ...shadows.sm,
@@ -230,7 +234,7 @@ export default function HomeScreen() {
               {
                 backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)',
                 borderRadius: borderRadius.xl,
-                padding: spacing.sm + 2,
+                padding: designSystem.spacing.sm + 2,
                 borderWidth: 1,
                 borderColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)',
                 ...shadows.sm,
@@ -259,7 +263,7 @@ export default function HomeScreen() {
         style={{ flex: 1 }}
       >
         {/* Greeting Message */}
-        <View style={{ paddingHorizontal: spacing.md, marginBottom: spacing.md }}>
+        <View style={{ paddingHorizontal: designSystem.spacing.md, marginBottom: designSystem.spacing.md }}>
           <Text style={[
             isDark ? modernStyles.h1Dark : modernStyles.h1, 
             { 
@@ -285,12 +289,12 @@ export default function HomeScreen() {
         </View>
 
         {/* Enhanced Banner with Real Images */}
-        <View style={{ paddingHorizontal: spacing.md, marginBottom: spacing.lg }}>
+        <View style={{ paddingHorizontal: designSystem.spacing.md, marginBottom: designSystem.spacing.lg }}>
           <AdvertisingBanner />
         </View>
 
         {/* Enhanced Navigate Button - Smaller & More Rounded */}
-        <View style={{ paddingHorizontal: spacing.md, marginBottom: spacing.lg }}>
+        <View style={{ paddingHorizontal: designSystem.spacing.md, marginBottom: designSystem.spacing.lg }}>
           <EnhancedNavigateButton 
             onPress={() => router.push('/ar-navigation-landing')}
             title="Navigate!"
@@ -301,8 +305,8 @@ export default function HomeScreen() {
         </View>
 
         {/* Enhanced Categories */}
-        <View style={{ marginBottom: spacing.lg }}>
-          <View style={{ paddingHorizontal: spacing.md, marginBottom: spacing.md }}>
+        <View style={{ marginBottom: designSystem.spacing.lg }}>
+          <View style={{ paddingHorizontal: designSystem.spacing.md, marginBottom: designSystem.spacing.md }}>
             <View style={[modernStyles.row, modernStyles.spaceBetween, modernStyles.alignCenter]}>
               <View>
                 <Text style={[
@@ -318,7 +322,7 @@ export default function HomeScreen() {
                 onPress={() => router.push('/explore')}
                 style={[
                   isDark ? modernStyles.buttonSecondaryDark : modernStyles.buttonSecondary,
-                  { paddingVertical: spacing.xs, paddingHorizontal: spacing.sm }
+                  { paddingVertical: designSystem.spacing.xs, paddingHorizontal: designSystem.spacing.sm }
                 ]}
               >
                 <Text style={[{ fontWeight: '500', fontSize: 11 }, { color: isDark ? '#FFFFFF' : colors.text }]}>View All</Text>
@@ -330,13 +334,13 @@ export default function HomeScreen() {
           <ScrollView 
             horizontal 
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingHorizontal: spacing.md, gap: spacing.md }}
+            contentContainerStyle={{ paddingHorizontal: designSystem.spacing.md, gap: designSystem.spacing.md }}
           >
             {venueCategories.slice(0, 6).map((category) => (
               <UnifiedCategoryCard
                 key={category.id}
                 category={category}
-                width={(width - spacing.lg * 3) / 2}
+                width={(width - designSystem.spacing.lg * 3) / 2}
                 onPress={() => router.push('/explore')}
               />
             ))}
@@ -344,9 +348,9 @@ export default function HomeScreen() {
         </View>
 
         {/* Enhanced Featured Venues */}
-        <View style={{ marginBottom: spacing.lg }}>
-          <View style={{ paddingHorizontal: spacing.md, marginBottom: spacing.sm }}>
-            <View style={[modernStyles.row, modernStyles.spaceBetween, modernStyles.alignCenter, { marginBottom: spacing.xs }]}>
+        <View style={{ marginBottom: designSystem.spacing.lg }}>
+          <View style={{ paddingHorizontal: designSystem.spacing.md, marginBottom: designSystem.spacing.sm }}>
+            <View style={[modernStyles.row, modernStyles.spaceBetween, modernStyles.alignCenter, { marginBottom: designSystem.spacing.xs }]}>
               <View>
                 <Text style={[
                   isDark ? modernStyles.h3Dark : modernStyles.h3,
@@ -361,7 +365,7 @@ export default function HomeScreen() {
                 onPress={() => router.push('/explore')}
                 style={[
                   isDark ? modernStyles.buttonSecondaryDark : modernStyles.buttonSecondary,
-                  { paddingVertical: spacing.xs, paddingHorizontal: spacing.sm }
+                  { paddingVertical: designSystem.spacing.xs, paddingHorizontal: designSystem.spacing.sm }
                 ]}
               >
                 <Text style={[{ fontWeight: '600', fontSize: 11 }, { color: isDark ? '#FFFFFF' : colors.text }]}>View All</Text>
@@ -372,25 +376,33 @@ export default function HomeScreen() {
           <ScrollView 
             horizontal 
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingHorizontal: spacing.md }}
+            contentContainerStyle={{ paddingHorizontal: designSystem.spacing.md }}
           >
             {enhancedVenuesData.slice(0, 8).map((venue) => (
-              <EnhancedVenueCard
+              <ModernVenueCard
                 key={venue.id}
                 venue={venue}
-                size="medium"
+                variant="compact"
                 showFeatures={true}
-                onPress={(venueId) => router.push(`/venue/${venueId}`)}
+                onPress={(venueId: string) => router.push(`/venue/${venueId}`)}
+                onNavigate={(venueId: string) => {
+                  // Navigate to venue with AR
+                  router.push(`/venue/${venueId}?navigate=true`);
+                }}
+                onCall={(venueId: string) => {
+                  // Handle call functionality
+                  console.log(`Calling venue ${venueId}`);
+                }}
               />
             ))}
           </ScrollView>
         </View>
 
         {/* Enhanced Deals Section */}
-        <View style={{ marginBottom: spacing.lg }}>
-          <View style={{ paddingHorizontal: spacing.md, marginBottom: spacing.sm }}>
-            <View style={[modernStyles.row, modernStyles.spaceBetween, modernStyles.alignCenter, { marginBottom: spacing.xs }]}>
-              <View style={[modernStyles.row, modernStyles.alignCenter, { gap: spacing.xs, flex: 1 }]}>
+        <View style={{ marginBottom: designSystem.spacing.lg }}>
+          <View style={{ paddingHorizontal: designSystem.spacing.md, marginBottom: designSystem.spacing.sm }}>
+            <View style={[modernStyles.row, modernStyles.spaceBetween, modernStyles.alignCenter, { marginBottom: designSystem.spacing.xs }]}>
+              <View style={[modernStyles.row, modernStyles.alignCenter, { gap: designSystem.spacing.xs, flex: 1 }]}>
                 <IconSymbol name="tag.fill" size={18} color={colors.primary} />
                 <Text style={[
                   isDark ? modernStyles.h3Dark : modernStyles.h3,
@@ -399,7 +411,7 @@ export default function HomeScreen() {
                 <View style={{
                   backgroundColor: colors.error,
                   borderRadius: borderRadius.full,
-                  paddingHorizontal: spacing.xs,
+                  paddingHorizontal: designSystem.spacing.xs,
                   paddingVertical: 2,
                 }}>
                   <Text style={{ color: '#FFFFFF', fontSize: 9, fontWeight: '700' }}>LIMITED</Text>
@@ -427,32 +439,22 @@ export default function HomeScreen() {
           <ScrollView 
             horizontal 
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingHorizontal: spacing.md }}
+            contentContainerStyle={{ paddingHorizontal: designSystem.spacing.md }}
           >
             {enhancedDealsData.slice(0, 6).map((deal) => (
-              <ModernCard
+              <ModernDealCard
                 key={deal.id}
-                onPress={() => router.push(`/deal-details/${deal.id}` as any)}
-                style={{ width: 240, marginRight: spacing.md }}
-              >
-                <View>
-                  <Text style={[
-                    isDark ? modernStyles.h3Dark : modernStyles.h3,
-                    { fontSize: 14, fontWeight: '600', marginBottom: 4 }
-                  ]}>{deal.title}</Text>
-                  <Text style={[
-                    isDark ? modernStyles.bodyDark : modernStyles.body,
-                    { fontSize: 12, opacity: 0.7 }
-                  ]}>{deal.description}</Text>
-                </View>
-              </ModernCard>
+                deal={deal}
+                onPress={(id: string) => router.push(`/deal-details/${id}` as any)}
+                variant="compact"
+              />
             ))}
           </ScrollView>
         </View>
 
         {/* Store Cards Section */}
-        <View style={{ paddingHorizontal: spacing.md, marginBottom: spacing.lg }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.md }}>
+        <View style={{ paddingHorizontal: designSystem.spacing.md, marginBottom: designSystem.spacing.lg }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: designSystem.spacing.md }}>
             <View>
               <Text style={[
                 isDark ? modernStyles.h3Dark : modernStyles.h3,
@@ -467,7 +469,7 @@ export default function HomeScreen() {
               onPress={() => router.push('/store-cards')}
               style={[
                 isDark ? modernStyles.buttonSecondaryDark : modernStyles.buttonSecondary,
-                { paddingVertical: spacing.xs, paddingHorizontal: spacing.sm }
+                { paddingVertical: designSystem.spacing.xs, paddingHorizontal: designSystem.spacing.sm }
               ]}
             >
               <Text style={[{ fontWeight: '500', fontSize: 11 }, { color: isDark ? '#FFFFFF' : colors.text }]}>View All</Text>
@@ -851,57 +853,24 @@ export default function HomeScreen() {
           
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {articlesData.map((article) => (
-              <ModernCard
+              <ModernArticleCard
                 key={article.id}
+                article={article}
                 onPress={() => router.push('/article')}
-                style={{
-                  width: 220,
-                  marginRight: spacing.md,
+                onBookmark={(articleId: number) => {
+                  // Handle bookmark functionality
+                  console.log(`Bookmarking article ${articleId}`);
                 }}
-                shadow="lg"
-              >
-                <Image 
-                  source={{ uri: article.image }}
-                  style={{ 
-                    width: '100%', 
-                    height: 120,
-                    borderTopLeftRadius: borderRadius.xl,
-                    borderTopRightRadius: borderRadius.xl,
-                    marginBottom: spacing.sm
-                  }}
-                  resizeMode="cover"
-                />
-                <View style={{ flex: 1 }}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: spacing.xs }}>
-                    <View style={{
-                      backgroundColor: colors.primary + '15',
-                      paddingHorizontal: spacing.sm,
-                      paddingVertical: 2,
-                      borderRadius: borderRadius.sm,
-                    }}>
-                      <Text style={{ 
-                        color: colors.primary, 
-                        fontSize: 10, 
-                        fontWeight: '600',
-                        textTransform: 'uppercase' 
-                      }}>{article.category}</Text>
-                    </View>
-                    <Text style={{ 
-                      color: isDark ? 'rgba(255,255,255,0.6)' : colors.gray[500], 
-                      fontSize: 10,
-                      fontWeight: '500'
-                    }}>{article.readTime}</Text>
-                  </View>
-                  <Text style={[
-                    { fontSize: 16, fontWeight: '700', marginBottom: spacing.xs },
-                    { color: isDark ? '#FFFFFF' : colors.gray[900] }
-                  ]} numberOfLines={2}>{article.title}</Text>
-                  <Text style={[
-                    { fontSize: 13, lineHeight: 18 },
-                    { color: isDark ? 'rgba(255,255,255,0.7)' : colors.gray[600] }
-                  ]} numberOfLines={3}>{article.excerpt}</Text>
-                </View>
-              </ModernCard>
+                onShare={(articleId: number) => {
+                  // Handle share functionality
+                  console.log(`Sharing article ${articleId}`);
+                }}
+                onLike={(articleId: number) => {
+                  // Handle like functionality
+                  console.log(`Liking article ${articleId}`);
+                }}
+                variant="compact"
+              />
             ))}
           </ScrollView>
         </View>
