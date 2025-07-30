@@ -612,6 +612,19 @@ export default function InMallWallet({ visible, onClose, venueId }: WalletProps)
     </Modal>
   ), [showTopUpModal, topUpAmount, colors, handleTopUp]); // Depend on state, colors, and handler
 
+  // Tab configuration
+  const TAB_WALLET = 'wallet';
+  const TAB_CARDS = 'cards';
+  const TAB_REWARDS = 'rewards';
+  const TAB_TRANSACTIONS = 'transactions';
+  
+  const tabConfig = [
+    { key: TAB_WALLET, label: 'Wallet', icon: 'creditcard' },
+    { key: TAB_CARDS, label: 'Cards', icon: 'rectangle.stack' },
+    { key: TAB_REWARDS, label: 'Rewards', icon: 'gift' },
+    { key: TAB_TRANSACTIONS, label: 'History', icon: 'list.bullet' }
+  ];
+
   // --- Main Component Render ---
   return (
     <Modal
@@ -641,12 +654,7 @@ export default function InMallWallet({ visible, onClose, venueId }: WalletProps)
 
         {/* Tab Navigation */}
         <View style={[styles.tabNav, { backgroundColor: colors.surface }]}>
-          {[
-            { key: 'wallet', label: 'Wallet', icon: 'creditcard' },
-            { key: 'cards', label: 'Cards', icon: 'rectangle.stack' },
-            { key: 'rewards', label: 'Rewards', icon: 'gift' },
-            { key: 'transactions', label: 'History', icon: 'list.bullet' }
-          ].map((tab) => (
+          {tabConfig.map((tab) => (
             <TouchableOpacity
               key={tab.key}
               style={[
@@ -671,10 +679,10 @@ export default function InMallWallet({ visible, onClose, venueId }: WalletProps)
         </View>
 
         {/* Tab Content */}
-        {activeTab === 'wallet' && renderWalletTab()}
-        {activeTab === 'cards' && renderCardsTab()}
-        {activeTab === 'rewards' && renderRewardsTab()}
-        {activeTab === 'transactions' && renderTransactionsTab()}
+        {activeTab === TAB_WALLET && renderWalletTab()}
+        {activeTab === TAB_CARDS && renderCardsTab()}
+        {activeTab === TAB_REWARDS && renderRewardsTab()}
+        {activeTab === TAB_TRANSACTIONS && renderTransactionsTab()}
 
         {/* Top Up Modal */}
         {renderTopUpModal()}

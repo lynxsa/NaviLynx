@@ -19,7 +19,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Auto-detect device locale on app start
-    const deviceLocale = Localization.locale;
+    const deviceLocale = Localization.locale || 'en-US';
     const localeCode = deviceLocale.split('-')[0].toLowerCase();
 
     // Map device locale to supported languages

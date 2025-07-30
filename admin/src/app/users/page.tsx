@@ -480,40 +480,6 @@ export default function UsersPage() {
             </CardContent>
           </Card>
         </div>
-                    <span className="text-gray-500 ml-1">sessions</span>
-                  </div>
-                </div>
-                <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg card-glow">
-                  <EyeIcon className="h-7 w-7 text-white" />
-                </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </CardContent>
-          </Card>
-
-          <Card className="relative group card-hover overflow-hidden border-purple-200">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50"></div>
-            <CardContent className="relative p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1">Products Scanned</p>
-                  <p className="text-3xl font-bold text-gray-900 mb-2">
-                    {mockUsers.reduce((sum, user) => sum + user.mobileAppUsage.productsScanned, 0)}
-                  </p>
-                  <div className="flex items-center text-sm">
-                    <Zap className="h-4 w-4 text-purple-500 mr-1" />
-                    <span className="text-purple-600 font-medium">Shopping</span>
-                    <span className="text-gray-500 ml-1">assistant</span>
-                  </div>
-                </div>
-                <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg card-glow">
-                  <Zap className="h-7 w-7 text-white" />
-                </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </CardContent>
-          </Card>
-        </div>
 
         {/* Enhanced Filters and Search */}
         <Card className="glass-effect border-navilynx-primary/20">

@@ -6,7 +6,10 @@ import { AdminLayout } from "@/components/admin-layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { QuickActions } from "@/components/quick-actions"
+import                     <Users className="h-5 w-5 text                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2.5 bg-purple-50 rounded-lg dark:bg-purple-900/50">
+                    <Users className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                  </div>ple-600" /> QuickActions } from "@/components/quick-actions"
 import {
   BarChart3,
   TrendingUp,
@@ -241,7 +244,7 @@ export default function DashboardPage() {
 
   return (
     <AdminLayout userRole="admin" title="Dashboard Overview">
-      <div className="min-h-screen bg-gradient-to-br from-slate-50/30 via-blue-50/20 to-indigo-50/30">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50/80 via-indigo-50/60 to-purple-100/40 dark:from-gray-900 dark:via-purple-900/20 dark:to-indigo-900/20">
         <div className="max-w-7xl mx-auto px-6 py-6">
           {/* Enhanced Header with Improved Typography */}
           <motion.div 
@@ -275,7 +278,7 @@ export default function DashboardPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => setTimeRange('24h')}
-                  className={`${timeRange === '24h' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'border-slate-200 text-slate-600'} transition-all duration-200`}
+                  className={`${timeRange === '24h' ? 'bg-purple-50 text-purple-700 border-purple-200' : 'border-slate-200 text-slate-600'} transition-all duration-200`}
                 >
                   24h
                 </Button>
@@ -283,7 +286,7 @@ export default function DashboardPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => setTimeRange('7d')}
-                  className={`${timeRange === '7d' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'border-slate-200 text-slate-600'} transition-all duration-200`}
+                  className={`${timeRange === '7d' ? 'bg-purple-50 text-purple-700 border-purple-200' : 'border-slate-200 text-slate-600'} transition-all duration-200`}
                 >
                   7d
                 </Button>
@@ -291,7 +294,7 @@ export default function DashboardPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => setTimeRange('30d')}
-                  className={`${timeRange === '30d' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'border-slate-200 text-slate-600'} transition-all duration-200`}
+                  className={`${timeRange === '30d' ? 'bg-purple-50 text-purple-700 border-purple-200' : 'border-slate-200 text-slate-600'} transition-all duration-200`}
                 >
                   30d
                 </Button>
@@ -299,7 +302,7 @@ export default function DashboardPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => setTimeRange('90d')}
-                  className={`${timeRange === '90d' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'border-slate-200 text-slate-600'} transition-all duration-200`}
+                  className={`${timeRange === '90d' ? 'bg-purple-50 text-purple-700 border-purple-200' : 'border-slate-200 text-slate-600'} transition-all duration-200`}
                 >
                   90d
                 </Button>
@@ -318,7 +321,7 @@ export default function DashboardPage() {
                 <Download className="w-4 h-4" />
                 Export
               </Button>
-              <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-sm hover:shadow-md">
+              <Button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all shadow-sm hover:shadow-md">
                 <Settings className="w-4 h-4 mr-2" />
                 Configure
               </Button>
@@ -333,11 +336,11 @@ export default function DashboardPage() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-6"
           >
             {/* Total Users */}
-            <Card className="bg-white border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:border-blue-200">
+            <Card className="bg-white/90 backdrop-blur border border-purple-200/60 shadow-sm hover:shadow-lg transition-all duration-300 hover:border-purple-300 hover:bg-white dark:bg-gray-800/90 dark:border-purple-700/60 dark:hover:border-purple-600 dark:hover:bg-gray-800">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <div className="p-2.5 bg-blue-50 rounded-lg">
-                    <Users className="w-5 h-5 text-blue-600" />
+                  <div className="p-2.5 bg-purple-50 rounded-lg">
+                    <Users className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                   </div>
                   <div className={`flex items-center gap-1 ${getChangeColor(mockDashboardData.users.growth)}`}>
                     {getChangeIcon(mockDashboardData.users.growth)}
@@ -359,7 +362,7 @@ export default function DashboardPage() {
             </Card>
 
             {/* Revenue */}
-            <Card className="bg-white border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:border-emerald-200">
+            <Card className="bg-white/90 backdrop-blur border border-purple-200/60 shadow-sm hover:shadow-lg transition-all duration-300 hover:border-emerald-300 hover:bg-white">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="p-2.5 bg-emerald-50 rounded-lg">
@@ -385,7 +388,7 @@ export default function DashboardPage() {
             </Card>
 
             {/* Venues */}
-            <Card className="bg-white border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:border-purple-200">
+            <Card className="bg-white/90 backdrop-blur border border-purple-200/60 shadow-sm hover:shadow-lg transition-all duration-300 hover:border-purple-300 hover:bg-white">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="p-2.5 bg-purple-50 rounded-lg">
@@ -411,7 +414,7 @@ export default function DashboardPage() {
             </Card>
 
             {/* AR Usage */}
-            <Card className="bg-white border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:border-orange-200">
+            <Card className="bg-white/90 backdrop-blur border border-purple-200/60 shadow-sm hover:shadow-lg transition-all duration-300 hover:border-orange-300 hover:bg-white">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="p-2.5 bg-orange-50 rounded-lg">
@@ -437,7 +440,7 @@ export default function DashboardPage() {
             </Card>
 
             {/* Session Duration */}
-            <Card className="bg-white border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:border-teal-200">
+            <Card className="bg-white/90 backdrop-blur border border-purple-200/60 shadow-sm hover:shadow-lg transition-all duration-300 hover:border-teal-300 hover:bg-white">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="p-2.5 bg-teal-50 rounded-lg">

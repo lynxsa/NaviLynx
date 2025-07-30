@@ -253,8 +253,39 @@ const mockARContent: ARContent[] = [
     analytics: { views: 8765, interactions: 4321, scans: 1234, duration: 3.2, clicks: 2345 },
     createdAt: new Date('2024-01-05'),
     updatedAt: new Date('2024-01-10')
-  }
-]
+  },
+  {
+    id: 'ar_002',
+    name: 'Woolworths Store Overlay',
+    description: 'Interactive AR overlay showing special offers, product locations, and digital coupons.',
+    type: 'store_overlay',
+    venueId: 'woolworths-eastgate',
+    venueName: 'Woolworths Eastgate',
+    coordinates: {
+      lat: -26.1650,
+      lng: 28.1780,
+      floor: 1,
+      altitude: 1.2
+    },
+    position: { x: 4.2, y: 1.2, z: 8.5 },
+    rotation: { x: 0, y: 45, z: 0 },
+    scale: { x: 1, y: 1, z: 1 },
+    assets: {
+      model: 'store_display.obj',
+      texture: 'special_offers.png',
+      animation: 'promotional_loop.anim',
+      audio: 'welcome_message.mp3',
+      images: ['coupon_1.jpg', 'coupon_2.jpg', 'product_highlights.png']
+    },
+    triggers: {
+      scan: false,
+      gesture: 'swipe_up'
+    },
+    interactions: {
+      touchable: true,
+      swipeable: true,
+      rotatable: false,
+      scalable: false
     },
     visibility: {
       distance: 30,

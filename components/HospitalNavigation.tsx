@@ -492,6 +492,18 @@ export function HospitalNavigation({
 
   if (!visible) return null;
 
+  const tabConfig = [
+    { key: 'queue' as const, icon: 'people' as const, label: 'Queue' as const },
+    { key: 'appointments' as const, icon: 'calendar' as const, label: 'Appointments' as const },
+    { key: 'profile' as const, icon: 'person' as const, label: 'Profile' as const },
+    { key: 'family' as const, icon: 'heart' as const, label: 'Family' as const }
+  ];
+
+  const TAB_QUEUE = 'queue';
+  const TAB_APPOINTMENTS = 'appointments';
+  const TAB_PROFILE = 'profile';
+  const TAB_FAMILY = 'family';
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -511,12 +523,7 @@ export function HospitalNavigation({
 
       {/* Tab Navigation */}
       <View style={styles.tabNavigation}>
-        {[
-          { key: 'queue', icon: 'people', label: 'Queue' },
-          { key: 'appointments', icon: 'calendar', label: 'Appointments' },
-          { key: 'profile', icon: 'person', label: 'Profile' },
-          { key: 'family', icon: 'heart', label: 'Family' }
-        ].map((tab) => (
+        {tabConfig.map((tab) => (
           <TouchableOpacity
             key={tab.key}
             style={[styles.tabButton, activeTab === tab.key && styles.activeTab]}
@@ -538,10 +545,10 @@ export function HospitalNavigation({
       </View>
 
       {/* Tab Content */}
-      {activeTab === 'queue' && <QueueTab />}
-      {activeTab === 'appointments' && <AppointmentsTab />}
-      {activeTab === 'profile' && <ProfileTab />}
-      {activeTab === 'family' && <FamilyTab />}
+      {activeTab === TAB_QUEUE && <QueueTab />}
+      {activeTab === TAB_APPOINTMENTS && <AppointmentsTab />}
+      {activeTab === TAB_PROFILE && <ProfileTab />}
+      {activeTab === TAB_FAMILY && <FamilyTab />}
 
       {/* Queue Details Modal */}
       <Modal

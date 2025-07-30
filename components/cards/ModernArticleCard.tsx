@@ -89,12 +89,12 @@ export function ModernArticleCard({
     const categoryColors: { [key: string]: string } = {
       'Technology': designSystem.colors.primary[500],
       'Business': designSystem.colors.success[500],
-      'Design': designSystem.colors.purple[500],
+      'Design': designSystem.colors.primary[500],
       'Marketing': designSystem.colors.warning[500],
-      'Travel': designSystem.colors.info[500],
+      'Travel': designSystem.colors.primary[500],
       'Lifestyle': designSystem.colors.error[500],
     };
-    return categoryColors[category] || designSystem.colors.neutral[500];
+    return categoryColors[category] || designSystem.colors.gray[500];
   };
 
   const getDifficultyColor = (difficulty?: string) => {
@@ -103,7 +103,7 @@ export function ModernArticleCard({
       'intermediate': designSystem.colors.warning[500],
       'advanced': designSystem.colors.error[500],
     };
-    return difficulty ? difficultyColors[difficulty] : designSystem.colors.neutral[500];
+    return difficulty ? difficultyColors[difficulty] : designSystem.colors.gray[500];
   };
 
   const renderCategoryBadge = () => {
@@ -177,13 +177,13 @@ export function ModernArticleCard({
         <View style={styles.statsContainer}>
           {article.likes !== undefined && (
             <TouchableOpacity style={styles.actionButton} onPress={handleLike}>
-              <IconSymbol name="heart" size={16} color={designSystem.colors.neutral[600]} />
+              <IconSymbol name="heart" size={16} color={designSystem.colors.gray[600]} />
               <Text style={styles.actionText}>{article.likes}</Text>
             </TouchableOpacity>
           )}
           {article.views !== undefined && (
             <View style={styles.statItem}>
-              <IconSymbol name="eye" size={16} color={designSystem.colors.neutral[600]} />
+              <IconSymbol name="eye" size={16} color={designSystem.colors.gray[600]} />
               <Text style={styles.actionText}>{article.views}</Text>
             </View>
           )}
@@ -195,13 +195,13 @@ export function ModernArticleCard({
               <IconSymbol 
                 name={article.isBookmarked ? "bookmark.fill" : "bookmark"} 
                 size={16} 
-                color={article.isBookmarked ? designSystem.colors.primary[600] : designSystem.colors.neutral[600]} 
+                color={article.isBookmarked ? designSystem.colors.primary[600] : designSystem.colors.gray[600]} 
               />
             </TouchableOpacity>
           )}
           {onShare && (
             <TouchableOpacity style={styles.actionButton} onPress={handleShare}>
-              <IconSymbol name="square.and.arrow.up" size={16} color={designSystem.colors.neutral[600]} />
+              <IconSymbol name="square.and.arrow.up" size={16} color={designSystem.colors.gray[600]} />
             </TouchableOpacity>
           )}
         </View>
@@ -427,7 +427,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: designSystem.colors.neutral[200],
+    backgroundColor: designSystem.colors.gray[200],
   },
   
   authorInfo: {
@@ -437,12 +437,12 @@ const styles = StyleSheet.create({
   authorName: {
     fontSize: designSystem.typography.fontSizes.sm,
     fontWeight: designSystem.typography.fontWeights.semibold,
-    color: designSystem.colors.neutral[900],
+    color: designSystem.colors.gray[900],
   },
   
   authorTitle: {
     fontSize: designSystem.typography.fontSizes.xs,
-    color: designSystem.colors.neutral[600],
+    color: designSystem.colors.gray[600],
   },
   
   tagsContainer: {
@@ -453,7 +453,7 @@ const styles = StyleSheet.create({
   },
   
   tagBadge: {
-    backgroundColor: designSystem.colors.neutral[100],
+    backgroundColor: designSystem.colors.gray[100],
     paddingHorizontal: designSystem.spacing.sm,
     paddingVertical: 4,
     borderRadius: designSystem.borderRadius.md,
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
   
   tagText: {
     fontSize: designSystem.typography.fontSizes.xs,
-    color: designSystem.colors.neutral[700],
+    color: designSystem.colors.gray[700],
     fontWeight: designSystem.typography.fontWeights.medium,
   },
   
@@ -472,7 +472,7 @@ const styles = StyleSheet.create({
     marginTop: designSystem.spacing.md,
     paddingTop: designSystem.spacing.md,
     borderTopWidth: 1,
-    borderTopColor: designSystem.colors.neutral[200],
+    borderTopColor: designSystem.colors.gray[200],
   },
   
   statsContainer: {
@@ -500,13 +500,13 @@ const styles = StyleSheet.create({
   
   actionText: {
     fontSize: designSystem.typography.fontSizes.sm,
-    color: designSystem.colors.neutral[600],
+    color: designSystem.colors.gray[600],
     fontWeight: designSystem.typography.fontWeights.medium,
   },
   
   publishDate: {
     fontSize: designSystem.typography.fontSizes.xs,
-    color: designSystem.colors.neutral[500],
+    color: designSystem.colors.gray[500],
   },
 
   // Compact Variant - Modernized
@@ -548,13 +548,13 @@ const styles = StyleSheet.create({
   modernCompactTitle: {
     fontSize: designSystem.typography.fontSizes.lg,
     fontWeight: designSystem.typography.fontWeights.bold,
-    color: designSystem.colors.neutral[900],
+    color: designSystem.colors.gray[900],
     marginBottom: designSystem.spacing.xs,
   },
   
   modernCompactExcerpt: {
     fontSize: designSystem.typography.fontSizes.sm,
-    color: designSystem.colors.neutral[700],
+    color: designSystem.colors.gray[700],
     lineHeight: 20,
     marginBottom: designSystem.spacing.sm,
   },
@@ -624,13 +624,13 @@ const styles = StyleSheet.create({
   modernStandardTitle: {
     fontSize: designSystem.typography.fontSizes.xl,
     fontWeight: designSystem.typography.fontWeights.bold,
-    color: designSystem.colors.neutral[900],
+    color: designSystem.colors.gray[900],
     marginBottom: designSystem.spacing.sm,
   },
   
   modernStandardExcerpt: {
     fontSize: designSystem.typography.fontSizes.md,
-    color: designSystem.colors.neutral[700],
+    color: designSystem.colors.gray[700],
     lineHeight: 22,
     marginBottom: designSystem.spacing.sm,
   },
@@ -643,7 +643,7 @@ const styles = StyleSheet.create({
   
   publishDateStandard: {
     fontSize: designSystem.typography.fontSizes.sm,
-    color: designSystem.colors.neutral[500],
+    color: designSystem.colors.gray[500],
   },
 
   // Featured Variant - Premium
@@ -723,7 +723,7 @@ const styles = StyleSheet.create({
   
   modernFeaturedExcerpt: {
     fontSize: designSystem.typography.fontSizes.lg,
-    color: designSystem.colors.neutral[700],
+    color: designSystem.colors.gray[700],
     lineHeight: 26,
     marginBottom: designSystem.spacing.md,
   },
@@ -736,6 +736,6 @@ const styles = StyleSheet.create({
   
   publishDateFeatured: {
     fontSize: designSystem.typography.fontSizes.md,
-    color: designSystem.colors.neutral[500],
+    color: designSystem.colors.gray[500],
   },
 });

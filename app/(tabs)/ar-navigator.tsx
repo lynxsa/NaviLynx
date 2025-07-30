@@ -295,7 +295,9 @@ export default function ARNavigatorEnhanced() {
         shortDescription: venue.shortDescription,
         image: venue.images?.[0] || '', // Use first image or empty string
         location: venue.location,
-        openingHours: venue.openingHours,
+        openingHours: typeof venue.openingHours === 'string' 
+          ? venue.openingHours 
+          : venue.openingHours?.monday || '09:00 - 21:00', // Convert object to string format
         features: venue.features || [],
         rating: venue.rating || 0,
         contact: venue.contact,
@@ -417,7 +419,7 @@ export default function ARNavigatorEnhanced() {
     };
     
     initializeARServices();
-  }, []);
+  }, [performanceMetrics.batteryOptimized]);
 
   // Enhanced navigation announcements
   const announceNavigationUpdate = useCallback(async (instruction: string, distance: number) => {

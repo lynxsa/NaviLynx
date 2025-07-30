@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, ViewStyle, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, ViewStyle } from 'react-native';
 import { BaseCard } from './EnhancedBaseCard';
 import { designSystem } from '../../styles/designSystem';
 import { IconSymbol } from '../ui/IconSymbol';
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
   // Compact variant styles
   compactCard: {
     marginBottom: designSystem.spacing.sm,
-  },
+  } as ViewStyle,
   
   compactContent: {
     flexDirection: 'row',
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
   
   compactTitle: {
     fontSize: designSystem.typography.fontSizes.base,
-    fontWeight: designSystem.typography.fontWeights.semibold,
+    fontWeight: "600",
     color: designSystem.colors.text.primary,
     marginBottom: 2,
   },
@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
   
   featuredTitle: {
     fontSize: designSystem.typography.fontSizes.xl,
-    fontWeight: designSystem.typography.fontWeights.bold,
+    fontWeight: "700",
     color: designSystem.colors.text.primary,
     lineHeight: designSystem.typography.lineHeights.tight * designSystem.typography.fontSizes.xl,
     marginBottom: designSystem.spacing.xs,
@@ -408,7 +408,7 @@ const styles = StyleSheet.create({
   
   standardTitle: {
     fontSize: designSystem.typography.fontSizes.lg,
-    fontWeight: designSystem.typography.fontWeights.semibold,
+    fontWeight: "600",
     color: designSystem.colors.text.primary,
     flex: 1,
     marginRight: designSystem.spacing.sm,
@@ -451,7 +451,7 @@ const styles = StyleSheet.create({
   
   ratingText: {
     fontSize: designSystem.typography.fontSizes.sm,
-    fontWeight: designSystem.typography.fontWeights.medium,
+    fontWeight: "500",
     color: designSystem.colors.text.primary,
   },
   
@@ -483,7 +483,7 @@ const styles = StyleSheet.create({
   
   statusText: {
     fontSize: designSystem.typography.fontSizes.xs,
-    fontWeight: designSystem.typography.fontWeights.medium,
+    fontWeight: "500",
   },
   
   priceBadge: {
@@ -496,7 +496,7 @@ const styles = StyleSheet.create({
   
   priceText: {
     fontSize: designSystem.typography.fontSizes.sm,
-    fontWeight: designSystem.typography.fontWeights.bold,
+    fontWeight: "700",
   },
   
   featuresContainer: {
@@ -515,6 +515,6 @@ const styles = StyleSheet.create({
   featureText: {
     fontSize: designSystem.typography.fontSizes.xs,
     color: designSystem.colors.primary[700],
-    fontWeight: designSystem.typography.fontWeights.medium,
+    fontWeight: "500",
   },
 });
