@@ -388,7 +388,7 @@ const styles = StyleSheet.create<{
   discountText: {
     color: '#FFFFFF',
     fontSize: designSystem.typography.fontSizes.sm,
-    fontWeight: designSystem.typography.fontWeights.bold as any,
+    fontWeight: designSystem.typography.fontWeights.bold,
   },
   
   countdownBadge: {
@@ -406,7 +406,7 @@ const styles = StyleSheet.create<{
   countdownText: {
     color: '#FFFFFF',
     fontSize: designSystem.typography.fontSizes.xs,
-    fontWeight: designSystem.typography.fontWeights.bold as any,
+    fontWeight: designSystem.typography.fontWeights.bold,
   },
   
   progressContainer: {
@@ -455,7 +455,7 @@ const styles = StyleSheet.create<{
   claimButtonText: {
     color: '#FFFFFF',
     fontSize: designSystem.typography.fontSizes.sm,
-    fontWeight: designSystem.typography.fontWeights.semibold as any,
+    fontWeight: designSystem.typography.fontWeights.semibold,
   },
   
   shareButton: {
@@ -507,7 +507,7 @@ const styles = StyleSheet.create<{
   
   modernCompactTitle: {
     fontSize: designSystem.typography.fontSizes.lg,
-    fontWeight: designSystem.typography.fontWeights.bold as any,
+    fontWeight: designSystem.typography.fontWeights.bold,
     color: designSystem.colors.gray[900],
     marginBottom: designSystem.spacing.xs,
   },
@@ -515,7 +515,7 @@ const styles = StyleSheet.create<{
   modernCompactVenue: {
     fontSize: designSystem.typography.fontSizes.sm,
     color: designSystem.colors.gray[600],
-    fontWeight: designSystem.typography.fontWeights.medium as any,
+    fontWeight: designSystem.typography.fontWeights.medium,
     marginBottom: designSystem.spacing.sm,
   },
   
@@ -534,14 +534,14 @@ const styles = StyleSheet.create<{
   
   discountedPrice: {
     fontSize: designSystem.typography.fontSizes.lg,
-    fontWeight: designSystem.typography.fontWeights.bold as any,
+    fontWeight: designSystem.typography.fontWeights.bold,
     color: designSystem.colors.success[600],
   },
   
   savingsText: {
     fontSize: designSystem.typography.fontSizes.sm,
     color: designSystem.colors.success[600],
-    fontWeight: designSystem.typography.fontWeights.semibold as any,
+    fontWeight: designSystem.typography.fontWeights.semibold,
   },
 
   // Standard Variant - Modernized
@@ -591,19 +591,19 @@ const styles = StyleSheet.create<{
   
   modernStandardTitle: {
     fontSize: designSystem.typography.fontSizes.xl,
-    fontWeight: designSystem.typography.fontWeights.bold as any,
+    fontWeight: designSystem.typography.fontWeights.bold,
     color: designSystem.colors.gray[900],
     marginBottom: designSystem.spacing.xs,
   },
   
   modernStandardVenue: {
-    fontSize: designSystem.typography.fontSizes.base,
+    fontSize: designSystem.typography.fontSizes.md,
     color: designSystem.colors.gray[600],
-    fontWeight: designSystem.typography.fontWeights.medium as any,
+    fontWeight: designSystem.typography.fontWeights.medium,
   },
   
   modernStandardDescription: {
-    fontSize: designSystem.typography.fontSizes.base,
+    fontSize: designSystem.typography.fontSizes.md,
     color: designSystem.colors.gray[700],
     lineHeight: 20,
     marginBottom: designSystem.spacing.md,
@@ -628,14 +628,14 @@ const styles = StyleSheet.create<{
   
   discountedPriceStandard: {
     fontSize: designSystem.typography.fontSizes['2xl'],
-    fontWeight: designSystem.typography.fontWeights.bold as any,
+    fontWeight: designSystem.typography.fontWeights.bold,
     color: designSystem.colors.success[600],
   },
   
   savingsTextStandard: {
-    fontSize: designSystem.typography.fontSizes.base,
+    fontSize: designSystem.typography.fontSizes.md,
     color: designSystem.colors.success[600],
-    fontWeight: designSystem.typography.fontWeights.semibold as any,
+    fontWeight: designSystem.typography.fontWeights.semibold,
   },
 
   // Featured Variant - Premium
@@ -691,7 +691,7 @@ const styles = StyleSheet.create<{
   
   modernFeaturedTitle: {
     fontSize: designSystem.typography.fontSizes['2xl'],
-    fontWeight: designSystem.typography.fontWeights.bold as any,
+    fontWeight: designSystem.typography.fontWeights.bold,
     color: '#FFFFFF',
     marginBottom: designSystem.spacing.xs,
   },
@@ -699,7 +699,7 @@ const styles = StyleSheet.create<{
   modernFeaturedVenue: {
     fontSize: designSystem.typography.fontSizes.lg,
     color: 'rgba(255,255,255,0.9)',
-    fontWeight: designSystem.typography.fontWeights.medium as any,
+    fontWeight: designSystem.typography.fontWeights.medium,
   },
   
   modernFeaturedInfo: {
@@ -733,13 +733,13 @@ const styles = StyleSheet.create<{
   
   discountedPriceFeatured: {
     fontSize: designSystem.typography.fontSizes['3xl'],
-    fontWeight: designSystem.typography.fontWeights.bold as any,
+    fontWeight: designSystem.typography.fontWeights.bold,
     color: designSystem.colors.success[600],
   },
   
   savingsTextFeatured: {
     fontSize: designSystem.typography.fontSizes.lg,
     color: designSystem.colors.success[600],
-    fontWeight: designSystem.typography.fontWeights.semibold as any,
+    fontWeight: designSystem.typography.fontWeights.semibold,
   },
 });

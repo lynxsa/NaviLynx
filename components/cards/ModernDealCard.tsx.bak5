@@ -515,7 +515,7 @@ const styles = StyleSheet.create<{
   modernCompactVenue: {
     fontSize: designSystem.typography.fontSizes.sm,
     color: designSystem.colors.gray[600],
-    fontWeight: designSystem.typography.fontWeights.medium as any,
+    fontWeight: designSystem.typography.fontWeights.medium,
     marginBottom: designSystem.spacing.sm,
   },
   
@@ -599,7 +599,7 @@ const styles = StyleSheet.create<{
   modernStandardVenue: {
     fontSize: designSystem.typography.fontSizes.base,
     color: designSystem.colors.gray[600],
-    fontWeight: designSystem.typography.fontWeights.medium as any,
+    fontWeight: designSystem.typography.fontWeights.medium,
   },
   
   modernStandardDescription: {
@@ -699,7 +699,7 @@ const styles = StyleSheet.create<{
   modernFeaturedVenue: {
     fontSize: designSystem.typography.fontSizes.lg,
     color: 'rgba(255,255,255,0.9)',
-    fontWeight: designSystem.typography.fontWeights.medium as any,
+    fontWeight: designSystem.typography.fontWeights.medium,
   },
   
   modernFeaturedInfo: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ViewStyle } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ViewStyle, TextStyle, ImageStyle } from 'react-native';
 import { BaseCard } from './EnhancedBaseCard';
 import { designSystem } from '../../styles/designSystem';
 import { IconSymbol } from '../ui/IconSymbol';
@@ -337,13 +337,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: designSystem.spacing.sm,
     paddingVertical: 4,
     borderRadius: designSystem.borderRadius.full,
-  },
+  } as ViewStyle,
   
   ratingText: {
     fontSize: designSystem.typography.fontSizes.xs,
     fontWeight: designSystem.typography.fontWeights.semibold,
     color: designSystem.colors.warning[700],
-  },
+  } as TextStyle,
   
   statusBadge: {
     flexDirection: 'row',
@@ -352,18 +352,18 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: designSystem.borderRadius.full,
     gap: 4,
-  },
+  } as ViewStyle,
   
   statusDot: {
     width: 6,
     height: 6,
     borderRadius: 3,
-  },
+  } as ViewStyle,
   
   statusText: {
     fontSize: designSystem.typography.fontSizes.xs,
     fontWeight: designSystem.typography.fontWeights.medium,
-  },
+  } as TextStyle,
   
   priceBadge: {
     backgroundColor: designSystem.colors.gray[900],
@@ -372,52 +372,52 @@ const styles = StyleSheet.create({
     borderRadius: designSystem.borderRadius.md,
     minWidth: 32,
     alignItems: 'center',
-  },
+  } as ViewStyle,
   
   priceText: {
     fontSize: designSystem.typography.fontSizes.sm,
     fontWeight: designSystem.typography.fontWeights.bold,
     color: '#FFFFFF',
-  },
+  } as TextStyle,
   
   featuresContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: designSystem.spacing.xs,
     marginTop: designSystem.spacing.sm,
-  },
+  } as ViewStyle,
   
   featureBadge: {
     backgroundColor: designSystem.colors.primary[50],
     paddingHorizontal: designSystem.spacing.sm,
     paddingVertical: 4,
     borderRadius: designSystem.borderRadius.md,
-  },
+  } as ViewStyle,
   
   featureText: {
     fontSize: designSystem.typography.fontSizes.xs,
     color: designSystem.colors.primary[700],
     fontWeight: designSystem.typography.fontWeights.medium,
-  },
+  } as TextStyle,
   
   distanceContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-  },
+  } as ViewStyle,
   
   distanceText: {
     fontSize: designSystem.typography.fontSizes.sm,
     color: designSystem.colors.gray[600],
     fontWeight: designSystem.typography.fontWeights.medium,
-  },
+  } as TextStyle,
   
   // CTA Button styles
   ctaContainer: {
     flexDirection: 'row',
     gap: designSystem.spacing.sm,
     marginTop: designSystem.spacing.md,
-  },
+  } as ViewStyle,
   
   ctaButtonPrimary: {
     backgroundColor: designSystem.colors.primary[600],
@@ -429,7 +429,7 @@ const styles = StyleSheet.create({
     gap: 6,
     flex: 1,
     justifyContent: 'center',
-  },
+  } as ViewStyle,
   
   ctaButtonSecondary: {
     backgroundColor: designSystem.colors.primary[50],
@@ -443,29 +443,29 @@ const styles = StyleSheet.create({
     gap: 6,
     flex: 1,
     justifyContent: 'center',
-  },
+  } as ViewStyle,
   
   ctaButtonTextPrimary: {
     color: '#FFFFFF',
     fontSize: designSystem.typography.fontSizes.sm,
     fontWeight: designSystem.typography.fontWeights.semibold,
-  },
+  } as TextStyle,
   
   ctaButtonTextSecondary: {
     color: designSystem.colors.primary[700],
     fontSize: designSystem.typography.fontSizes.sm,
     fontWeight: designSystem.typography.fontWeights.semibold,
-  },
+  } as TextStyle,
 
   // Modernized Compact Card - Less compact, larger images
   modernCompactCard: {
     width: 300, // Increased from typical compact width
     marginRight: designSystem.spacing.md,
-  },
+  } as ViewStyle,
   
   modernCompactContent: {
     flex: 1,
-  },
+  } as ViewStyle,
   
   modernCompactImageContainer: {
     position: 'relative',
@@ -473,13 +473,13 @@ const styles = StyleSheet.create({
     borderRadius: designSystem.borderRadius.lg,
     overflow: 'hidden',
     marginBottom: designSystem.spacing.md,
-  },
+  } as ViewStyle,
   
   modernCompactImage: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-  },
+  } as ImageStyle,
   
   modernCompactOverlay: {
     position: 'absolute',
@@ -489,19 +489,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-  },
+  } as ViewStyle,
   
   modernCompactInfo: {
     flex: 1,
     paddingHorizontal: designSystem.spacing.sm,
-  },
+  } as ViewStyle,
   
   modernCompactHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     marginBottom: designSystem.spacing.xs,
-  },
+  } as ViewStyle,
   
   modernCompactTitle: {
     fontSize: designSystem.typography.fontSizes.lg,
@@ -509,31 +509,31 @@ const styles = StyleSheet.create({
     color: designSystem.colors.gray[900],
     flex: 1,
     marginRight: designSystem.spacing.sm,
-  },
+  } as TextStyle,
   
   modernCompactCategory: {
     fontSize: designSystem.typography.fontSizes.sm,
     color: designSystem.colors.gray[600],
     fontWeight: designSystem.typography.fontWeights.medium,
     marginBottom: designSystem.spacing.xs,
-  },
+  } as TextStyle,
   
   modernCompactMeta: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: designSystem.spacing.sm,
-  },
+  } as ViewStyle,
 
   // Modernized Standard Card
   modernStandardCard: {
     width: '100%',
     marginBottom: designSystem.spacing.lg,
-  },
+  } as ViewStyle,
   
   modernStandardContent: {
     flex: 1,
-  },
+  } as ViewStyle,
   
   modernStandardImageContainer: {
     position: 'relative',
@@ -541,13 +541,13 @@ const styles = StyleSheet.create({
     borderRadius: designSystem.borderRadius.lg,
     overflow: 'hidden',
     marginBottom: designSystem.spacing.md,
-  },
+  } as ViewStyle,
   
   modernStandardImage: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-  },
+  } as ImageStyle,
   
   modernStandardOverlay: {
     position: 'absolute',
@@ -557,60 +557,60 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-  },
+  } as ViewStyle,
   
   modernStandardInfo: {
     paddingHorizontal: designSystem.spacing.md,
     paddingBottom: designSystem.spacing.md,
-  },
+  } as ViewStyle,
   
   modernStandardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     marginBottom: designSystem.spacing.sm,
-  },
+  } as ViewStyle,
   
   modernStandardTitleSection: {
     flex: 1,
     marginRight: designSystem.spacing.md,
-  },
+  } as ViewStyle,
   
   modernStandardTitle: {
     fontSize: designSystem.typography.fontSizes.xl,
     fontWeight: designSystem.typography.fontWeights.bold,
     color: designSystem.colors.gray[900],
     marginBottom: designSystem.spacing.xs,
-  },
+  } as TextStyle,
   
   modernStandardCategory: {
-    fontSize: designSystem.typography.fontSizes.md,
+    fontSize: designSystem.typography.fontSizes.base,
     color: designSystem.colors.gray[600],
     fontWeight: designSystem.typography.fontWeights.medium,
-  },
+  } as TextStyle,
   
   modernStandardDescription: {
-    fontSize: designSystem.typography.fontSizes.md,
+    fontSize: designSystem.typography.fontSizes.base,
     color: designSystem.colors.gray[700],
     lineHeight: 20,
     marginBottom: designSystem.spacing.sm,
-  },
+  } as TextStyle,
   
   modernStandardMeta: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: designSystem.spacing.sm,
-  },
+  } as ViewStyle,
 
   // Modernized Featured Card - Premium experience
   modernFeaturedCard: {
     width: '100%',
     marginBottom: designSystem.spacing.xl,
-  },
+  } as ViewStyle,
   
   modernFeaturedContent: {
     flex: 1,
-  },
+  } as ViewStyle,
   
   modernFeaturedImageContainer: {
     position: 'relative',
@@ -618,13 +618,13 @@ const styles = StyleSheet.create({
     borderRadius: designSystem.borderRadius.lg,
     overflow: 'hidden',
     marginBottom: designSystem.spacing.md,
-  },
+  } as ViewStyle,
   
   modernFeaturedImage: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-  },
+  } as ImageStyle,
   
   modernFeaturedGradient: {
     position: 'absolute',
@@ -635,53 +635,53 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.3)',
     justifyContent: 'space-between',
     padding: designSystem.spacing.md,
-  },
+  } as ViewStyle,
   
   modernFeaturedTopBadges: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-  },
+  } as ViewStyle,
   
   modernFeaturedBottomContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-  },
+  } as ViewStyle,
   
   modernFeaturedTitleSection: {
     flex: 1,
     marginRight: designSystem.spacing.md,
-  },
+  } as ViewStyle,
   
   modernFeaturedTitle: {
     fontSize: designSystem.typography.fontSizes['2xl'],
     fontWeight: designSystem.typography.fontWeights.bold,
     color: '#FFFFFF',
     marginBottom: designSystem.spacing.xs,
-  },
+  } as TextStyle,
   
   modernFeaturedCategory: {
     fontSize: designSystem.typography.fontSizes.lg,
     color: 'rgba(255,255,255,0.9)',
     fontWeight: designSystem.typography.fontWeights.medium,
-  },
+  } as TextStyle,
   
   modernFeaturedInfo: {
     paddingHorizontal: designSystem.spacing.md,
     paddingBottom: designSystem.spacing.md,
-  },
+  } as ViewStyle,
   
   modernFeaturedDescription: {
     fontSize: designSystem.typography.fontSizes.lg,
     color: designSystem.colors.gray[700],
     lineHeight: 24,
     marginBottom: designSystem.spacing.md,
-  },
+  } as TextStyle,
   
   modernFeaturedMeta: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: designSystem.spacing.sm,
-  },
+  } as ViewStyle,
 });

@@ -7,6 +7,7 @@ import {
   Platform,
   Pressable,
   AccessibilityRole,
+  StyleProp,
 } from 'react-native';
 import { designSystem, cardVariants, interactionStates } from '../../styles/designSystem';
 
@@ -17,8 +18,8 @@ export interface BaseCardProps {
   onPress?: () => void;
   onLongPress?: () => void;
   disabled?: boolean;
-  style?: ViewStyle;
-  contentStyle?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
+  contentStyle?: StyleProp<ViewStyle>;
   
   // Backend integration props
   id?: string;
